@@ -1,1 +1,57 @@
-<p>view-inventory works!</p>
+<div class="w-full p-5">
+  <app-header [title]="'Inventory Item: ' + inventory.itemId"></app-header>
+
+  <mat-divider></mat-divider>
+
+  <!-- Inventory Details Section -->
+  <div class="w-full flex flex-col gap-5 my-5">
+    <mat-card appearance="outlined" class="p-4 shadow-md">
+      <div class="flex flex-col gap-1">
+        <div class="text-lg font-semibold">Inventory Details</div>
+        <mat-divider></mat-divider>
+
+        <!-- Item Description -->
+        <div *ngIf="inventory.description" class="text-md">
+          <span class="font-semibold">Description:</span>
+          {{ inventory.description }}
+        </div>
+
+        <!-- Item Notes -->
+        <div *ngIf="inventory.notes" class="text-md">
+          <span class="font-semibold">Notes:</span> {{ inventory.notes }}
+        </div>
+      </div>
+    </mat-card>
+
+    <!-- Address Details Section -->
+    <mat-card appearance="outlined" class="p-4 shadow-md">
+      <div class="flex flex-col gap-1">
+        <div class="text-lg font-semibold">Address Details</div>
+        <mat-divider></mat-divider>
+
+        <!-- Address Information -->
+        <div class="text-md">
+          {{ inventory.address.addressLine1 }},
+          <span *ngIf="inventory.address.addressLine2">
+            {{ inventory.address.addressLine2 }},
+          </span>
+          {{ inventory.address.townCity }},
+          {{ inventory.address.stateProvinceCounty }},
+          {{ inventory.address.postalZipCode }},
+          {{ inventory.address.country }}
+        </div>
+
+        <!-- Maps Link (if available) -->
+        <div *ngIf="inventory.address.mapsLink" class="mt-2">
+          <a
+            [href]="inventory.address.mapsLink"
+            target="_blank"
+            class="text-sm text-blue-600 hover:underline flex items-center"
+          >
+            View on Maps
+          </a>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
