@@ -1,0 +1,135 @@
+<app-header title="Supplier Details"></app-header>
+
+<div class="w-full p-2 flex flex-col">
+  <mat-form-field class="w-full" appearance="outline">
+    <input
+      matInput
+      id="supplierName"
+      placeholder="Supplier Name"
+      [(ngModel)]="supplier.name"
+    />
+  </mat-form-field>
+
+  <h2 class="text-xl my-2">Primary Contact</h2>
+  <div class="p-0 flex flex-row items-center gap-1">
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="primaryContactName"
+        placeholder="Name"
+        [(ngModel)]="supplier.primaryContact.name"
+      />
+    </mat-form-field>
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="primaryContactEmail"
+        type="email"
+        placeholder="Email"
+        [(ngModel)]="supplier.primaryContact.email"
+      />
+    </mat-form-field>
+  </div>
+  <div class="p-0 flex flex-row items-center gap-1">
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        id="primaryContactPhoneCode"
+        placeholder="Code"
+        [(ngModel)]="supplier.primaryContact.phone!.code"
+      />
+    </mat-form-field>
+    <mat-form-field class="w-full" appearance="outline">
+      <input
+        matInput
+        id="primaryContactPhoneNumber"
+        placeholder="Number"
+        [(ngModel)]="supplier.primaryContact.phone!.number"
+      />
+    </mat-form-field>
+  </div>
+  <mat-form-field class="w-full" appearance="outline">
+    <input
+      matInput
+      id="primaryContactDesignation"
+      placeholder="Designation"
+      [(ngModel)]="supplier.primaryContact.designation"
+    />
+  </mat-form-field>
+
+  <h2 class="text-xl my-2">Address</h2>
+  <div class="p-0 flex flex-row items-center gap-1">
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="addressLine1"
+        placeholder="Address Line 1"
+        [(ngModel)]="supplier.address!.addressLine1"
+      />
+    </mat-form-field>
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="addressLine2"
+        placeholder="Address Line 2"
+        [(ngModel)]="supplier.address!.addressLine2"
+      />
+    </mat-form-field>
+  </div>
+  <div class="p-0 flex flex-row items-center gap-1">
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="townCity"
+        placeholder="Town/City"
+        [(ngModel)]="supplier.address!.townCity"
+      />
+    </mat-form-field>
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="stateProvinceCounty"
+        placeholder="State/Province/County"
+        [(ngModel)]="supplier.address!.stateProvinceCounty"
+      />
+    </mat-form-field>
+  </div>
+  <div class="p-0 flex flex-row items-center gap-1">
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="country"
+        placeholder="Country"
+        [(ngModel)]="supplier.address!.country"
+      />
+    </mat-form-field>
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="postalZipCode"
+        placeholder="Postal/ZIP Code"
+        [(ngModel)]="supplier.address!.postalZipCode"
+      />
+    </mat-form-field>
+  </div>
+  <div class="p-0 flex flex-row items-center gap-1">
+    <mat-form-field class="w-full" appearance="outline">
+      <input
+        type="url"
+        matInput
+        id="mapsLink"
+        placeholder="Maos Link"
+        [(ngModel)]="supplier.address!.mapsLink"
+      />
+    </mat-form-field>
+  </div>
+</div>
+
+<mat-toolbar
+  class="fixed bottom-0 right-0 w-full flex flex-row justify-end items-center"
+>
+  <button mat-fab extended (click)="submit()">
+    <mat-icon>check_circle</mat-icon>
+    Submit
+  </button>
+</mat-toolbar>

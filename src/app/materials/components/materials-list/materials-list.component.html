@@ -1,0 +1,11 @@
+<div class="w-full flex flex-row items-center justify-between">
+  <app-header title="Materials Library" icon="category"></app-header>
+  <button mat-fab extended routerLink="./create">
+    <mat-icon>add_circle</mat-icon>
+    Add New Material
+  </button>
+</div>
+
+<mat-divider class="w-full my-3"></mat-divider>
+
+<app-materials-library [materials]="materials"></app-materials-library>

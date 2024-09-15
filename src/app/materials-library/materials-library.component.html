@@ -1,0 +1,77 @@
+<div class="w-full my-2">
+  <mat-form-field appearance="fill" class="w-full">
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Filter Materials by Part Name, Material or Manufacturing Method..."
+      #input
+    />
+  </mat-form-field>
+
+  <div class="my-5 mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="partName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Part Name</th>
+        <td mat-cell *matCellDef="let row">{{ row.partName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="material">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Material</th>
+        <td mat-cell *matCellDef="let row">{{ row.material }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="manufacturingMethod">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Manufacturing Method
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.manufacturingMethod }}
+        </td>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td
+              mat-cell
+              *matCellDef="let row"
+              class="flex flex-row justify-end items-center"
+            >
+              <div class="flex flex-row gap-4 min-w-fit">
+                <button
+                  mat-mini-fab
+                  color="secondary"
+                  [routerLink]="'./view/' + row.id"
+                  matTooltip="View Supplier Details"
+                >
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button
+                  mat-mini-fab
+                  [routerLink]="'./edit/' + row.id"
+                  matTooltip="Edit Supplier Details"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-mini-fab
+                  color="danger"
+                  (click)="deleteSupplier(row.id)"
+                  matTooltip="Delete Supplier"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container> -->
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+          No data matching the filter "{{ input.value }}"
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

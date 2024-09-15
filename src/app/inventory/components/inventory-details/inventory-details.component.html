@@ -1,0 +1,107 @@
+<app-header title="Inventory Details"></app-header>
+
+<div class="w-full p-2 flex flex-col">
+  <mat-form-field class="w-full" appearance="outline">
+    <input
+      matInput
+      id="inventoryName"
+      placeholder="Inventory Entry Name/ID"
+      [(ngModel)]="inventory.itemId"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="w-full" appearance="outline">
+    <input
+      matInput
+      id="inventoryDescription"
+      placeholder="Description"
+      [(ngModel)]="inventory.description"
+    />
+  </mat-form-field>
+
+  <h2 class="text-xl my-2">Address</h2>
+  <div class="p-0 flex flex-row items-center gap-1">
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="addressLine1"
+        placeholder="Address Line 1"
+        [(ngModel)]="inventory.address!.addressLine1"
+      />
+    </mat-form-field>
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="addressLine2"
+        placeholder="Address Line 2"
+        [(ngModel)]="inventory.address!.addressLine2"
+      />
+    </mat-form-field>
+  </div>
+  <div class="p-0 flex flex-row items-center gap-1">
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="townCity"
+        placeholder="Town/City"
+        [(ngModel)]="inventory.address!.townCity"
+      />
+    </mat-form-field>
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="stateProvinceCounty"
+        placeholder="State/Province/County"
+        [(ngModel)]="inventory.address!.stateProvinceCounty"
+      />
+    </mat-form-field>
+  </div>
+  <div class="p-0 flex flex-row items-center gap-1">
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="country"
+        placeholder="Country"
+        [(ngModel)]="inventory.address!.country"
+      />
+    </mat-form-field>
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="postalZipCode"
+        placeholder="Postal/ZIP Code"
+        [(ngModel)]="inventory.address!.postalZipCode"
+      />
+    </mat-form-field>
+  </div>
+  <div class="p-0 flex flex-row items-center gap-1">
+    <mat-form-field class="w-full" appearance="outline">
+      <input
+        type="url"
+        matInput
+        id="mapsLink"
+        placeholder="Maos Link"
+        [(ngModel)]="inventory.address!.mapsLink"
+      />
+    </mat-form-field>
+  </div>
+
+  <h2 class="text-xl my-2">Notes</h2>
+  <mat-form-field class="w-full" appearance="outline">
+    <textarea
+      matInput
+      id="notes"
+      placeholder="Notes"
+      [(ngModel)]="inventory.notes"
+    ></textarea>
+  </mat-form-field>
+</div>
+
+<mat-toolbar
+  class="fixed bottom-0 right-0 w-full flex flex-row justify-end items-center"
+>
+  <button mat-fab extended (click)="submit()">
+    <mat-icon>check_circle</mat-icon>
+    Submit
+  </button>
+</mat-toolbar>

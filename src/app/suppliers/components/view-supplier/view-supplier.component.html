@@ -1,0 +1,85 @@
+<div class="w-full p-5">
+  <app-header [title]="supplier!.name"></app-header>
+
+  <mat-divider></mat-divider>
+
+  <div class="w-full flex flex-row items-center justify-evenly my-5">
+    <mat-card appearance="outlined" class="p-4 shadow-md card-width">
+      <div class="flex flex-col gap-1">
+        <div class="text-lg font-semibold">Address</div>
+        <mat-divider></mat-divider>
+        <div class="text-md">
+          {{ supplier!.address!.addressLine1 }},
+          <span *ngIf="supplier!.address!.addressLine2">
+            {{ supplier!.address!.addressLine2 }},
+          </span>
+          {{ supplier!.address!.townCity }},
+          {{ supplier!.address!.stateProvinceCounty }},
+          {{ supplier!.address!.postalZipCode }},
+          {{ supplier!.address!.country }}
+        </div>
+
+        <div *ngIf="supplier!.address!.mapsLink" class="mt-2">
+          <a
+            [href]="supplier!.address!.mapsLink"
+            target="_blank"
+            class="text-sm text-blue-600 hover:underline flex items-center"
+          >
+            View on Maps
+          </a>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="p-4 shadow-md card-width">
+      <div class="flex flex-col gap-1">
+        <div class="text-lg font-semibold">Contact Information</div>
+        <mat-divider></mat-divider>
+        <div class="text-md font-medium">
+          {{ supplier!.primaryContact!.name }}, <br />
+          @if (supplier!.primaryContact!.designation) {
+          <span class="font-semibold">Designation: </span>
+          {{ supplier!.primaryContact!.designation }}
+          }
+        </div>
+        <div class="text-md flex gap-4 mt-1">
+          <span>
+            <span class="font-semibold">Email:</span>
+            <a
+              href="mailto:{{ supplier!.primaryContact!.email }}"
+              class="text-blue-600 hover:underline"
+            >
+              {{ supplier!.primaryContact!.email }}
+            </a>
+          </span>
+          <span *ngIf="supplier!.primaryContact!.phone">
+            <span class="font-semibold">Phone:</span> +{{
+              supplier!.primaryContact!.phone!.code
+            }}
+            {{ supplier!.primaryContact!.phone!.number }}
+          </span>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+<mat-tab-group>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div class="flex flex-row items-center justify-center gap-3 w-full">
+        <mat-icon>store</mat-icon>
+        <div class="text-lg">Materials</div>
+      </div>
+    </ng-template>
+    <app-materials-library [materials]="materials"></app-materials-library>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <div class="flex flex-row items-center justify-center gap-3 w-full">
+        <mat-icon>shopping_cart</mat-icon>
+        <div class="text-lg">Orders</div>
+      </div>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

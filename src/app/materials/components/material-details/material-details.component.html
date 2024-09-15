@@ -1,0 +1,117 @@
+<app-header title="Material Details"></app-header>
+
+<div class="w-full p-2 flex flex-col">
+  <mat-form-field class="w-full" appearance="outline">
+    <input
+      matInput
+      id="partName"
+      placeholder="Part Name"
+      [(ngModel)]="material.partName"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="w-full" appearance="outline">
+    <input
+      matInput
+      id="material"
+      placeholder="Material"
+      [(ngModel)]="material.material"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="w-full" appearance="outline">
+    <input
+      matInput
+      id="manufacturingMethod"
+      placeholder="Manufacturing Method"
+      [(ngModel)]="material.manufacturingMethod"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="w-full" appearance="outline">
+    <input
+      matInput
+      id="weight"
+      placeholder="Weight"
+      [(ngModel)]="material.weight"
+    />
+  </mat-form-field>
+
+  <h2 class="text-xl my-2">Dimensions</h2>
+  <div class="p-0 flex flex-row items-center gap-1">
+    <mat-form-field class="w-1/3" appearance="outline">
+      <input
+        matInput
+        id="length"
+        placeholder="Length"
+        [(ngModel)]="material.dimensions!.length"
+      />
+    </mat-form-field>
+    <mat-form-field class="w-1/3" appearance="outline">
+      <input
+        matInput
+        id="breadth"
+        placeholder="Breadth"
+        [(ngModel)]="material.dimensions!.breadth"
+      />
+    </mat-form-field>
+    <mat-form-field class="w-1/3" appearance="outline">
+      <input
+        matInput
+        id="height"
+        placeholder="Height"
+        [(ngModel)]="material.dimensions!.height"
+      />
+    </mat-form-field>
+  </div>
+
+  <!-- <h2 class="text-xl my-2">Images</h2>
+  <mat-form-field class="w-full" appearance="outline">
+    <input
+      matInput
+      id="images"
+      placeholder="Images (comma-separated URLs)"
+      [(ngModel)]="material.images"
+    />
+  </mat-form-field>
+
+  <h2 class="text-xl my-2">Drawings</h2>
+  <mat-form-field class="w-full" appearance="outline">
+    <input
+      matInput
+      id="drawings"
+      placeholder="Drawings (comma-separated URLs)"
+      [(ngModel)]="material.drawings"
+    />
+  </mat-form-field>
+
+  <h2 class="text-xl my-2">Data Sheets</h2>
+  <mat-form-field class="w-full" appearance="outline">
+    <input
+      matInput
+      id="dataSheets"
+      placeholder="Data Sheets (comma-separated URLs)"
+      [(ngModel)]="material.dataSheets"
+    />
+  </mat-form-field> -->
+
+  <!-- <h2 class="text-xl my-2">Suppliers</h2>
+  <mat-form-field class="w-full" appearance="outline">
+    <textarea
+      matInput
+      id="suppliers"
+      placeholder="Suppliers (JSON format or IDs)"
+      [(ngModel)]="material.suppliers"
+      rows="3"
+    ></textarea>
+  </mat-form-field> -->
+</div>
+
+<mat-toolbar
+  class="fixed bottom-0 right-0 w-full flex flex-row justify-end items-center"
+>
+  <button mat-fab extended (click)="submit()">
+    <mat-icon>check_circle</mat-icon>
+    Submit
+  </button>
+</mat-toolbar>
