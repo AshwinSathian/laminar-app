@@ -103,7 +103,7 @@
       placeholder="Select Suppliers"
     >
       @for (supplier of supplierOptions; track supplier.id) {
-      <mat-option [value]="supplier.id">{{ supplier.name }}</mat-option>
+      <mat-option [value]="supplier">{{ supplier.name }}</mat-option>
       }
     </mat-select>
   </mat-form-field>

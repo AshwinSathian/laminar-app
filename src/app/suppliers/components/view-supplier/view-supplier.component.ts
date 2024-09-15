@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Material } from '../../../../interfaces/material.interface';
 import { Supplier } from '../../../../interfaces/supplier.interface';
@@ -18,6 +18,7 @@ export class ViewSupplierComponent implements OnInit, OnDestroy {
 
   constructor(
     private _service: SuppliersService,
+    private _router: Router,
     private _route: ActivatedRoute
   ) {}
 
@@ -35,7 +36,37 @@ export class ViewSupplierComponent implements OnInit, OnDestroy {
         next: (data) => {
           if (data?.length) {
             this.materials = JSON.parse(JSON.stringify(data));
+            for (const material of this.materials) {
+              material.suppliers = material.suppliers?.map(
+                (stringifiedElement) => {
+                  try {
+                    const jsonString = stringifiedElement
+                      .replace(/'/g, '"')
+                      .replace(/new ObjectId/g, '');
+                    return JSON.parse(jsonString);
+                  } catch (error) {
+                    return null;
+                  }
+                }
+              );
+            }
           }
+        },
+      });
+  }
+
+  deleteSupplier() {
+    this._service
+      .deleteSupplier(this._route.snapshot.params['id'])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          if (data) {
+            this._router.navigate(['/suppliers']);
+          }
+        },
+        error: (error) => {
+          console.error('Error fetching suppliers:', error); // Handle errors if needed
         },
       });
   }

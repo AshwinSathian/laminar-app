@@ -71,33 +71,6 @@ export class SuppliersListComponent
     }
   }
 
-  deleteSupplier(id: string) {
-    this._service
-      .deleteSupplier(id)
-      .pipe(
-        switchMap(() => this._service.getSuppliers()),
-        takeUntil(this.destroy$)
-      )
-      .subscribe({
-        next: (data) => {
-          if (data?.length) {
-            this.suppliers = JSON.parse(JSON.stringify(data));
-            this.dataSource = new MatTableDataSource(
-              this.suppliers?.map((s) => ({
-                name: s.name || '',
-                email: s.primaryContact?.email || '',
-                country: s.address?.country || '',
-                id: s.id || '',
-              }))
-            );
-          }
-        },
-        error: (error) => {
-          console.error('Error fetching suppliers:', error); // Handle errors if needed
-        },
-      });
-  }
-
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();

@@ -1,11 +1,8 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -32,22 +29,15 @@ import { Material } from '../../interfaces/material.interface';
   ],
   templateUrl: './materials-library.component.html',
   styleUrl: './materials-library.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MaterialsLibraryComponent implements OnChanges, AfterViewInit {
   @Input({ required: true }) materials: Material[] = [];
   @Input() showActions = false;
-  @Output() deleteEmitter = new EventEmitter<string>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  displayedColumns: string[] = [
-    'partName',
-    'material',
-    'manufacturingMethod',
-    'actions',
-  ];
+  displayedColumns: string[] = ['partName', 'material', 'manufacturingMethod'];
   dataSource!: MatTableDataSource<{
     partName: string;
     material: string;
@@ -66,6 +56,10 @@ export class MaterialsLibraryComponent implements OnChanges, AfterViewInit {
         }))
       );
     }
+
+    if (changes['showActions']?.currentValue === true) {
+      this.displayedColumns.push('actions');
+    }
   }
 
   ngAfterViewInit() {
@@ -80,9 +74,5 @@ export class MaterialsLibraryComponent implements OnChanges, AfterViewInit {
     if (this.dataSource?.paginator) {
       this.dataSource.paginator.firstPage();
     }
-  }
-
-  deleteSupplier(id: string) {
-    this.deleteEmitter.emit(id);
   }
 }

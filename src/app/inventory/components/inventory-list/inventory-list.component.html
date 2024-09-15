@@ -34,9 +34,9 @@
         *matCellDef="let row"
         class="flex flex-row justify-end items-center"
       >
-        <div class="flex flex-row gap-4 min-w-fit">
+        <div class="flex flex-row items-center gap-4 min-w-fit">
           <button
-            mat-mini-fab
+            mat-icon
             color="secondary"
             [routerLink]="'./view/' + row.id"
             matTooltip="View Details"
@@ -44,19 +44,11 @@
             <mat-icon>visibility</mat-icon>
           </button>
           <button
-            mat-mini-fab
+            mat-icon
             [routerLink]="'./edit/' + row.id"
             matTooltip="Edit Details"
           >
             <mat-icon>edit</mat-icon>
-          </button>
-          <button
-            mat-mini-fab
-            color="danger"
-            (click)="deleteInventory(row.id)"
-            matTooltip="Delete"
-          >
-            <mat-icon>delete</mat-icon>
           </button>
         </div>
       </td>

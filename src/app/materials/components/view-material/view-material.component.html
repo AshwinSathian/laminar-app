@@ -1,5 +1,22 @@
 <div class="w-full p-5">
-  <app-header [title]="material.partName"></app-header>
+  <div class="w-full flex flex-row items-center justify-between">
+    <app-header [title]="material.partName"></app-header>
+    <div class="flex items-center gap-2">
+      <button
+        mat-fab
+        color="secondary"
+        extended
+        [routerLink]="'/material/edit' + material.id"
+      >
+        <mat-icon>edit</mat-icon>
+        Edit Material
+      </button>
+      <button mat-fab color="danger" extended (click)="deleteMaterial()">
+        <mat-icon>delete</mat-icon>
+        Delete Material
+      </button>
+    </div>
+  </div>
 
   <mat-divider></mat-divider>
 
@@ -49,7 +66,7 @@
         >
           <mat-list role="list">
             @for (supplier of material.suppliers; track $index) {
-            <mat-list-item role="listitem">{{ supplier }}</mat-list-item>
+            <mat-list-item role="listitem">{{ supplier?.name }}</mat-list-item>
             }
           </mat-list>
         </div>

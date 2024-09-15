@@ -8,7 +8,7 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subject, switchMap, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Inventory } from '../../../../interfaces/inventory.interface';
 import { InventoryService } from '../../../services/inventory.service';
 
@@ -67,32 +67,6 @@ export class InventoryListComponent
     if (this.dataSource?.paginator) {
       this.dataSource.paginator.firstPage();
     }
-  }
-
-  deleteInventory(id: string) {
-    this._service
-      .deleteInventory(id)
-      .pipe(
-        switchMap(() => this._service.getInventories()),
-        takeUntil(this.destroy$)
-      )
-      .subscribe({
-        next: (data) => {
-          if (data?.length) {
-            this.inventoryEntries = JSON.parse(JSON.stringify(data));
-            this.dataSource = new MatTableDataSource(
-              this.inventoryEntries?.map((i) => ({
-                itemId: i.itemId || '',
-                description: i.description || '',
-                id: i.id || '',
-              }))
-            );
-          }
-        },
-        error: (error) => {
-          console.error('Error fetching inventorys:', error); // Handle errors if needed
-        },
-      });
   }
 
   ngOnDestroy(): void {

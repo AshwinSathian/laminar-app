@@ -29,7 +29,6 @@
         </td>
       </ng-container>
 
-      @if (showActions) {
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td
@@ -37,9 +36,9 @@
           *matCellDef="let row"
           class="flex flex-row justify-end items-center"
         >
-          <div class="flex flex-row gap-4 min-w-fit">
+          <div class="flex flex-row items-center gap-4 min-w-fit">
             <button
-              mat-mini-fab
+              mat-icon
               color="secondary"
               [routerLink]="'./view/' + row.id"
               matTooltip="View Material Details"
@@ -47,32 +46,18 @@
               <mat-icon>visibility</mat-icon>
             </button>
             <button
-              mat-mini-fab
+              mat-icon
               [routerLink]="'./edit/' + row.id"
               matTooltip="Edit Material Details"
             >
               <mat-icon>edit</mat-icon>
             </button>
-            <button
-              mat-mini-fab
-              color="danger"
-              (click)="deleteSupplier(row.id)"
-              matTooltip="Delete Material"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
           </div>
-        </td> </ng-container
-      >}
+        </td>
+      </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">
-          No data matching the filter "{{ input.value }}"
-        </td>
-      </tr>
     </table>
   </div>
 </div>

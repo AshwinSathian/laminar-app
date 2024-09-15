@@ -1,5 +1,22 @@
 <div class="w-full p-5">
-  <app-header [title]="'Inventory Item: ' + inventory.itemId"></app-header>
+  <div class="w-full flex flex-row items-center justify-between">
+    <app-header [title]="'Inventory Item: ' + inventory.itemId"></app-header>
+    <div class="flex items-center gap-2">
+      <button
+        mat-fab
+        color="secondary"
+        extended
+        [routerLink]="'/inventory/edit' + inventory.id"
+      >
+        <mat-icon>edit</mat-icon>
+        Edit Inventory
+      </button>
+      <button mat-fab color="danger" extended (click)="deleteInventory()">
+        <mat-icon>delete</mat-icon>
+        Delete Inventory
+      </button>
+    </div>
+  </div>
 
   <mat-divider></mat-divider>
 

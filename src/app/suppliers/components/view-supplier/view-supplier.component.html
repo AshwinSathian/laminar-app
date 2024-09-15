@@ -1,5 +1,22 @@
 <div class="w-full p-5">
-  <app-header [title]="supplier!.name"></app-header>
+  <div class="w-full flex flex-row items-center justify-between">
+    <app-header [title]="supplier!.name"></app-header>
+    <div class="flex items-center gap-2">
+      <button
+        mat-fab
+        color="secondary"
+        extended
+        [routerLink]="'/supplier/edit' + supplier.id"
+      >
+        <mat-icon>edit</mat-icon>
+        Edit Supplier
+      </button>
+      <button mat-fab color="danger" extended (click)="deleteSupplier()">
+        <mat-icon>delete</mat-icon>
+        Delete Supplier
+      </button>
+    </div>
+  </div>
 
   <mat-divider></mat-divider>
 
@@ -69,7 +86,7 @@
     <ng-template mat-tab-label>
       <div class="flex flex-row items-center justify-center gap-3 w-full">
         <mat-icon>store</mat-icon>
-        <div class="text-lg">Materials</div>
+        <div class="text-lg">Suppliers</div>
       </div>
     </ng-template>
     <app-materials-library [materials]="materials"></app-materials-library>
