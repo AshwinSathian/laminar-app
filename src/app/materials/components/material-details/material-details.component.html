@@ -95,16 +95,18 @@
     />
   </mat-form-field> -->
 
-  <!-- <h2 class="text-xl my-2">Suppliers</h2>
+  <h2 class="text-xl my-2">Suppliers</h2>
   <mat-form-field class="w-full" appearance="outline">
-    <textarea
-      matInput
-      id="suppliers"
-      placeholder="Suppliers (JSON format or IDs)"
+    <mat-select
       [(ngModel)]="material.suppliers"
-      rows="3"
-    ></textarea>
-  </mat-form-field> -->
+      multiple
+      placeholder="Select Suppliers"
+    >
+      @for (supplier of supplierOptions; track supplier.id) {
+      <mat-option [value]="supplier.id">{{ supplier.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <mat-toolbar

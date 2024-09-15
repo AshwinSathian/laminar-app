@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Material } from '../../interfaces/material.interface';
+import { Supplier } from '../../interfaces/supplier.interface';
 
 const API_BASE_URL = `${environment.apiUrl}materials/`;
 
@@ -28,5 +29,9 @@ export class MaterialsService {
 
   deleteMaterial(id: string): Observable<Material> {
     return this._http.delete<Material>(`${API_BASE_URL}${id}`);
+  }
+
+  getSuppliers(): Observable<Supplier[]> {
+    return this._http.get<Supplier[]>(`${environment.apiUrl}suppliers`);
   }
 }

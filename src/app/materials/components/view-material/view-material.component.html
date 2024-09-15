@@ -1,1 +1,62 @@
-<p>view-material works!</p>
+<div class="w-full p-5">
+  <app-header [title]="material.partName"></app-header>
+
+  <mat-divider></mat-divider>
+
+  <!-- Material Details Section -->
+  <div class="w-full flex flex-col gap-5 my-5">
+    <mat-card appearance="outlined" class="p-4 shadow-md">
+      <div class="flex flex-col gap-1">
+        <div class="text-lg font-semibold">Material Details</div>
+        <mat-divider></mat-divider>
+
+        <!-- Material Information -->
+        <div class="text-md">
+          <span class="font-semibold">Material:</span> {{ material.material }}
+        </div>
+        <div class="text-md">
+          <span class="font-semibold">Manufacturing Method:</span>
+          {{ material.manufacturingMethod }}
+        </div>
+
+        <!-- Material Dimensions (if available) -->
+        <div *ngIf="material.dimensions" class="text-md">
+          <span class="font-semibold">Dimensions:</span>
+          {{ material.dimensions.length }} x {{ material.dimensions.breadth }} x
+          {{ material.dimensions.height }}
+        </div>
+
+        <!-- Material Weight -->
+        <div class="text-md">
+          <span class="font-semibold">Weight:</span> {{ material.weight }}
+        </div>
+      </div>
+    </mat-card>
+
+    <!-- Supplier Details Section -->
+    <mat-card appearance="outlined" class="p-4 shadow-md">
+      <div class="flex flex-col gap-1">
+        <div class="text-lg font-semibold">Suppliers</div>
+        <mat-divider></mat-divider>
+
+        <!-- Supplier List -->
+        <div
+          *ngIf="
+            material.suppliers && material.suppliers.length > 0;
+            else noSuppliers
+          "
+          class="text-md"
+        >
+          <mat-list role="list">
+            @for (supplier of material.suppliers; track $index) {
+            <mat-list-item role="listitem">{{ supplier }}</mat-list-item>
+            }
+          </mat-list>
+        </div>
+        <ng-template #noSuppliers>
+          <div class="text-md text-gray-500">No suppliers available</div>
+        </ng-template>
+      </div>
+    </mat-card>
+  </div>
+</div>

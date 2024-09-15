@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Material } from '../../../../interfaces/material.interface';
 import { MaterialsService } from '../../../services/materials.service';
+import { MatOption } from '@angular/material/core';
+import { Supplier } from '../../../../interfaces/supplier.interface';
 
 @Component({
   selector: 'app-material-details',
@@ -26,6 +28,7 @@ export class MaterialDetailsComponent implements OnInit, OnDestroy {
     dataSheets: [],
     suppliers: [],
   };
+  supplierOptions: Supplier[] = [];
 
   destroy$ = new Subject<boolean>();
 
@@ -41,6 +44,17 @@ export class MaterialDetailsComponent implements OnInit, OnDestroy {
         JSON.stringify(this._route.snapshot.data['material'])
       );
     }
+
+    this._service
+      .getSuppliers()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          if (data?.length) {
+            this.supplierOptions = data;
+          }
+        },
+      });
   }
 
   submit() {

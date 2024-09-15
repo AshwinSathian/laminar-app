@@ -29,40 +29,41 @@
         </td>
       </ng-container>
 
-      <!-- <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-            <td
-              mat-cell
-              *matCellDef="let row"
-              class="flex flex-row justify-end items-center"
+      @if (showActions) {
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          class="flex flex-row justify-end items-center"
+        >
+          <div class="flex flex-row gap-4 min-w-fit">
+            <button
+              mat-mini-fab
+              color="secondary"
+              [routerLink]="'./view/' + row.id"
+              matTooltip="View Material Details"
             >
-              <div class="flex flex-row gap-4 min-w-fit">
-                <button
-                  mat-mini-fab
-                  color="secondary"
-                  [routerLink]="'./view/' + row.id"
-                  matTooltip="View Supplier Details"
-                >
-                  <mat-icon>visibility</mat-icon>
-                </button>
-                <button
-                  mat-mini-fab
-                  [routerLink]="'./edit/' + row.id"
-                  matTooltip="Edit Supplier Details"
-                >
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button
-                  mat-mini-fab
-                  color="danger"
-                  (click)="deleteSupplier(row.id)"
-                  matTooltip="Delete Supplier"
-                >
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
-            </td>
-          </ng-container> -->
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              [routerLink]="'./edit/' + row.id"
+              matTooltip="Edit Material Details"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              color="danger"
+              (click)="deleteSupplier(row.id)"
+              matTooltip="Delete Material"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td> </ng-container
+      >}
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

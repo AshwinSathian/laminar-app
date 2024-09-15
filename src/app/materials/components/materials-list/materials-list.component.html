@@ -8,4 +8,8 @@
 
 <mat-divider class="w-full my-3"></mat-divider>
 
-<app-materials-library [materials]="materials"></app-materials-library>
+<app-materials-library
+  [materials]="materials"
+  [showActions]="true"
+  (deleteEmitter)="deleteSupplier($event)"
+></app-materials-library>
