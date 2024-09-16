@@ -39,4 +39,8 @@ export class InventoryService {
   deleteInventory(id: string): Observable<Inventory> {
     return this._http.delete<Inventory>(`${API_BASE_URL}${id}`);
   }
+
+  getCountries(): Observable<any[]> {
+    return this._http.get<any[]>('https://restcountries.com/v3.1/all');
+  }
 }

@@ -36,4 +36,8 @@ export class SuppliersService {
   deleteSupplier(id: string): Observable<Supplier> {
     return this._http.delete<Supplier>(`${API_BASE_URL}${id}`);
   }
+
+  getCountries(): Observable<any[]> {
+    return this._http.get<any[]>('https://restcountries.com/v3.1/all');
+  }
 }

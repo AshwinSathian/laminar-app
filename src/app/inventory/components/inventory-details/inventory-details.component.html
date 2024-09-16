@@ -58,12 +58,25 @@
   </div>
   <div class="p-0 flex flex-row items-center gap-1">
     <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
+      <mat-select
         id="country"
         placeholder="Country"
         [(ngModel)]="inventory.address!.country"
-      />
+      >
+        @for (country of countryOptions; track country.name) {
+        <mat-option [value]="country.name">
+          <div class="flex items-center gap-2">
+            <img
+              [src]="country.flag"
+              alt="{{ country.name }} flag"
+              width="20"
+              height="15"
+            />
+            {{ country.name }}
+          </div>
+        </mat-option>
+        }
+      </mat-select>
     </mat-form-field>
     <mat-form-field class="w-1/2" appearance="outline">
       <input

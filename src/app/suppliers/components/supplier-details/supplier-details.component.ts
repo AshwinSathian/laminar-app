@@ -28,6 +28,7 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
       postalZipCode: '',
     },
   };
+  countryOptions: { flag: string; name: string }[] = [];
 
   destroy$ = new Subject<boolean>();
 
@@ -43,6 +44,22 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
         JSON.stringify(this._route.snapshot.data['supplier'])
       );
     }
+
+    this._service
+      .getCountries()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          if (data?.length) {
+            this.countryOptions = data
+              .map((d) => ({
+                flag: d.flags.png,
+                name: d.name.common,
+              }))
+              ?.sort((a, b) => a.name.localeCompare(b.name));
+          }
+        },
+      });
   }
 
   submit() {

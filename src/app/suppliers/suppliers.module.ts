@@ -9,12 +9,14 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
+import { HeaderComponent } from '../header/header.component';
 import { MaterialsLibraryComponent } from '../materials-library/materials-library.component';
 import { SuppliersService } from '../services/suppliers.service';
 import { SupplierDetailsComponent } from './components/supplier-details/supplier-details.component';
@@ -22,7 +24,6 @@ import { SuppliersListComponent } from './components/suppliers-list/suppliers-li
 import { ViewSupplierComponent } from './components/view-supplier/view-supplier.component';
 import { SupplierResolver } from './resolvers/supplier.resolver';
 import { routes } from './suppliers.routes';
-import { HeaderComponent } from '../header/header.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { HeaderComponent } from '../header/header.component';
     MatDialogModule,
     MatCardModule,
     MatDividerModule,
+    MatSelectModule,
     MatTooltipModule,
     MatTabsModule,
     RouterModule.forChild(routes),
