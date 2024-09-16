@@ -101,6 +101,7 @@
       [(ngModel)]="material.suppliers"
       multiple
       placeholder="Select Suppliers"
+      [compareWith]="supplierCompareFunction"
     >
       @for (supplier of supplierOptions; track supplier.id) {
       <mat-option [value]="supplier">{{ supplier.name }}</mat-option>

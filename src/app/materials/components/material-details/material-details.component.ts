@@ -57,6 +57,10 @@ export class MaterialDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
+  supplierCompareFunction = (option: Supplier, value: Supplier): boolean => {
+    return option.id === value.id;
+  };
+
   submit() {
     if (this.material?.id) {
       this._updateMaterial();
