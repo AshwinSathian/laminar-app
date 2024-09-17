@@ -8,8 +8,11 @@ export const routes: Routes = [
       import('./materials/materials.module').then((m) => m.MaterialsModule),
   },
   {
-    path: 'boms',
-    loadChildren: () => import('./boms/boms.module').then((m) => m.BomsModule),
+    path: 'bill-of-materials',
+    loadChildren: () =>
+      import('./bill-of-materials/bill-of-materials.module').then(
+        (m) => m.BillOfMaterialsModule
+      ),
   },
   {
     path: 'orders',

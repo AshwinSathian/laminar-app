@@ -9,46 +9,53 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
-import { Supplier } from '../../../../interfaces/supplier.interface';
-import { SuppliersService } from '../../../services/suppliers.service';
+import { BillOfMaterials } from '../../../../interfaces/bom.interface';
+import { BillOfMaterialsService } from '../../../services/bill-of-materials.service';
 
 @Component({
-  selector: 'app-suppliers-list',
-  templateUrl: './suppliers-list.component.html',
-  styleUrl: './suppliers-list.component.css',
+  selector: 'app-bill-of-materials-list',
+  templateUrl: './bill-of-materials-list.component.html',
+  styleUrl: './bill-of-materials-list.component.css',
 })
-export class SuppliersListComponent
+export class BillOfMaterialsListComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  displayedColumns: string[] = ['name', 'email', 'country', 'actions'];
+  displayedColumns: string[] = [
+    'productName',
+    'partCount',
+    'totalCost',
+    'actions',
+  ];
   dataSource!: MatTableDataSource<{
-    name: string;
-    email: string;
-    country: string;
+    productName: string;
+    partCount: number;
+    currency: string;
+    totalCost: number;
     id: string;
   }>;
-  suppliers: Supplier[] = [];
+  billOfMaterials: BillOfMaterials[] = [];
 
   destroy$ = new Subject<boolean>();
 
-  constructor(private _service: SuppliersService) {}
+  constructor(private _service: BillOfMaterialsService) {}
 
   ngOnInit(): void {
     this._service
-      .getSuppliers()
+      .getBillsOfMaterials()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
           if (data?.length) {
-            this.suppliers = JSON.parse(JSON.stringify(data));
+            this.billOfMaterials = JSON.parse(JSON.stringify(data));
             this.dataSource = new MatTableDataSource(
-              this.suppliers?.map((s) => ({
-                name: s.name || '',
-                email: s.primaryContact?.email || '',
-                country: s.address?.country || '',
+              this.billOfMaterials?.map((s) => ({
+                productName: s.productName || '',
+                partCount: s.partCount || 0,
+                currency: s.currency || '',
+                totalCost: s.totalCost || 0,
                 id: s.id || '',
               }))
             );

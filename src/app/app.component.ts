@@ -40,7 +40,12 @@ export class AppComponent implements OnInit, OnDestroy {
       icon: 'category',
       isActive: false,
     },
-    { label: 'BoMs', route: '/boms', icon: 'receipt_long', isActive: false },
+    {
+      label: 'Bill Of Materials',
+      route: '/bill-of-materials',
+      icon: 'receipt_long',
+      isActive: false,
+    },
     {
       label: 'Orders',
       route: '/orders',
@@ -71,15 +76,15 @@ export class AppComponent implements OnInit, OnDestroy {
   private _updatedActiveRoute(url: string) {
     this.menuItems = this.menuItems.map((m) => ({ ...m, isActive: false }));
 
-    if (url.includes('materials')) {
+    if (url.includes('/materials')) {
       this.menuItems[0].isActive = true;
-    } else if (url.includes('boms')) {
+    } else if (url.includes('/bill-of-materials')) {
       this.menuItems[1].isActive = true;
-    } else if (url.includes('orders')) {
+    } else if (url.includes('/orders')) {
       this.menuItems[2].isActive = true;
-    } else if (url.includes('inventory')) {
+    } else if (url.includes('/inventory')) {
       this.menuItems[3].isActive = true;
-    } else if (url.includes('suppliers')) {
+    } else if (url.includes('/suppliers')) {
       this.menuItems[4].isActive = true;
     }
   }

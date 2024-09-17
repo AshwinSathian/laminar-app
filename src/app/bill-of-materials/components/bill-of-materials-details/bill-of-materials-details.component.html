@@ -1,0 +1,174 @@
+<app-header title="Bill Of Materials Details"></app-header>
+
+<div class="w-full p-2 flex flex-col">
+  <mat-form-field class="w-full" appearance="outline">
+    <input
+      matInput
+      id="productName"
+      placeholder="Product Name"
+      [(ngModel)]="billOfMaterials.productName"
+    />
+  </mat-form-field>
+  <mat-form-field class="w-full" appearance="outline">
+    <input
+      matInput
+      id="contactInfo"
+      placeholder="Contact Info"
+      [(ngModel)]="billOfMaterials.contactInfo"
+    />
+  </mat-form-field>
+  <mat-form-field class="w-full" appearance="outline">
+    <mat-select [(ngModel)]="billOfMaterials.currency" placeholder="Currency">
+      @for (currency of currencyOptions; track currency.value) {
+      <mat-option [value]="currency.value">
+        {{ currency.label }}
+      </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <h2 class="text-xl my-2">Approval Details</h2>
+  <div class="p-0 flex flex-row items-center gap-1">
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        id="approvedBy"
+        placeholder="Approved By"
+        [(ngModel)]="billOfMaterials.approvedBy"
+      />
+    </mat-form-field>
+    <mat-form-field class="w-1/2" appearance="outline">
+      <input
+        matInput
+        [matDatepicker]="picker"
+        id="approvedDate"
+        placeholder="Date of Approval"
+        [(ngModel)]="billOfMaterials.dateOfApproval"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <h2 class="text-xl my-2">Parts</h2>
+  <mat-form-field class="w-full" appearance="outline">
+    <mat-select
+      [(ngModel)]="selectedParts"
+      multiple
+      placeholder="Select Parts"
+      [compareWith]="materialCompareFunction"
+      (ngModelChange)="addParts()"
+    >
+      @for (material of materialsOptions; track material.id) {
+      <mat-option [value]="material">{{ material.partName }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <div class="overflow-x-auto max-w-full">
+    <table
+      class="table-auto w-full max-w-full bg-gray-800 border border-gray-700 text-gray-200"
+    >
+      <thead>
+        <tr class="bg-gray-700 text-gray-300">
+          <th class="py-2 px-2 border-b border-gray-600 w-24">Part Number</th>
+          <th class="py-2 px-2 border-b border-gray-600">Part Name</th>
+          <th class="py-2 px-2 border-b border-gray-600 w-40">Description</th>
+          <th class="py-2 px-2 border-b border-gray-600 w-20">Quantity</th>
+          <th class="py-2 px-2 border-b border-gray-600 w-24">Units</th>
+          <th class="py-2 px-2 border-b border-gray-600">Supplier</th>
+          <th class="py-2 px-2 border-b border-gray-600 w-28">Unit Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (part of billOfMaterials.parts; track $index) {
+        <tr class="hover:bg-gray-700">
+          <td class="py-2 px-2 border-b border-gray-700 w-24">
+            <mat-form-field class="w-full" appearance="outline">
+              <input
+                matInput
+                class="w-full text-sm"
+                [(ngModel)]="part.partNumber"
+                placeholder="Part Number"
+              />
+            </mat-form-field>
+          </td>
+          <td class="py-2 px-2 border-b border-gray-700">
+            {{ part.partName }}
+          </td>
+          <td class="py-2 px-2 border-b border-gray-700 w-40">
+            <mat-form-field class="w-full" appearance="outline">
+              <input
+                matInput
+                class="w-full text-sm"
+                [(ngModel)]="part.description"
+                placeholder="Description"
+              />
+            </mat-form-field>
+          </td>
+          <td class="py-2 px-2 border-b border-gray-700 w-20">
+            <mat-form-field class="w-full" appearance="outline">
+              <input
+                matInput
+                type="number"
+                class="w-full text-sm"
+                [(ngModel)]="part.quantity"
+                placeholder="Quantity"
+              />
+            </mat-form-field>
+          </td>
+          <td class="py-2 px-2 border-b border-gray-700 w-24">
+            <mat-form-field class="w-full" appearance="outline">
+              <mat-select [(ngModel)]="part.units" placeholder="Units">
+                @for (unit of unitOptions; track unit) {
+                <mat-option [value]="unit">
+                  {{ unit }}
+                </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td class="py-2 px-2 border-b border-gray-700">
+            <mat-form-field class="w-full" appearance="outline">
+              <mat-select
+                [(ngModel)]="part.supplierOrManufacturer"
+                placeholder="Select Supplier"
+                [compareWith]="supplierCompareFunction"
+              >
+                @for (supplier of supplierOptionsMap[part.materialId]; track
+                $index) {
+                <mat-option [value]="supplier">
+                  {{ supplier.name }}
+                </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td class="py-2 px-2 border-b border-gray-700 w-28">
+            <mat-form-field class="w-full" appearance="outline">
+              <span matTextPrefix class="mr-2">{{
+                billOfMaterials.currency
+              }}</span>
+              <input
+                matInput
+                type="number"
+                class="w-full text-sm"
+                [(ngModel)]="part.unitCost"
+                placeholder="Unit Cost"
+              />
+            </mat-form-field>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<mat-toolbar
+  class="fixed bottom-0 right-0 w-full flex flex-row justify-end items-center"
+>
+  <button mat-fab extended (click)="submit()">
+    <mat-icon>check_circle</mat-icon>
+    Submit
+  </button>
+</mat-toolbar>

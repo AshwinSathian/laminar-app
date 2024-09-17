@@ -1,33 +1,33 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
-import { MaterialsLibraryComponent } from '../materials-library/materials-library.component';
-import { SuppliersService } from '../services/suppliers.service';
-import { SupplierDetailsComponent } from './components/supplier-details/supplier-details.component';
-import { SuppliersListComponent } from './components/suppliers-list/suppliers-list.component';
-import { ViewSupplierComponent } from './components/view-supplier/view-supplier.component';
-import { SupplierResolver } from './resolvers/supplier.resolver';
-import { routes } from './suppliers.routes';
+import { BillOfMaterialsService } from '../services/bill-of-materials.service';
+import { BillOfMaterialsRoutingModule } from './bill-of-materials-routing.module';
+import { BillOfMaterialsDetailsComponent } from './components/bill-of-materials-details/bill-of-materials-details.component';
+import { BillOfMaterialsListComponent } from './components/bill-of-materials-list/bill-of-materials-list.component';
+import { ViewBillOfMaterialsComponent } from './components/view-bill-of-materials/view-bill-of-materials.component';
+import { BillOfMaterialsResolver } from './resolvers/bill-of-materials.resolver';
 
 @NgModule({
   declarations: [
-    SuppliersListComponent,
-    SupplierDetailsComponent,
-    ViewSupplierComponent,
+    BillOfMaterialsDetailsComponent,
+    BillOfMaterialsListComponent,
+    ViewBillOfMaterialsComponent,
   ],
   imports: [
     CommonModule,
@@ -42,13 +42,13 @@ import { routes } from './suppliers.routes';
     MatCardModule,
     MatDividerModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatTooltipModule,
-    MatTabsModule,
-    RouterModule.forChild(routes),
+    BillOfMaterialsRoutingModule,
 
-    MaterialsLibraryComponent,
     HeaderComponent,
   ],
-  providers: [SuppliersService, SupplierResolver],
+  providers: [BillOfMaterialsService, BillOfMaterialsResolver],
 })
-export class SuppliersModule {}
+export class BillOfMaterialsModule {}
