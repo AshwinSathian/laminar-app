@@ -50,15 +50,6 @@ export class SuppliersListComponent
   ) {}
 
   ngOnInit(): void {
-    this._bottomSheet.open(SuppliersImportStatsComponent, {
-      data: {
-        inserted: {
-          count: 0,
-          names: '',
-        },
-        updated: { count: 0 },
-      },
-    });
     this._service
       .getSuppliers()
       .pipe(takeUntil(this.destroy$))
