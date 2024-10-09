@@ -179,7 +179,8 @@ export class ViewBillOfMaterialsComponent
       { wch: 30 },
     ];
 
-    this._excelExportService.exportToExcel(exportData, { colsInfo });
+    const fileName = `laminar-bills-of-materials-${this.billOfMaterials.productName}`;
+    this._excelExportService.exportToExcel(exportData, { colsInfo, fileName });
   }
 
   ngOnDestroy() {

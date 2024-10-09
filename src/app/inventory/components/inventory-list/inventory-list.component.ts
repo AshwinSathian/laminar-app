@@ -103,7 +103,8 @@ export class InventoryListComponent
       { wch: 30 },
     ];
 
-    this._excelExportService.exportToExcel(exportData, { colsInfo });
+    const fileName = 'laminar-inventory-list';
+    this._excelExportService.exportToExcel(exportData, { colsInfo, fileName });
   }
 
   ngOnDestroy(): void {

@@ -115,7 +115,8 @@ export class SuppliersListComponent
       { wch: 40 },
     ];
 
-    this._excelExportService.exportToExcel(exportData, { colsInfo });
+    const fileName = 'laminar-suppliers';
+    this._excelExportService.exportToExcel(exportData, { colsInfo, fileName });
   }
 
   private _formatDocuments(documents: { name: string; url: string }[]): string {

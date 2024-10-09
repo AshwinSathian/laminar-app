@@ -13,7 +13,7 @@ export class ExcelExportService {
 
   exportToExcel(
     exportData: unknown[],
-    options?: { colsInfo?: XLSX.ColInfo[] }
+    options?: { colsInfo?: XLSX.ColInfo[]; fileName?: string }
   ) {
     const worksheet = XLSX.utils.json_to_sheet(exportData);
 
@@ -38,7 +38,7 @@ export class ExcelExportService {
       type: 'array',
     });
 
-    this._saveAsExcelFile(excelBuffer, 'suppliers');
+    this._saveAsExcelFile(excelBuffer, options?.fileName || 'export');
   }
 
   private _saveAsExcelFile(buffer: any, fileName: string): void {

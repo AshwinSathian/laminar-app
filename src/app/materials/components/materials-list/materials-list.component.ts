@@ -60,7 +60,8 @@ export class MaterialsListComponent implements OnInit, OnDestroy {
       { wch: 30 },
     ];
 
-    this._excelExportService.exportToExcel(exportData, { colsInfo });
+    const fileName = 'laminar-materials-list';
+    this._excelExportService.exportToExcel(exportData, { colsInfo, fileName });
   }
 
   private _formatDimensions(dimensions?: {
