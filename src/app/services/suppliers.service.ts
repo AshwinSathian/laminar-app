@@ -40,4 +40,20 @@ export class SuppliersService {
   getCountries(): Observable<any[]> {
     return this._http.get<any[]>('https://restcountries.com/v3.1/all');
   }
+
+  importSuppliers(formData: FormData): Observable<{
+    inserted: {
+      count: number;
+      names: string;
+    };
+    updated: { count: number };
+  }> {
+    return this._http.post<{
+      inserted: {
+        count: number;
+        names: string;
+      };
+      updated: { count: number };
+    }>(`${API_BASE_URL}import`, formData);
+  }
 }

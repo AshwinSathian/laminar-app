@@ -1,6 +1,19 @@
 <div class="w-full flex flex-row items-center justify-between">
   <app-header title="Suppliers" icon="store"></app-header>
   <div class="flex items-center gap-1">
+    <input
+      type="file"
+      #fileInput
+      style="display: none"
+      (change)="onFileSelected($event)"
+      accept=".xlsx, .xls"
+    />
+
+    <button mat-fab extended (click)="fileInput.click()">
+      <mat-icon>upload</mat-icon>
+      Import Suppliers
+    </button>
+
     <button mat-fab extended (click)="exportAllSuppliers()">
       <mat-icon>download</mat-icon>
       Export All Suppliers

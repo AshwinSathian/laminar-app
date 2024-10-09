@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  inject,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -8,11 +9,16 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { ColInfo } from 'xlsx';
 import { Supplier } from '../../../../interfaces/supplier.interface';
 import { ExcelExportService } from '../../../services/excel-export.service';
 import { SuppliersService } from '../../../services/suppliers.service';
+import {
+  MatBottomSheet,
+  MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
+import { SuppliersImportStatsComponent } from './suppliers-import-stats/suppliers-import-stats.component';
 
 @Component({
   selector: 'app-suppliers-list',
@@ -22,6 +28,8 @@ import { SuppliersService } from '../../../services/suppliers.service';
 export class SuppliersListComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
+  private _bottomSheet = inject(MatBottomSheet);
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -42,6 +50,15 @@ export class SuppliersListComponent
   ) {}
 
   ngOnInit(): void {
+    this._bottomSheet.open(SuppliersImportStatsComponent, {
+      data: {
+        inserted: {
+          count: 0,
+          names: '',
+        },
+        updated: { count: 0 },
+      },
+    });
     this._service
       .getSuppliers()
       .pipe(takeUntil(this.destroy$))
@@ -121,6 +138,60 @@ export class SuppliersListComponent
 
   private _formatDocuments(documents: { name: string; url: string }[]): string {
     return documents?.map((doc) => `${doc.name}: ${doc.url}`).join('; ');
+  }
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+
+    if (file) {
+      const formData: FormData = new FormData();
+      formData.append('file', file, file.name);
+
+      let _supplierImportStats: {
+        inserted: {
+          count: number;
+          names: string;
+        };
+        updated: { count: number };
+      };
+      this._service
+        .importSuppliers(formData)
+        .pipe(
+          takeUntil(this.destroy$),
+          switchMap((res) => {
+            if (res) {
+              _supplierImportStats = res;
+              return this._service.getSuppliers();
+            } else {
+              throw new Error('Import failed');
+            }
+          }),
+          takeUntil(this.destroy$) // Ensuring that the subscription to getSuppliers also respects destroy$
+        )
+        .subscribe({
+          next: (data) => {
+            if (data?.length) {
+              this.suppliers = JSON.parse(JSON.stringify(data)); // Clone the data to avoid mutating
+              this.dataSource = new MatTableDataSource(
+                this.suppliers?.map((s) => ({
+                  name: s.name || '',
+                  email: s.primaryContact?.email || '',
+                  country: s.address?.country || '',
+                  id: s.id || '',
+                }))
+              );
+
+              this._bottomSheet.open(SuppliersImportStatsComponent, {
+                data: _supplierImportStats,
+              });
+            }
+          },
+          error: (error) => {
+            console.error('Error during import or fetch:', error);
+            alert('Failed');
+          },
+        });
+    }
   }
 
   ngOnDestroy() {

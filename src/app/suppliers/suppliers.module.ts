@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -16,17 +17,19 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { MaterialsLibraryComponent } from '../materials-library/materials-library.component';
+import { ExcelExportService } from '../services/excel-export.service';
 import { SuppliersService } from '../services/suppliers.service';
 import { SupplierDetailsComponent } from './components/supplier-details/supplier-details.component';
+import { SuppliersImportStatsComponent } from './components/suppliers-list/suppliers-import-stats/suppliers-import-stats.component';
 import { SuppliersListComponent } from './components/suppliers-list/suppliers-list.component';
 import { ViewSupplierComponent } from './components/view-supplier/view-supplier.component';
 import { SupplierResolver } from './resolvers/supplier.resolver';
 import { routes } from './suppliers.routes';
-import { ExcelExportService } from '../services/excel-export.service';
 
 @NgModule({
   declarations: [
     SuppliersListComponent,
+    SuppliersImportStatsComponent,
     SupplierDetailsComponent,
     ViewSupplierComponent,
   ],
@@ -39,6 +42,7 @@ import { ExcelExportService } from '../services/excel-export.service';
     MatButtonModule,
     HttpClientModule,
     MatToolbarModule,
+    MatBottomSheetModule,
     MatIconModule,
     MatCardModule,
     MatDividerModule,

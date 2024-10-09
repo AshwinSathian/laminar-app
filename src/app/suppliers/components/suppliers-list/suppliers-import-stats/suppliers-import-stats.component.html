@@ -1,0 +1,23 @@
+<div class="flex flex-col gap-5 mt-3 mb-9">
+  <h1 class="text-2xl flex items-center gap-2">
+    <mat-icon>check_circle</mat-icon>
+    Import Successful
+  </h1>
+
+  <mat-divider></mat-divider>
+
+  <div class="flex flex-col">
+    <div class="text-md font-semibold">
+      {{ _supplierImportStats!.inserted!.count || 0 }} Suppliers created
+    </div>
+    <div class="text-md font-normal">
+      {{ _supplierImportStats!.inserted!.names || "" }}
+    </div>
+  </div>
+
+  <div>
+    <div class="text-md font-semibold">
+      {{ _supplierImportStats!.updated!.count || 0 }} Suppliers updated
+    </div>
+  </div>
+</div>
