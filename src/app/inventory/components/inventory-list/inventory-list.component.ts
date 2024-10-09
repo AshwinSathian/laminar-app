@@ -85,6 +85,7 @@ export class InventoryListComponent
       'State/Province/County': inventory.address.stateProvinceCounty || '',
       Country: inventory.address.country || '',
       'Postal/Zip Code': inventory.address.postalZipCode || '',
+      'Maps Link': inventory.address?.mapsLink || '',
       Notes: inventory.notes || '',
     }));
 
@@ -98,6 +99,7 @@ export class InventoryListComponent
       { wch: 25 },
       { wch: 20 },
       { wch: 15 },
+      { wch: 30 },
       { wch: 30 },
     ];
 

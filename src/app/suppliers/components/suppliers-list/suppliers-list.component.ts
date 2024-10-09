@@ -92,6 +92,8 @@ export class SuppliersListComponent
       'State/Province/County': supplier.address?.stateProvinceCounty || '',
       Country: supplier.address?.country || '',
       'Postal/Zip Code': supplier.address?.postalZipCode || '',
+      'Maps Link': supplier.address?.mapsLink || '',
+      Documents: this._formatDocuments(supplier.documents || []),
     }));
 
     const colsInfo: ColInfo[] = [
@@ -109,9 +111,15 @@ export class SuppliersListComponent
       { wch: 25 },
       { wch: 15 },
       { wch: 10 },
+      { wch: 30 },
+      { wch: 40 },
     ];
 
     this._excelExportService.exportToExcel(exportData, { colsInfo });
+  }
+
+  private _formatDocuments(documents: { name: string; url: string }[]): string {
+    return documents.map((doc) => `${doc.name}: ${doc.url}`).join('; ');
   }
 
   ngOnDestroy() {
