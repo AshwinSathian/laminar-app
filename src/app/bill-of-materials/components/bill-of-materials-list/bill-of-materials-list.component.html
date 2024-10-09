@@ -1,9 +1,15 @@
 <div class="w-full flex flex-row items-center justify-between">
   <app-header title="Bill of Materials" icon="receipt_long"></app-header>
-  <button mat-fab extended routerLink="./create">
-    <mat-icon>add_circle</mat-icon>
-    Create Bill of Materials
-  </button>
+  <div class="flex items-center gap-1">
+    <button mat-fab extended (click)="exportAllBillsOfMaterials()">
+      <mat-icon>download</mat-icon>
+      Export All Bills of Materials
+    </button>
+    <button mat-fab extended routerLink="./create">
+      <mat-icon>add_circle</mat-icon>
+      Create Bill of Materials
+    </button>
+  </div>
 </div>
 
 <mat-form-field appearance="fill" class="w-full">

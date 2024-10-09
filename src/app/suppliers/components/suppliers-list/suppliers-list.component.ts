@@ -9,10 +9,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
-import { Supplier } from '../../../../interfaces/supplier.interface';
-import { SuppliersService } from '../../../services/suppliers.service';
-import { ExcelExportService } from '../../../services/excel-export.service';
 import { ColInfo } from 'xlsx';
+import { Supplier } from '../../../../interfaces/supplier.interface';
+import { ExcelExportService } from '../../../services/excel-export.service';
+import { SuppliersService } from '../../../services/suppliers.service';
 
 @Component({
   selector: 'app-suppliers-list',
@@ -119,7 +119,7 @@ export class SuppliersListComponent
   }
 
   private _formatDocuments(documents: { name: string; url: string }[]): string {
-    return documents.map((doc) => `${doc.name}: ${doc.url}`).join('; ');
+    return documents?.map((doc) => `${doc.name}: ${doc.url}`).join('; ');
   }
 
   ngOnDestroy() {

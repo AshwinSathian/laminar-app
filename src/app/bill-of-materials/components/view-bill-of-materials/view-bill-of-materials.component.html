@@ -1,7 +1,19 @@
 <div class="w-full p-5">
   <div class="w-full flex flex-row items-center justify-between">
-    <app-header [title]="billOfMaterials!.productName"></app-header>
+    <app-header
+      [title]="billOfMaterials!.productName"
+      [subTitle]="'ID: ' + billOfMaterials.id"
+    ></app-header>
     <div class="flex items-center gap-2">
+      <button
+        mat-fab
+        color="secondary"
+        extended
+        (click)="exportBillOfMaterials()"
+      >
+        <mat-icon>download</mat-icon>
+        Export Bill of Materials
+      </button>
       <button
         mat-fab
         color="secondary"
@@ -9,11 +21,11 @@
         [routerLink]="'/bill-of-materials/edit/' + billOfMaterials.id"
       >
         <mat-icon>edit</mat-icon>
-        Edit Supplier
+        Edit Bill of Materials
       </button>
       <button mat-fab color="danger" extended (click)="deleteBillOfMaterials()">
         <mat-icon>delete</mat-icon>
-        Delete Supplier
+        Delete Bill of Materials
       </button>
     </div>
   </div>

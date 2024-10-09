@@ -5,13 +5,18 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { BillOfMaterials } from '../../../../interfaces/bom.interface';
+import { ColInfo } from 'xlsx';
+import {
+  BillOfMaterials,
+  PartDetail,
+} from '../../../../interfaces/bom.interface';
 import { BillOfMaterialsService } from '../../../services/bill-of-materials.service';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { ExcelExportService } from '../../../services/excel-export.service';
 
 @Component({
   selector: 'app-view-bill-of-materials',
@@ -50,6 +55,7 @@ export class ViewBillOfMaterialsComponent
 
   constructor(
     private _service: BillOfMaterialsService,
+    private _excelExportService: ExcelExportService,
     private _router: Router,
     private _route: ActivatedRoute
   ) {}
@@ -60,7 +66,7 @@ export class ViewBillOfMaterialsComponent
         JSON.stringify(this._route.snapshot.data['billOfMaterials'])
       );
       this.dataSource = new MatTableDataSource(
-        this.billOfMaterials.parts?.map((p) => ({
+        this.billOfMaterials.parts?.map((p: PartDetail) => ({
           partNumber: p.partNumber,
           partName: p.partName,
           description: p.description || '',
@@ -103,6 +109,77 @@ export class ViewBillOfMaterialsComponent
     if (this.dataSource?.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  exportBillOfMaterials() {
+    const exportData = [];
+
+    exportData.push({
+      ID: this.billOfMaterials.id,
+      'Product Name': this.billOfMaterials.productName,
+      'Contact Info': this.billOfMaterials.contactInfo,
+      'Approved By': this.billOfMaterials.approvedBy,
+      'Date of Approval': this.billOfMaterials.dateOfApproval.toDateString(),
+      'Part Count': this.billOfMaterials.partCount,
+      'Total Cost': this.billOfMaterials.totalCost,
+      Currency: this.billOfMaterials.currency,
+      'Part Number': '',
+      'Part Name': '',
+      'Material ID': '',
+      Description: '',
+      Quantity: '',
+      Units: '',
+      'Supplier/Manufacturer': '',
+      'Unit Cost': '',
+      'Total Part Cost': '',
+      'Part Images': '',
+    });
+
+    for (const part of this.billOfMaterials.parts || []) {
+      exportData.push({
+        ID: '',
+        'Product Name': '',
+        'Contact Info': '',
+        'Approved By': '',
+        'Date of Approval': '',
+        'Part Count': '',
+        'Total Cost': '',
+        Currency: '',
+        'Part Number': part.partNumber,
+        'Part Name': part.partName,
+        'Material ID': part.materialId,
+        Description: part.description || '',
+        Quantity: part.quantity,
+        Units: part.units,
+        'Supplier/Manufacturer': part.supplierOrManufacturer?.name || '',
+        'Unit Cost': part.unitCost,
+        'Total Part Cost': part.totalPartCost,
+        'Part Images': (part.partImages || []).join('; '),
+      });
+    }
+
+    const colsInfo: ColInfo[] = [
+      { wch: 15 },
+      { wch: 30 },
+      { wch: 25 },
+      { wch: 20 },
+      { wch: 15 },
+      { wch: 10 },
+      { wch: 15 },
+      { wch: 10 },
+      { wch: 15 },
+      { wch: 25 },
+      { wch: 15 },
+      { wch: 30 },
+      { wch: 10 },
+      { wch: 10 },
+      { wch: 25 },
+      { wch: 15 },
+      { wch: 15 },
+      { wch: 30 },
+    ];
+
+    this._excelExportService.exportToExcel(exportData, { colsInfo });
   }
 
   ngOnDestroy() {

@@ -1,6 +1,9 @@
 <div class="w-full p-5">
   <div class="w-full flex flex-row items-center justify-between">
-    <app-header [title]="material.partName"></app-header>
+    <app-header
+      [title]="material.partName"
+      [subTitle]="'ID: ' + material.id"
+    ></app-header>
     <div class="flex items-center gap-2">
       <button
         mat-fab

@@ -9,10 +9,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
-import { Inventory } from '../../../../interfaces/inventory.interface';
-import { InventoryService } from '../../../services/inventory.service';
-import { ExcelExportService } from '../../../services/excel-export.service';
 import { ColInfo } from 'xlsx';
+import { Inventory } from '../../../../interfaces/inventory.interface';
+import { ExcelExportService } from '../../../services/excel-export.service';
+import { InventoryService } from '../../../services/inventory.service';
 
 @Component({
   selector: 'app-inventory-list',

@@ -1,6 +1,9 @@
 <div class="w-full p-5">
   <div class="w-full flex flex-row items-center justify-between">
-    <app-header [title]="'Inventory Item: ' + inventory.itemId"></app-header>
+    <app-header
+      [title]="'Inventory Item: ' + inventory.itemId"
+      [subTitle]="'ID: ' + inventory.id"
+    ></app-header>
     <div class="flex items-center gap-2">
       <button
         mat-fab
