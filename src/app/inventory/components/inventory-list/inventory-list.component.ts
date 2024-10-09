@@ -77,7 +77,7 @@ export class InventoryListComponent
   exportAllInventory() {
     const exportData = this.inventoryEntries?.map((inventory) => ({
       ID: inventory.id,
-      'Item ID': inventory.itemId,
+      'Item Name/ID': inventory.itemId,
       Description: inventory.description || '',
       'Address Line 1': inventory.address.addressLine1 || '',
       'Address Line 2': inventory.address.addressLine2 || '',
