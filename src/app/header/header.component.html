@@ -1,8 +1,11 @@
-<div class="w-full">
-  <h1 class="text-3xl my-5 text-center flex items-center gap-4">
+<div class="w-full flex flex-col gap-1 my-5">
+  <h1 class="text-3xl text-center flex items-center gap-4">
     @if(icon){
     <mat-icon>{{ icon }}</mat-icon>
     }
     {{ title }}
   </h1>
+  @if (subTitle) {
+  <div class="text-md text-gray-200">{{ subTitle }}</div>
+  }
 </div>

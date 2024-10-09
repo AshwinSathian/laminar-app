@@ -11,5 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class HeaderComponent {
   @Input({ required: true }) title = '';
+  @Input() subTitle = '';
   @Input() icon = '';
 }
