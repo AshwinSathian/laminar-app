@@ -9,8 +9,7 @@ import { AsyncPipe } from '@angular/common';
   imports: [MatProgressSpinnerModule, AsyncPipe],
   templateUrl: './loading.component.html',
   styleUrl: './loading.component.css',
-  providers: [LoadingService],
 })
 export class LoadingComponent {
-  constructor(public loadingService: LoadingService) {}
+  constructor(public _loadingService: LoadingService) {}
 }
