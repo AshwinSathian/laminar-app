@@ -11,6 +11,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
 import { Supplier } from '../../../../interfaces/supplier.interface';
 import { SuppliersService } from '../../../services/suppliers.service';
+import { ExcelExportService } from '../../../services/excel-export.service';
+import { ColInfo } from 'xlsx';
 
 @Component({
   selector: 'app-suppliers-list',
@@ -34,7 +36,10 @@ export class SuppliersListComponent
 
   destroy$ = new Subject<boolean>();
 
-  constructor(private _service: SuppliersService) {}
+  constructor(
+    private _service: SuppliersService,
+    private _excelExportService: ExcelExportService
+  ) {}
 
   ngOnInit(): void {
     this._service
@@ -69,6 +74,44 @@ export class SuppliersListComponent
     if (this.dataSource?.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  exportAllSuppliers() {
+    const exportData = this.suppliers?.map((supplier) => ({
+      ID: supplier.id,
+      Name: supplier.name,
+      'Primary Contact Name': supplier.primaryContact.name,
+      'Primary Contact Email': supplier.primaryContact.email,
+      Designation: supplier.primaryContact.designation || '',
+      'Phone Code': supplier.primaryContact.phone?.code || '',
+      'Phone Number': supplier.primaryContact.phone?.number || '',
+      Website: supplier.website || '',
+      'Address Line 1': supplier.address?.addressLine1 || '',
+      'Address Line 2': supplier.address?.addressLine2 || '',
+      'Town/City': supplier.address?.townCity || '',
+      'State/Province/County': supplier.address?.stateProvinceCounty || '',
+      Country: supplier.address?.country || '',
+      'Postal/Zip Code': supplier.address?.postalZipCode || '',
+    }));
+
+    const colsInfo: ColInfo[] = [
+      { wch: 15 },
+      { wch: 20 },
+      { wch: 25 },
+      { wch: 30 },
+      { wch: 20 },
+      { wch: 15 },
+      { wch: 20 },
+      { wch: 30 },
+      { wch: 25 },
+      { wch: 25 },
+      { wch: 20 },
+      { wch: 25 },
+      { wch: 15 },
+      { wch: 10 },
+    ];
+
+    this._excelExportService.exportToExcel(exportData, { colsInfo });
   }
 
   ngOnDestroy() {

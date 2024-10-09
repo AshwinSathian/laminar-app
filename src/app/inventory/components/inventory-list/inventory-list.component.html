@@ -1,9 +1,15 @@
 <div class="w-full flex flex-row items-center justify-between">
   <app-header title="Inventory" icon="inventory"></app-header>
-  <button mat-fab extended routerLink="./create">
-    <mat-icon>add_circle</mat-icon>
-    Create Inventory Entry
-  </button>
+  <div class="flex items-center gap-1">
+    <button mat-fab extended (click)="exportAllInventory()">
+      <mat-icon>download</mat-icon>
+      Export Inventory Records
+    </button>
+    <button mat-fab extended routerLink="./create">
+      <mat-icon>add_circle</mat-icon>
+      Create Inventory Entry
+    </button>
+  </div>
 </div>
 
 <mat-form-field appearance="fill" class="w-full">

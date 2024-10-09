@@ -22,6 +22,7 @@ import { SuppliersListComponent } from './components/suppliers-list/suppliers-li
 import { ViewSupplierComponent } from './components/view-supplier/view-supplier.component';
 import { SupplierResolver } from './resolvers/supplier.resolver';
 import { routes } from './suppliers.routes';
+import { ExcelExportService } from '../services/excel-export.service';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,6 @@ import { routes } from './suppliers.routes';
     MaterialsLibraryComponent,
     HeaderComponent,
   ],
-  providers: [SuppliersService, SupplierResolver],
+  providers: [SuppliersService, SupplierResolver, ExcelExportService],
 })
 export class SuppliersModule {}

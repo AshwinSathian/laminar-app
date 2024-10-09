@@ -11,6 +11,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
 import { Inventory } from '../../../../interfaces/inventory.interface';
 import { InventoryService } from '../../../services/inventory.service';
+import { ExcelExportService } from '../../../services/excel-export.service';
+import { ColInfo } from 'xlsx';
 
 @Component({
   selector: 'app-inventory-list',
@@ -33,7 +35,10 @@ export class InventoryListComponent
 
   destroy$ = new Subject<boolean>();
 
-  constructor(private _service: InventoryService) {}
+  constructor(
+    private _service: InventoryService,
+    private _excelExportService: ExcelExportService
+  ) {}
 
   ngOnInit(): void {
     this._service
@@ -67,6 +72,36 @@ export class InventoryListComponent
     if (this.dataSource?.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  exportAllInventory() {
+    const exportData = this.inventoryEntries?.map((inventory) => ({
+      ID: inventory.id,
+      'Item ID': inventory.itemId,
+      Description: inventory.description || '',
+      'Address Line 1': inventory.address.addressLine1 || '',
+      'Address Line 2': inventory.address.addressLine2 || '',
+      'Town/City': inventory.address.townCity || '',
+      'State/Province/County': inventory.address.stateProvinceCounty || '',
+      Country: inventory.address.country || '',
+      'Postal/Zip Code': inventory.address.postalZipCode || '',
+      Notes: inventory.notes || '',
+    }));
+
+    const colsInfo: ColInfo[] = [
+      { wch: 15 },
+      { wch: 15 },
+      { wch: 30 },
+      { wch: 30 },
+      { wch: 30 },
+      { wch: 20 },
+      { wch: 25 },
+      { wch: 20 },
+      { wch: 15 },
+      { wch: 30 },
+    ];
+
+    this._excelExportService.exportToExcel(exportData, { colsInfo });
   }
 
   ngOnDestroy(): void {
