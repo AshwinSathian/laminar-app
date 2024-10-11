@@ -1,6 +1,23 @@
 <div class="w-full flex flex-row items-center justify-between">
   <app-header title="Suppliers" icon="store"></app-header>
-  <div class="flex items-center gap-1">
+
+  <button mat-fab extended [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+    Actions
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="./create">
+      <mat-icon>add_circle</mat-icon>
+      Create Supplier
+    </button>
+    <button mat-menu-item (click)="exportAllSuppliers()">
+      <mat-icon>download</mat-icon>
+      Export All Suppliers
+    </button>
+    <button mat-menu-item (click)="fileInput.click()">
+      <mat-icon>upload</mat-icon>
+      Import Suppliers
+    </button>
     <input
       type="file"
       #fileInput
@@ -8,21 +25,7 @@
       (change)="onFileSelected($event)"
       accept=".xlsx, .xls"
     />
-
-    <button mat-fab extended (click)="fileInput.click()">
-      <mat-icon>upload</mat-icon>
-      Import Suppliers
-    </button>
-
-    <button mat-fab extended (click)="exportAllSuppliers()">
-      <mat-icon>download</mat-icon>
-      Export All Suppliers
-    </button>
-    <button mat-fab extended routerLink="./create">
-      <mat-icon>add_circle</mat-icon>
-      Create Supplier
-    </button>
-  </div>
+  </mat-menu>
 </div>
 
 <mat-form-field appearance="fill" class="w-full">

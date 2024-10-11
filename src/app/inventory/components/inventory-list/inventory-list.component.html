@@ -1,15 +1,30 @@
 <div class="w-full flex flex-row items-center justify-between">
   <app-header title="Inventory" icon="inventory"></app-header>
-  <div class="flex items-center gap-1">
-    <button mat-fab extended (click)="exportAllInventory()">
-      <mat-icon>download</mat-icon>
-      Export Inventory Records
-    </button>
-    <button mat-fab extended routerLink="./create">
+  <button mat-fab extended [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+    Actions
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="./create">
       <mat-icon>add_circle</mat-icon>
-      Create Inventory Entry
+      Create New Inventory
     </button>
-  </div>
+    <button mat-menu-item (click)="exportAllInventory()">
+      <mat-icon>download</mat-icon>
+      Export All Inventory Records
+    </button>
+    <!-- <button mat-menu-item (click)="fileInput.click()">
+      <mat-icon>upload</mat-icon>
+      Import Suppliers
+    </button>
+    <input
+      type="file"
+      #fileInput
+      style="display: none"
+      (change)="onFileSelected($event)"
+      accept=".xlsx, .xls"
+    /> -->
+  </mat-menu>
 </div>
 
 <mat-form-field appearance="fill" class="w-full">
