@@ -38,9 +38,6 @@ export class ViewInventoryComponent implements OnInit, OnDestroy {
             this._router.navigate(['/inventory']);
           }
         },
-        error: (error) => {
-          console.error('Error fetching inventorys:', error); // Handle errors if needed
-        },
       });
   }
 

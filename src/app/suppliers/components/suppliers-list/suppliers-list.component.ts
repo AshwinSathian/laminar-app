@@ -6,6 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,10 +15,6 @@ import { ColInfo } from 'xlsx';
 import { Supplier } from '../../../../interfaces/supplier.interface';
 import { ExcelExportService } from '../../../services/excel-export.service';
 import { SuppliersService } from '../../../services/suppliers.service';
-import {
-  MatBottomSheet,
-  MatBottomSheetRef,
-} from '@angular/material/bottom-sheet';
 import { SuppliersImportStatsComponent } from './suppliers-import-stats/suppliers-import-stats.component';
 
 @Component({
@@ -173,13 +170,9 @@ export class SuppliersListComponent
               );
 
               this._bottomSheet.open(SuppliersImportStatsComponent, {
-                data: _supplierImportStats,
+                data: { ...(_supplierImportStats || {}), success: true },
               });
             }
-          },
-          error: (error) => {
-            console.error('Error during import or fetch:', error);
-            alert('Failed');
           },
         });
     }

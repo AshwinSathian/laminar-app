@@ -16,24 +16,28 @@
     Import {{ data!.success ? "Successful" : "Failed" }}
   </h1>
 
+  @if (data!.success) {
   <mat-divider></mat-divider>
 
-  @if (data!.success) {
   <div class="flex flex-col">
     <div class="text-md font-semibold">
-      {{ _supplierImportStats!.inserted!.count || 0 }} Suppliers created
+      {{ _inventoryImportStats!.inserted!.count || 0 }} inventorys created
     </div>
     <div class="text-md font-normal">
-      {{ _supplierImportStats!.inserted!.names || "" }}
+      {{ _inventoryImportStats!.inserted!.names || "" }}
     </div>
   </div>
 
-  <div class="text-md font-semibold">
-    {{ _supplierImportStats!.updated!.count || 0 }} Suppliers updated
+  <div>
+    <div class="text-md font-semibold">
+      {{ _inventoryImportStats!.updated!.count || 0 }} inventorys updated
+    </div>
   </div>
   } @else {
-  <div class="text-md font-semibold">
-    {{ _supplierImportStats!.error }}
+  <div>
+    <div class="text-md font-semibold">
+      {{ _inventoryImportStats!.error }}
+    </div>
   </div>
   }
 </div>

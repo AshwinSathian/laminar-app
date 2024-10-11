@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -16,6 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { HeaderComponent } from '../header/header.component';
 import { InventoryService } from '../services/inventory.service';
 import { InventoryDetailsComponent } from './components/inventory-details/inventory-details.component';
+import { InventoriesImportStatsComponent } from './components/inventory-list/inventories-import-stats/inventories-import-stats.component';
 import { InventoryListComponent } from './components/inventory-list/inventory-list.component';
 import { ViewInventoryComponent } from './components/view-inventory/view-inventory.component';
 import { InventoryRoutingModule } from './inventory-routing.module';
@@ -26,6 +28,7 @@ import { InventoryResolver } from './resolvers/inventory.resolver';
     InventoryDetailsComponent,
     InventoryListComponent,
     ViewInventoryComponent,
+    InventoriesImportStatsComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +37,7 @@ import { InventoryResolver } from './resolvers/inventory.resolver';
     MatInputModule,
     FormsModule,
     MatDividerModule,
+    MatBottomSheetModule,
     MatMenuModule,
     MatCardModule,
     MatButtonModule,

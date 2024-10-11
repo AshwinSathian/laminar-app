@@ -1,18 +1,21 @@
 import {
   AfterViewInit,
   Component,
+  inject,
   OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { ColInfo } from 'xlsx';
 import { Inventory } from '../../../../interfaces/inventory.interface';
 import { ExcelExportService } from '../../../services/excel-export.service';
 import { InventoryService } from '../../../services/inventory.service';
+import { InventoriesImportStatsComponent } from './inventories-import-stats/inventories-import-stats.component';
 
 @Component({
   selector: 'app-inventory-list',
@@ -22,6 +25,8 @@ import { InventoryService } from '../../../services/inventory.service';
 export class InventoryListComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
+  private _bottomSheet = inject(MatBottomSheet);
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -105,6 +110,55 @@ export class InventoryListComponent
 
     const fileName = 'laminar-inventory-list';
     this._excelExportService.exportToExcel(exportData, { colsInfo, fileName });
+  }
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+
+    if (file) {
+      const formData: FormData = new FormData();
+      formData.append('file', file, file.name);
+
+      let _inventoryImportStats: {
+        inserted: {
+          count: number;
+          names: string;
+        };
+        updated: { count: number };
+      };
+      this._service
+        .importInventories(formData)
+        .pipe(
+          takeUntil(this.destroy$),
+          switchMap((res) => {
+            if (res) {
+              _inventoryImportStats = res;
+              return this._service.getInventories();
+            } else {
+              throw new Error('Import failed');
+            }
+          }),
+          takeUntil(this.destroy$) // Ensuring that the subscription to getInventories also respects destroy$
+        )
+        .subscribe({
+          next: (data) => {
+            if (data?.length) {
+              this.inventoryEntries = JSON.parse(JSON.stringify(data));
+              this.dataSource = new MatTableDataSource(
+                this.inventoryEntries?.map((i) => ({
+                  itemId: i.itemId || '',
+                  description: i.description || '',
+                  id: i.id || '',
+                }))
+              );
+
+              this._bottomSheet.open(InventoriesImportStatsComponent, {
+                data: { ...(_inventoryImportStats || {}), success: true },
+              });
+            }
+          },
+        });
+    }
   }
 
   ngOnDestroy(): void {

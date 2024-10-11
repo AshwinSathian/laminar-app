@@ -65,9 +65,6 @@ export class ViewSupplierComponent implements OnInit, OnDestroy {
             this._router.navigate(['/suppliers']);
           }
         },
-        error: (error) => {
-          console.error('Error fetching suppliers:', error); // Handle errors if needed
-        },
       });
   }
 

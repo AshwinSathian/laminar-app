@@ -91,9 +91,6 @@ export class ViewBillOfMaterialsComponent
             this._router.navigate(['/bill-of-materials']);
           }
         },
-        error: (error) => {
-          console.error('Error fetching suppliers:', error); // Handle errors if needed
-        },
       });
   }
 

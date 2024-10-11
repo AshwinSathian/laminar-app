@@ -5,12 +5,12 @@ import {
 } from '@angular/material/bottom-sheet';
 
 @Component({
-  selector: 'app-suppliers-import-stats',
-  templateUrl: './suppliers-import-stats.component.html',
-  styleUrl: './suppliers-import-stats.component.css',
+  selector: 'app-inventories-import-stats',
+  templateUrl: './inventories-import-stats.component.html',
+  styleUrl: './inventories-import-stats.component.css',
 })
-export class SuppliersImportStatsComponent {
-  _supplierImportStats: {
+export class InventoriesImportStatsComponent {
+  _inventoryImportStats: {
     success: boolean;
     error?: string;
     inserted: {
@@ -28,13 +28,14 @@ export class SuppliersImportStatsComponent {
     updated: { count: 0 },
   };
   private _bottomSheetRef =
-    inject<MatBottomSheetRef<SuppliersImportStatsComponent>>(MatBottomSheetRef);
+    inject<MatBottomSheetRef<InventoriesImportStatsComponent>>(
+      MatBottomSheetRef
+    );
 
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA)
     public data: {
       success: boolean;
-      error?: string;
       inserted: {
         count: number;
         names: string;
@@ -42,6 +43,6 @@ export class SuppliersImportStatsComponent {
       updated: { count: number };
     }
   ) {
-    this._supplierImportStats = data;
+    this._inventoryImportStats = data;
   }
 }

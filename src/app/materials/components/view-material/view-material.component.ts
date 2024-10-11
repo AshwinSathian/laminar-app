@@ -38,9 +38,6 @@ export class ViewMaterialComponent implements OnInit, OnDestroy {
             this._router.navigate(['/materials']);
           }
         },
-        error: (error) => {
-          console.error('Error fetching materials:', error); // Handle errors if needed
-        },
       });
   }
 
