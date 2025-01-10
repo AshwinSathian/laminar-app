@@ -37,6 +37,45 @@
     />
   </mat-form-field>
 
+  <div class="mt-4 flex w-full items-center justify-between">
+    <div class="flex flex-col gap-0">
+      <h2 class="text-xl my-2">Media</h2>
+      <small class="font-italic">Supported file types: .jpeg, .png, .pdf</small>
+    </div>
+    <input
+      #fileInput
+      type="file"
+      (change)="filesSelected($event)"
+      accept="image/jpeg,image/jpg,application/pdf"
+      multiple
+      hidden
+    />
+    <button mat-fab extended (click)="fileInput.click()" class="min-w-fit">
+      <mat-icon>upload</mat-icon>
+      Upload
+    </button>
+  </div>
+  <div class="w-full flex items-center gap-2 my-2 mb-4">
+    @for (item of addedMedia; track $index) {
+    <mat-card class="media-card" appearance="outlined">
+      @if (item.type.startsWith('image/')) {
+      <img mat-card-image [src]="item.url" class="responsive-img" />
+      } @else {
+      <div class="pdf-icon-container">
+        <mat-icon class="file-icon">picture_as_pdf</mat-icon>
+      </div>
+      }
+
+      <div class="overlay">
+        <span class="file-name">{{ item.name }}</span>
+        <button mat-icon-button (click)="deleteMedia($index)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </mat-card>
+    }
+  </div>
+
   <h2 class="text-xl my-2">Dimensions</h2>
   <div class="p-0 flex flex-row items-center gap-1">
     <mat-form-field class="w-1/3" appearance="outline">
