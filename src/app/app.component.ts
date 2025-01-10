@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,28 +13,26 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { LoadingComponent } from './interceptors/components/loading/loading.component';
 import { HttpErrorComponent } from './interceptors/components/http-error/http-error.component';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { LoadingComponent } from './interceptors/components/loading/loading.component';
 import { ErrorMessageService } from './services/error-message.service';
 
 @Component({
-    selector: 'app-root',
-    imports: [
-        CommonModule,
-        RouterModule,
-        RouterOutlet,
-        MatSidenavModule,
-        MatDividerModule,
-        MatIconModule,
-        MatButtonModule,
-        MatIconModule,
-        LoadingComponent,
-        MatListModule,
-        HttpErrorComponent,
-    ],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.css'
+  selector: 'app-root',
+  imports: [
+    CommonModule,
+    RouterModule,
+    RouterOutlet,
+    MatSidenavModule,
+    MatDividerModule,
+    MatIconModule,
+    MatButtonModule,
+    MatIconModule,
+    LoadingComponent,
+    MatListModule,
+  ],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit, OnDestroy {
   private _bottomSheet = inject(MatBottomSheet);
