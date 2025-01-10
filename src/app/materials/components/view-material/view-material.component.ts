@@ -5,9 +5,10 @@ import { Material } from '../../../../interfaces/material.interface';
 import { MaterialsService } from '../../../services/materials.service';
 
 @Component({
-  selector: 'app-view-material',
-  templateUrl: './view-material.component.html',
-  styleUrl: './view-material.component.css',
+    selector: 'app-view-material',
+    templateUrl: './view-material.component.html',
+    styleUrl: './view-material.component.css',
+    standalone: false
 })
 export class ViewMaterialComponent implements OnInit, OnDestroy {
   material!: Material;

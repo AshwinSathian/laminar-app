@@ -5,9 +5,10 @@ import { Inventory } from '../../../../interfaces/inventory.interface';
 import { InventoryService } from '../../../services/inventory.service';
 
 @Component({
-  selector: 'app-view-inventory',
-  templateUrl: './view-inventory.component.html',
-  styleUrl: './view-inventory.component.css',
+    selector: 'app-view-inventory',
+    templateUrl: './view-inventory.component.html',
+    styleUrl: './view-inventory.component.css',
+    standalone: false
 })
 export class ViewInventoryComponent implements OnInit, OnDestroy {
   inventory!: Inventory;

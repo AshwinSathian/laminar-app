@@ -5,9 +5,10 @@ import {
 } from '@angular/material/bottom-sheet';
 
 @Component({
-  selector: 'app-inventories-import-stats',
-  templateUrl: './inventories-import-stats.component.html',
-  styleUrl: './inventories-import-stats.component.css',
+    selector: 'app-inventories-import-stats',
+    templateUrl: './inventories-import-stats.component.html',
+    styleUrl: './inventories-import-stats.component.css',
+    standalone: false
 })
 export class InventoriesImportStatsComponent {
   _inventoryImportStats: {

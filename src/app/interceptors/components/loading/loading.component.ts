@@ -4,11 +4,10 @@ import { LoadingService } from '../../../services/loading.service';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-loading',
-  standalone: true,
-  imports: [MatProgressSpinnerModule, AsyncPipe],
-  templateUrl: './loading.component.html',
-  styleUrl: './loading.component.css',
+    selector: 'app-loading',
+    imports: [MatProgressSpinnerModule, AsyncPipe],
+    templateUrl: './loading.component.html',
+    styleUrl: './loading.component.css'
 })
 export class LoadingComponent {
   constructor(public _loadingService: LoadingService) {}

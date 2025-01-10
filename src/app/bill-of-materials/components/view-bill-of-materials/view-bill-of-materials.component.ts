@@ -19,9 +19,10 @@ import { BillOfMaterialsService } from '../../../services/bill-of-materials.serv
 import { ExcelExportService } from '../../../services/excel-export.service';
 
 @Component({
-  selector: 'app-view-bill-of-materials',
-  templateUrl: './view-bill-of-materials.component.html',
-  styleUrl: './view-bill-of-materials.component.css',
+    selector: 'app-view-bill-of-materials',
+    templateUrl: './view-bill-of-materials.component.html',
+    styleUrl: './view-bill-of-materials.component.css',
+    standalone: false
 })
 export class ViewBillOfMaterialsComponent
   implements OnInit, AfterViewInit, OnDestroy

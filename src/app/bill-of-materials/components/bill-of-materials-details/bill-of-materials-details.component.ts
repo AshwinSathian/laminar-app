@@ -10,9 +10,10 @@ import { Supplier } from '../../../../interfaces/supplier.interface';
 import { BillOfMaterialsService } from '../../../services/bill-of-materials.service';
 
 @Component({
-  selector: 'app-bill-of-materials-details',
-  templateUrl: './bill-of-materials-details.component.html',
-  styleUrl: './bill-of-materials-details.component.css',
+    selector: 'app-bill-of-materials-details',
+    templateUrl: './bill-of-materials-details.component.html',
+    styleUrl: './bill-of-materials-details.component.css',
+    standalone: false
 })
 export class BillOfMaterialsDetailsComponent implements OnInit, OnDestroy {
   billOfMaterials: BillOfMaterials = {

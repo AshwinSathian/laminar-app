@@ -18,23 +18,22 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ErrorMessageService } from './services/error-message.service';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    RouterOutlet,
-    MatSidenavModule,
-    MatDividerModule,
-    MatIconModule,
-    MatButtonModule,
-    MatIconModule,
-    LoadingComponent,
-    MatListModule,
-    HttpErrorComponent,
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+    selector: 'app-root',
+    imports: [
+        CommonModule,
+        RouterModule,
+        RouterOutlet,
+        MatSidenavModule,
+        MatDividerModule,
+        MatIconModule,
+        MatButtonModule,
+        MatIconModule,
+        LoadingComponent,
+        MatListModule,
+        HttpErrorComponent,
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit, OnDestroy {
   private _bottomSheet = inject(MatBottomSheet);

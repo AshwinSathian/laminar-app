@@ -18,19 +18,18 @@ import { RouterModule } from '@angular/router';
 import { Material } from '../../interfaces/material.interface';
 
 @Component({
-  selector: 'app-materials-library',
-  standalone: true,
-  imports: [
-    MatTableModule,
-    MatFormFieldModule,
-    MatInputModule,
-    RouterModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
-  ],
-  templateUrl: './materials-library.component.html',
-  styleUrl: './materials-library.component.css',
+    selector: 'app-materials-library',
+    imports: [
+        MatTableModule,
+        MatFormFieldModule,
+        MatInputModule,
+        RouterModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule,
+    ],
+    templateUrl: './materials-library.component.html',
+    styleUrl: './materials-library.component.css'
 })
 export class MaterialsLibraryComponent implements OnChanges, AfterViewInit {
   @Input({ required: true }) materials: Material[] = [];

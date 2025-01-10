@@ -7,9 +7,10 @@ import { MatOption } from '@angular/material/core';
 import { Supplier } from '../../../../interfaces/supplier.interface';
 
 @Component({
-  selector: 'app-material-details',
-  templateUrl: './material-details.component.html',
-  styleUrl: './material-details.component.css',
+    selector: 'app-material-details',
+    templateUrl: './material-details.component.html',
+    styleUrl: './material-details.component.css',
+    standalone: false
 })
 export class MaterialDetailsComponent implements OnInit, OnDestroy {
   material: Material = {

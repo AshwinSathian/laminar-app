@@ -18,9 +18,10 @@ import { SuppliersService } from '../../../services/suppliers.service';
 import { SuppliersImportStatsComponent } from './suppliers-import-stats/suppliers-import-stats.component';
 
 @Component({
-  selector: 'app-suppliers-list',
-  templateUrl: './suppliers-list.component.html',
-  styleUrl: './suppliers-list.component.css',
+    selector: 'app-suppliers-list',
+    templateUrl: './suppliers-list.component.html',
+    styleUrl: './suppliers-list.component.css',
+    standalone: false
 })
 export class SuppliersListComponent
   implements OnInit, AfterViewInit, OnDestroy

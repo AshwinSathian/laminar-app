@@ -18,9 +18,10 @@ import { InventoryService } from '../../../services/inventory.service';
 import { InventoriesImportStatsComponent } from './inventories-import-stats/inventories-import-stats.component';
 
 @Component({
-  selector: 'app-inventory-list',
-  templateUrl: './inventory-list.component.html',
-  styleUrl: './inventory-list.component.css',
+    selector: 'app-inventory-list',
+    templateUrl: './inventory-list.component.html',
+    styleUrl: './inventory-list.component.css',
+    standalone: false
 })
 export class InventoryListComponent
   implements OnInit, AfterViewInit, OnDestroy

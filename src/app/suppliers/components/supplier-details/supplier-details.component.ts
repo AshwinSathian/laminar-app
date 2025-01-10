@@ -5,9 +5,10 @@ import { Supplier } from '../../../../interfaces/supplier.interface';
 import { SuppliersService } from '../../../services/suppliers.service';
 
 @Component({
-  selector: 'app-supplier-details',
-  templateUrl: './supplier-details.component.html',
-  styleUrl: './supplier-details.component.css',
+    selector: 'app-supplier-details',
+    templateUrl: './supplier-details.component.html',
+    styleUrl: './supplier-details.component.css',
+    standalone: false
 })
 export class SupplierDetailsComponent implements OnInit, OnDestroy {
   supplier: Supplier = {

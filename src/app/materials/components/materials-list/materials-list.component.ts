@@ -6,9 +6,10 @@ import { ExcelExportService } from '../../../services/excel-export.service';
 import { ColInfo } from 'xlsx';
 
 @Component({
-  selector: 'app-materials-list',
-  templateUrl: './materials-list.component.html',
-  styleUrl: './materials-list.component.css',
+    selector: 'app-materials-list',
+    templateUrl: './materials-list.component.html',
+    styleUrl: './materials-list.component.css',
+    standalone: false
 })
 export class MaterialsListComponent implements OnInit, OnDestroy {
   materials: Material[] = [];

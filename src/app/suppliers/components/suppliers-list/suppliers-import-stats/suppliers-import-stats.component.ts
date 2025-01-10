@@ -5,9 +5,10 @@ import {
 } from '@angular/material/bottom-sheet';
 
 @Component({
-  selector: 'app-suppliers-import-stats',
-  templateUrl: './suppliers-import-stats.component.html',
-  styleUrl: './suppliers-import-stats.component.css',
+    selector: 'app-suppliers-import-stats',
+    templateUrl: './suppliers-import-stats.component.html',
+    styleUrl: './suppliers-import-stats.component.css',
+    standalone: false
 })
 export class SuppliersImportStatsComponent {
   _supplierImportStats: {

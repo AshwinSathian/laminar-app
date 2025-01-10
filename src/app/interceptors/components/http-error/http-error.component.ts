@@ -7,11 +7,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-http-error',
-  standalone: true,
-  imports: [MatBottomSheetModule, MatIconModule, MatDividerModule],
-  templateUrl: './http-error.component.html',
-  styleUrl: './http-error.component.css',
+    selector: 'app-http-error',
+    imports: [MatBottomSheetModule, MatIconModule, MatDividerModule],
+    templateUrl: './http-error.component.html',
+    styleUrl: './http-error.component.css'
 })
 export class HttpErrorComponent {
   constructor(
