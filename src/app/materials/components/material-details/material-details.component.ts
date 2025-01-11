@@ -12,6 +12,12 @@ import { Supplier } from '../../../../interfaces/supplier.interface';
 import { MaterialsService } from '../../../services/materials.service';
 import { UploadService } from '../../../services/upload.service';
 
+enum MediaTypes {
+  images = 'images',
+  drawings = 'drawings',
+  dataSheets = 'dataSheets',
+}
+
 @Component({
   selector: 'app-material-details',
   templateUrl: './material-details.component.html',
@@ -39,7 +45,12 @@ export class MaterialDetailsComponent implements OnInit, OnDestroy {
     suppliers: [],
   };
   supplierOptions: Supplier[] = [];
-  addedMedia: { url: string; name: string; type: string }[] = [];
+  MediaTypes = MediaTypes;
+  isUploading: { [key: string]: boolean } = {
+    [MediaTypes.images]: false,
+    [MediaTypes.drawings]: false,
+    [MediaTypes.dataSheets]: false,
+  };
 
   destroy$ = new Subject<boolean>();
 
@@ -73,30 +84,62 @@ export class MaterialDetailsComponent implements OnInit, OnDestroy {
     return option.id === value.id;
   };
 
-  filesSelected(event: Event): void {
+  filesSelected(event: Event, type: MediaTypes): void {
     const input = event.target as HTMLInputElement;
     const files: FileList | null = input.files;
 
     if (files?.length) {
       for (const file of Array.from(files)) {
-        this._uploadFile(file);
+        this.isUploading[type] = true;
+        this._uploadFile(file, type);
       }
     }
   }
 
-  deleteMedia(index: number) {
-    this.addedMedia.splice(index, 1);
+  deleteMedia(index: number, type: MediaTypes) {
+    switch (type) {
+      case MediaTypes.images:
+        this.material.images?.splice(index, 1);
+        break;
+      case MediaTypes.drawings:
+        this.material.drawings?.splice(index, 1);
+        break;
+      case MediaTypes.dataSheets:
+        this.material.dataSheets?.splice(index, 1);
+        break;
+    }
   }
 
-  private _uploadFile(file: File) {
+  private _uploadFile(file: File, type: MediaTypes) {
     this._uploadService
       .uploadFile(file)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-          if (data) {
-            this.addedMedia = [...(this.addedMedia || []), data];
+          if (data?.fileUrl) {
+            switch (type) {
+              case MediaTypes.images:
+                this.material.images = [
+                  ...(this.material.images || []),
+                  data.fileUrl,
+                ];
+                break;
+              case MediaTypes.drawings:
+                this.material.drawings = [
+                  ...(this.material.drawings || []),
+                  data.fileUrl,
+                ];
+                break;
+              case MediaTypes.dataSheets:
+                this.material.dataSheets = [
+                  ...(this.material.dataSheets || []),
+                  data.fileUrl,
+                ];
+                break;
+            }
+
             this.fileInput!.nativeElement.value = '';
+            this.isUploading[type] = false;
           }
         },
       });

@@ -53,6 +53,84 @@
       </div>
     </mat-card>
 
+    <!-- Images -->
+    @if (material.images?.length) {
+    <mat-card appearance="outlined" class="p-4 shadow-md">
+      <div class="flex flex-col gap-1">
+        <div class="text-lg font-semibold">Images</div>
+        <mat-divider></mat-divider>
+
+        <div class="w-full flex items-center gap-2 flex-wrap">
+          @for (item of material.images; track $index) {
+          <div class="media-card">
+            @if
+            (item.endsWith('.jpeg')||item.endsWith('.jpg')||item.endsWith('.png'))
+            {
+            <img mat-card-image [src]="item" class="responsive-img" />
+            } @else {
+            <div class="pdf-icon-container">
+              <mat-icon class="file-icon">picture_as_pdf</mat-icon>
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </mat-card>
+    }
+
+    <!-- Drawings -->
+    @if (material.drawings?.length) {
+    <mat-card appearance="outlined" class="p-4 shadow-md">
+      <div class="flex flex-col gap-1">
+        <div class="text-lg font-semibold">Drawings</div>
+        <mat-divider></mat-divider>
+
+        <div class="w-full flex items-center gap-2 flex-wrap">
+          @for (item of material.drawings; track $index) {
+          <div class="media-card">
+            @if
+            (item.endsWith('.jpeg')||item.endsWith('.jpg')||item.endsWith('.png'))
+            {
+            <img mat-card-image [src]="item" class="responsive-img" />
+            } @else {
+            <div class="pdf-icon-container">
+              <mat-icon class="file-icon">picture_as_pdf</mat-icon>
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </mat-card>
+    }
+
+    <!-- Data Sheets and other Documents -->
+    @if (material.dataSheets?.length) {
+    <mat-card appearance="outlined" class="p-4 shadow-md">
+      <div class="flex flex-col gap-1">
+        <div class="text-lg font-semibold">Data Sheets and other Documents</div>
+        <mat-divider></mat-divider>
+
+        <div class="w-full flex items-center gap-2 flex-wrap">
+          @for (item of material.dataSheets; track $index) {
+          <div class="media-card">
+            @if
+            (item.endsWith('.jpeg')||item.endsWith('.jpg')||item.endsWith('.png'))
+            {
+            <img mat-card-image [src]="item" class="responsive-img" />
+            } @else {
+            <div class="pdf-icon-container">
+              <mat-icon class="file-icon">picture_as_pdf</mat-icon>
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </mat-card>
+    }
+
     <!-- Supplier Details Section -->
     <mat-card appearance="outlined" class="p-4 shadow-md">
       <div class="flex flex-col gap-1">

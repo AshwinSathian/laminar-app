@@ -11,13 +11,16 @@ export class UploadService {
 
   uploadFile(
     file: File
-  ): Observable<{ url: string; name: string; type: string }> {
+  ): Observable<{ fileUrl: string; fileName: string; fileType: string }> {
     const _formData = new FormData();
     _formData.append('file', file);
 
-    return this._http.post<{ url: string; name: string; type: string }>(
-      API_BASE_URL,
-      _formData
-    );
+    return this._http.post<{
+      fileUrl: string;
+      fileName: string;
+      fileType: string;
+    }>(API_BASE_URL, _formData, {
+      headers: { 'X-Skip-Loading': 'true' },
+    });
   }
 }

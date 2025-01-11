@@ -17,10 +17,18 @@ export class LoadingInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    this.loadingService.show();
+    const skipLoading = request.headers.has('X-Skip-Loading');
 
-    return next
-      .handle(request)
-      .pipe(finalize(() => this.loadingService.hide()));
+    if (!skipLoading) {
+      this.loadingService.show();
+    }
+
+    return next.handle(request).pipe(
+      finalize(() => {
+        if (!skipLoading) {
+          this.loadingService.hide();
+        }
+      })
+    );
   }
 }

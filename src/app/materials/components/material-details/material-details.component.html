@@ -39,27 +39,64 @@
 
   <div class="mt-4 flex w-full items-center justify-between">
     <div class="flex flex-col gap-0">
-      <h2 class="text-xl my-2">Media</h2>
-      <small class="font-italic">Supported file types: .jpeg, .png, .pdf</small>
+      <h2 class="text-xl my-2">Images</h2>
+      <small class="font-italic">Supported file types: .jpeg, .png,</small>
     </div>
     <input
       #fileInput
       type="file"
-      (change)="filesSelected($event)"
-      accept="image/jpeg,image/jpg,application/pdf"
+      (change)="filesSelected($event, MediaTypes.images)"
+      accept="image/jpeg,image/jpg"
       multiple
       hidden
     />
-    <button mat-fab extended (click)="fileInput.click()" class="min-w-fit">
+    <button mat-stroked-button (click)="fileInput.click()" class="min-w-fit">
       <mat-icon>upload</mat-icon>
       Upload
     </button>
   </div>
   <div class="w-full flex items-center gap-2 my-2 mb-4">
-    @for (item of addedMedia; track $index) {
+    @for (item of material.images; track $index) {
     <mat-card class="media-card" appearance="outlined">
-      @if (item.type.startsWith('image/')) {
-      <img mat-card-image [src]="item.url" class="responsive-img" />
+      <img mat-card-image [src]="item" class="responsive-img" />
+      <div class="overlay">
+        <button
+          mat-icon-button
+          (click)="deleteMedia($index, MediaTypes.images)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </mat-card>
+    } @if (isUploading[MediaTypes.images]) {
+    <div class="skeleton-card"></div>
+    }
+  </div>
+
+  <div class="mt-4 flex w-full items-center justify-between">
+    <div class="flex flex-col gap-0">
+      <h2 class="text-xl my-2">Drawings</h2>
+      <small class="font-italic">Supported file types: .jpeg, .png, .pdf</small>
+    </div>
+    <input
+      #fileInput
+      type="file"
+      (change)="filesSelected($event, MediaTypes.drawings)"
+      accept="image/jpeg,image/jpg,application/pdf"
+      multiple
+      hidden
+    />
+    <button mat-stroked-button (click)="fileInput.click()" class="min-w-fit">
+      <mat-icon>upload</mat-icon>
+      Upload
+    </button>
+  </div>
+  <div class="w-full flex items-center gap-2 my-2 mb-4">
+    @for (item of material.drawings; track $index) {
+    <mat-card class="media-card" appearance="outlined">
+      @if (item.endsWith('.jpeg')||item.endsWith('.jpg')||item.endsWith('.png'))
+      {
+      <img mat-card-image [src]="item" class="responsive-img" />
       } @else {
       <div class="pdf-icon-container">
         <mat-icon class="file-icon">picture_as_pdf</mat-icon>
@@ -67,12 +104,55 @@
       }
 
       <div class="overlay">
-        <span class="file-name">{{ item.name }}</span>
-        <button mat-icon-button (click)="deleteMedia($index)">
+        <button
+          mat-icon-button
+          (click)="deleteMedia($index, MediaTypes.drawings)"
+        >
           <mat-icon>delete</mat-icon>
         </button>
       </div>
     </mat-card>
+    } @if (isUploading[MediaTypes.drawings]) {
+    <div class="skeleton-card"></div>
+    }
+  </div>
+
+  <div class="mt-4 flex w-full items-center justify-between">
+    <div class="flex flex-col gap-0">
+      <h2 class="text-xl my-2">Data Sheets and other Documents</h2>
+      <small class="font-italic">Supported file types: .pdf</small>
+    </div>
+    <input
+      #fileInput
+      type="file"
+      (change)="filesSelected($event, MediaTypes.dataSheets)"
+      accept="application/pdf"
+      multiple
+      hidden
+    />
+    <button mat-stroked-button (click)="fileInput.click()" class="min-w-fit">
+      <mat-icon>upload</mat-icon>
+      Upload
+    </button>
+  </div>
+  <div class="w-full flex items-center gap-2 my-2 mb-4">
+    @for (item of material.dataSheets; track $index) {
+    <mat-card class="media-card" appearance="outlined">
+      <div class="pdf-icon-container">
+        <mat-icon class="file-icon">picture_as_pdf</mat-icon>
+      </div>
+
+      <div class="overlay">
+        <button
+          mat-icon-button
+          (click)="deleteMedia($index, MediaTypes.dataSheets)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </mat-card>
+    } @if (isUploading[MediaTypes.dataSheets]) {
+    <div class="skeleton-card"></div>
     }
   </div>
 
