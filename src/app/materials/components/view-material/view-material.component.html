@@ -72,6 +72,12 @@
               <mat-icon class="file-icon">picture_as_pdf</mat-icon>
             </div>
             }
+
+            <div class="overlay">
+              <a mat-button [href]="item" target="_blank">
+                <mat-icon>visibility</mat-icon>
+              </a>
+            </div>
           </div>
           }
         </div>
@@ -98,6 +104,12 @@
               <mat-icon class="file-icon">picture_as_pdf</mat-icon>
             </div>
             }
+
+            <div class="overlay">
+              <a mat-button [href]="item" target="_blank">
+                <mat-icon>visibility</mat-icon>
+              </a>
+            </div>
           </div>
           }
         </div>
@@ -124,6 +136,12 @@
               <mat-icon class="file-icon">picture_as_pdf</mat-icon>
             </div>
             }
+
+            <div class="overlay">
+              <a mat-button [href]="item" target="_blank">
+                <mat-icon>visibility</mat-icon>
+              </a>
+            </div>
           </div>
           }
         </div>
@@ -152,8 +170,9 @@
                 mat-button
                 [href]="'/suppliers/view/' + supplier.id"
                 target="_blank"
-                >{{ supplier?.name }}</a
               >
+                {{ supplier?.name }}
+              </a>
             </mat-list-item>
             }
           </mat-list>
