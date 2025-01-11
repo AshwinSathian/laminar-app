@@ -147,7 +147,14 @@
         >
           <mat-list role="list">
             @for (supplier of material.suppliers; track $index) {
-            <mat-list-item role="listitem">{{ supplier?.name }}</mat-list-item>
+            <mat-list-item role="listitem">
+              <a
+                mat-button
+                [href]="'/suppliers/view/' + supplier.id"
+                target="_blank"
+                >{{ supplier?.name }}</a
+              >
+            </mat-list-item>
             }
           </mat-list>
         </div>
