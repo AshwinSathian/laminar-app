@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -18,18 +19,19 @@ import { RouterModule } from '@angular/router';
 import { Material } from '../../interfaces/material.interface';
 
 @Component({
-    selector: 'app-materials-library',
-    imports: [
-        MatTableModule,
-        MatFormFieldModule,
-        MatInputModule,
-        RouterModule,
-        MatButtonModule,
-        MatIconModule,
-        MatTooltipModule,
-    ],
-    templateUrl: './materials-library.component.html',
-    styleUrl: './materials-library.component.css'
+  selector: 'app-materials-library',
+  imports: [
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    RouterModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatMenuModule,
+  ],
+  templateUrl: './materials-library.component.html',
+  styleUrl: './materials-library.component.css',
 })
 export class MaterialsLibraryComponent implements OnChanges, AfterViewInit {
   @Input({ required: true }) materials: Material[] = [];
