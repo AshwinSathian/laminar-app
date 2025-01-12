@@ -26,7 +26,9 @@ enum MediaTypes {
   providers: [UploadService],
 })
 export class MaterialDetailsComponent implements OnInit, OnDestroy {
-  @ViewChild('fileInput') fileInput?: ElementRef<HTMLInputElement>;
+  @ViewChild('imagesInput') imagesInput?: ElementRef<HTMLInputElement>;
+  @ViewChild('drawingsInput') drawingsInput?: ElementRef<HTMLInputElement>;
+  @ViewChild('dataSheetsInput') dataSheetsInput?: ElementRef<HTMLInputElement>;
 
   material: Material = {
     id: '',
@@ -119,26 +121,34 @@ export class MaterialDetailsComponent implements OnInit, OnDestroy {
           if (data?.fileUrl) {
             switch (type) {
               case MediaTypes.images:
-                this.material.images = [
-                  ...(this.material.images || []),
-                  data.fileUrl,
-                ];
+                {
+                  this.material.images = [
+                    ...(this.material.images || []),
+                    data.fileUrl,
+                  ];
+                  this.imagesInput!.nativeElement.value = '';
+                }
                 break;
               case MediaTypes.drawings:
-                this.material.drawings = [
-                  ...(this.material.drawings || []),
-                  data.fileUrl,
-                ];
+                {
+                  this.material.drawings = [
+                    ...(this.material.drawings || []),
+                    data.fileUrl,
+                  ];
+                  this.drawingsInput!.nativeElement.value = '';
+                }
                 break;
               case MediaTypes.dataSheets:
-                this.material.dataSheets = [
-                  ...(this.material.dataSheets || []),
-                  data.fileUrl,
-                ];
+                {
+                  this.material.dataSheets = [
+                    ...(this.material.dataSheets || []),
+                    data.fileUrl,
+                  ];
+                  this.dataSheetsInput!.nativeElement.value = '';
+                }
                 break;
             }
 
-            this.fileInput!.nativeElement.value = '';
             this.isUploading[type] = false;
           }
         },
