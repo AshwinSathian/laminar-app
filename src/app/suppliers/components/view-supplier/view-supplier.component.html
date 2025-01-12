@@ -6,15 +6,14 @@
     ></app-header>
     <div class="flex items-center gap-2">
       <button
-        mat-fab
+        mat-stroked-button
         color="secondary"
-        extended
-        [routerLink]="'/supplier/edit' + supplier.id"
+        [routerLink]="'/suppliers/edit/' + supplier.id"
       >
         <mat-icon>edit</mat-icon>
         Edit Supplier
       </button>
-      <button mat-fab color="danger" extended (click)="deleteSupplier()">
+      <button mat-stroked-button color="warn" (click)="deleteSupplier()">
         <mat-icon>delete</mat-icon>
         Delete Supplier
       </button>

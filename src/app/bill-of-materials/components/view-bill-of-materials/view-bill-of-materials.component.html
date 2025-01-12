@@ -6,24 +6,22 @@
     ></app-header>
     <div class="flex items-center gap-2">
       <button
-        mat-fab
+        mat-stroked-button
         color="secondary"
-        extended
         (click)="exportBillOfMaterials()"
       >
         <mat-icon>download</mat-icon>
         Export Bill of Materials
       </button>
       <button
-        mat-fab
+        mat-stroked-button
         color="secondary"
-        extended
         [routerLink]="'/bill-of-materials/edit/' + billOfMaterials.id"
       >
         <mat-icon>edit</mat-icon>
         Edit Bill of Materials
       </button>
-      <button mat-fab color="danger" extended (click)="deleteBillOfMaterials()">
+      <button mat-stroked-button color="warn" (click)="deleteBillOfMaterials()">
         <mat-icon>delete</mat-icon>
         Delete Bill of Materials
       </button>
