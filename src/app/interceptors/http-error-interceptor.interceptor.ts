@@ -6,9 +6,9 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ErrorMessageService } from '@laminar-app/services';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ErrorMessageService } from '../services/error-message.service';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {

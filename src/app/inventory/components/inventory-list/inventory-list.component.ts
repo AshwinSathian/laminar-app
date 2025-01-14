@@ -10,18 +10,17 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Inventory } from '@laminar-app/interfaces';
+import { ExcelExportService, InventoryService } from '@laminar-app/services';
 import { Subject, switchMap, takeUntil } from 'rxjs';
 import { ColInfo } from 'xlsx';
-import { Inventory } from '../../../../interfaces/inventory.interface';
-import { ExcelExportService } from '../../../services/excel-export.service';
-import { InventoryService } from '../../../services/inventory.service';
 import { InventoriesImportStatsComponent } from './inventories-import-stats/inventories-import-stats.component';
 
 @Component({
-    selector: 'app-inventory-list',
-    templateUrl: './inventory-list.component.html',
-    styleUrl: './inventory-list.component.css',
-    standalone: false
+  selector: 'app-inventory-list',
+  templateUrl: './inventory-list.component.html',
+  styleUrl: './inventory-list.component.css',
+  standalone: false,
 })
 export class InventoryListComponent
   implements OnInit, AfterViewInit, OnDestroy

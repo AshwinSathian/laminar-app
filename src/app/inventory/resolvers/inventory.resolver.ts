@@ -4,8 +4,8 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
+import { InventoryService } from '@laminar-app/services';
 import { Observable } from 'rxjs';
-import { InventoryService } from '../../services/inventory.service';
 
 @Injectable()
 export class InventoryResolver implements Resolve<any> {

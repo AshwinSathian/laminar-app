@@ -81,6 +81,36 @@
       </div>
     </mat-card>
   </div>
+
+  <!-- Documents -->
+  @if (supplier.documents?.length) {
+  <mat-card appearance="outlined" class="p-4 shadow-md">
+    <div class="flex flex-col gap-1">
+      <div class="text-lg font-semibold">Documents</div>
+      <mat-divider></mat-divider>
+
+      <div class="w-full flex items-center gap-2 flex-wrap">
+        @for (item of supplier.documents; track $index) {
+        <div class="media-card">
+          @if (item.type.startsWith('image/')) {
+          <img mat-card-image [src]="item.url" class="responsive-img" />
+          } @else {
+          <div class="pdf-icon-container">
+            <mat-icon class="file-icon">picture_as_pdf</mat-icon>
+          </div>
+          }
+
+          <div class="overlay">
+            <a mat-button [href]="item.url" target="_blank">
+              <mat-icon>visibility</mat-icon>
+            </a>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </mat-card>
+  }
 </div>
 
 <mat-tab-group>

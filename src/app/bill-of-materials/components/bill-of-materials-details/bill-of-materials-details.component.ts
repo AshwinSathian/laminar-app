@@ -1,19 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
 import {
   BillOfMaterials,
+  Material,
   PartDetail,
-} from '../../../../interfaces/bom.interface';
-import { Material } from '../../../../interfaces/material.interface';
-import { Supplier } from '../../../../interfaces/supplier.interface';
-import { BillOfMaterialsService } from '../../../services/bill-of-materials.service';
+  Supplier,
+} from '@laminar-app/interfaces';
+import { BillOfMaterialsService } from '@laminar-app/services';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-    selector: 'app-bill-of-materials-details',
-    templateUrl: './bill-of-materials-details.component.html',
-    styleUrl: './bill-of-materials-details.component.css',
-    standalone: false
+  selector: 'app-bill-of-materials-details',
+  templateUrl: './bill-of-materials-details.component.html',
+  styleUrl: './bill-of-materials-details.component.css',
+  standalone: false,
 })
 export class BillOfMaterialsDetailsComponent implements OnInit, OnDestroy {
   billOfMaterials: BillOfMaterials = {

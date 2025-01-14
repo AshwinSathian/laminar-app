@@ -40,7 +40,8 @@ export interface Address {
   mapsLink?: string;
 }
 
-export interface Document {
+export interface Attachment {
   name: string;
+  type: string;
   url: string;
 }

@@ -58,7 +58,7 @@
   <div class="w-full flex items-center gap-2 my-2 mb-4">
     @for (item of material.images; track $index) {
     <mat-card class="media-card" appearance="outlined">
-      <img mat-card-image [src]="item" class="responsive-img" />
+      <img mat-card-image [src]="item.url" class="responsive-img" />
       <div class="overlay">
         <button
           mat-icon-button
@@ -98,9 +98,8 @@
   <div class="w-full flex items-center gap-2 my-2 mb-4">
     @for (item of material.drawings; track $index) {
     <mat-card class="media-card" appearance="outlined">
-      @if (item.endsWith('.jpeg')||item.endsWith('.jpg')||item.endsWith('.png'))
-      {
-      <img mat-card-image [src]="item" class="responsive-img" />
+      @if (item.type.startsWith('image/')) {
+      <img mat-card-image [src]="item.url" class="responsive-img" />
       } @else {
       <div class="pdf-icon-container">
         <mat-icon class="file-icon">picture_as_pdf</mat-icon>

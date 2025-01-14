@@ -6,17 +6,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MediaTypes } from '@laminar-app/enums';
+import { Material, Supplier } from '@laminar-app/interfaces';
+import { MaterialsService, UploadService } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
-import { Material } from '../../../../interfaces/material.interface';
-import { Supplier } from '../../../../interfaces/supplier.interface';
-import { MaterialsService } from '../../../services/materials.service';
-import { UploadService } from '../../../services/upload.service';
-
-enum MediaTypes {
-  images = 'images',
-  drawings = 'drawings',
-  dataSheets = 'dataSheets',
-}
 
 @Component({
   selector: 'app-material-details',
@@ -118,13 +111,13 @@ export class MaterialDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-          if (data?.fileUrl) {
+          if (data?.url) {
             switch (type) {
               case MediaTypes.images:
                 {
                   this.material.images = [
                     ...(this.material.images || []),
-                    data.fileUrl,
+                    data,
                   ];
                   this.imagesInput!.nativeElement.value = '';
                 }
@@ -133,7 +126,7 @@ export class MaterialDetailsComponent implements OnInit, OnDestroy {
                 {
                   this.material.drawings = [
                     ...(this.material.drawings || []),
-                    data.fileUrl,
+                    data,
                   ];
                   this.drawingsInput!.nativeElement.value = '';
                 }
@@ -142,7 +135,7 @@ export class MaterialDetailsComponent implements OnInit, OnDestroy {
                 {
                   this.material.dataSheets = [
                     ...(this.material.dataSheets || []),
-                    data.fileUrl,
+                    data,
                   ];
                   this.dataSheetsInput!.nativeElement.value = '';
                 }

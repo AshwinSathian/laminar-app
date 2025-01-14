@@ -1,15 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Material } from '@laminar-app/interfaces';
+import { ExcelExportService, MaterialsService } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
-import { Material } from '../../../../interfaces/material.interface';
-import { MaterialsService } from '../../../services/materials.service';
-import { ExcelExportService } from '../../../services/excel-export.service';
 import { ColInfo } from 'xlsx';
 
 @Component({
-    selector: 'app-materials-list',
-    templateUrl: './materials-list.component.html',
-    styleUrl: './materials-list.component.css',
-    standalone: false
+  selector: 'app-materials-list',
+  templateUrl: './materials-list.component.html',
+  styleUrl: './materials-list.component.css',
+  standalone: false,
 })
 export class MaterialsListComponent implements OnInit, OnDestroy {
   materials: Material[] = [];

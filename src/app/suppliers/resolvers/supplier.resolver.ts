@@ -4,8 +4,8 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
+import { SuppliersService } from '@laminar-app/services';
 import { Observable } from 'rxjs';
-import { SuppliersService } from '../../services/suppliers.service';
 
 @Injectable()
 export class SupplierResolver implements Resolve<any> {

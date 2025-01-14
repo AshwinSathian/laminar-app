@@ -15,7 +15,7 @@ import {
 import { Subject, takeUntil } from 'rxjs';
 import { HttpErrorComponent } from './interceptors/components/http-error/http-error.component';
 import { LoadingComponent } from './interceptors/components/loading/loading.component';
-import { ErrorMessageService } from './services/error-message.service';
+import { ErrorMessageService } from './services';
 
 @Component({
   selector: 'app-root',

@@ -9,20 +9,19 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BillOfMaterials, PartDetail } from '@laminar-app/interfaces';
+import {
+  BillOfMaterialsService,
+  ExcelExportService,
+} from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
 import { ColInfo } from 'xlsx';
-import {
-  BillOfMaterials,
-  PartDetail,
-} from '../../../../interfaces/bom.interface';
-import { BillOfMaterialsService } from '../../../services/bill-of-materials.service';
-import { ExcelExportService } from '../../../services/excel-export.service';
 
 @Component({
-    selector: 'app-view-bill-of-materials',
-    templateUrl: './view-bill-of-materials.component.html',
-    styleUrl: './view-bill-of-materials.component.css',
-    standalone: false
+  selector: 'app-view-bill-of-materials',
+  templateUrl: './view-bill-of-materials.component.html',
+  styleUrl: './view-bill-of-materials.component.css',
+  standalone: false,
 })
 export class ViewBillOfMaterialsComponent
   implements OnInit, AfterViewInit, OnDestroy

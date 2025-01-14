@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Inventory } from '@laminar-app/interfaces';
+import { InventoryService } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
-import { Inventory } from '../../../../interfaces/inventory.interface';
-import { InventoryService } from '../../../services/inventory.service';
 
 @Component({
-    selector: 'app-view-inventory',
-    templateUrl: './view-inventory.component.html',
-    styleUrl: './view-inventory.component.css',
-    standalone: false
+  selector: 'app-view-inventory',
+  templateUrl: './view-inventory.component.html',
+  styleUrl: './view-inventory.component.css',
+  standalone: false,
 })
 export class ViewInventoryComponent implements OnInit, OnDestroy {
   inventory!: Inventory;

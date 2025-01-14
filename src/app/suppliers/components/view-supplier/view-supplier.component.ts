@@ -1,15 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Material, Supplier } from '@laminar-app/interfaces';
+import { SuppliersService } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
-import { Material } from '../../../../interfaces/material.interface';
-import { Supplier } from '../../../../interfaces/supplier.interface';
-import { SuppliersService } from '../../../services/suppliers.service';
 
 @Component({
-    selector: 'app-view-supplier',
-    templateUrl: './view-supplier.component.html',
-    styleUrl: './view-supplier.component.css',
-    standalone: false
+  selector: 'app-view-supplier',
+  templateUrl: './view-supplier.component.html',
+  styleUrl: './view-supplier.component.css',
+  standalone: false,
 })
 export class ViewSupplierComponent implements OnInit, OnDestroy {
   supplier!: Supplier;

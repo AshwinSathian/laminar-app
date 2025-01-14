@@ -10,18 +10,17 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Supplier } from '@laminar-app/interfaces';
+import { ExcelExportService, SuppliersService } from '@laminar-app/services';
 import { Subject, switchMap, takeUntil } from 'rxjs';
 import { ColInfo } from 'xlsx';
-import { Supplier } from '../../../../interfaces/supplier.interface';
-import { ExcelExportService } from '../../../services/excel-export.service';
-import { SuppliersService } from '../../../services/suppliers.service';
 import { SuppliersImportStatsComponent } from './suppliers-import-stats/suppliers-import-stats.component';
 
 @Component({
-    selector: 'app-suppliers-list',
-    templateUrl: './suppliers-list.component.html',
-    styleUrl: './suppliers-list.component.css',
-    standalone: false
+  selector: 'app-suppliers-list',
+  templateUrl: './suppliers-list.component.html',
+  styleUrl: './suppliers-list.component.css',
+  standalone: false,
 })
 export class SuppliersListComponent
   implements OnInit, AfterViewInit, OnDestroy

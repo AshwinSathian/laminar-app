@@ -1,4 +1,5 @@
 import { Base } from './base.interface';
+import { Attachment } from './common.interface';
 import { Supplier } from './supplier.interface';
 
 export interface BillOfMaterials extends Base {
@@ -17,7 +18,7 @@ export interface PartDetail {
   partName: string;
   materialId: string;
   description?: string;
-  partImages?: string[];
+  partImages?: Attachment[];
   quantity: number;
   units: string;
   supplierOrManufacturer?: Supplier;

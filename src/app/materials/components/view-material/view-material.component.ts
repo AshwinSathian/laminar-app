@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Material } from '@laminar-app/interfaces';
+import { MaterialsService } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
-import { Material } from '../../../../interfaces/material.interface';
-import { MaterialsService } from '../../../services/materials.service';
 
 @Component({
-    selector: 'app-view-material',
-    templateUrl: './view-material.component.html',
-    styleUrl: './view-material.component.css',
-    standalone: false
+  selector: 'app-view-material',
+  templateUrl: './view-material.component.html',
+  styleUrl: './view-material.component.css',
+  standalone: false,
 })
 export class ViewMaterialComponent implements OnInit, OnDestroy {
   material!: Material;

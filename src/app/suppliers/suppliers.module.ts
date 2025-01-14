@@ -16,10 +16,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
+import {
+  ExcelExportService,
+  SuppliersService,
+  UploadService,
+} from '@laminar-app/services';
 import { HeaderComponent } from '../header/header.component';
 import { MaterialsLibraryComponent } from '../materials-library/materials-library.component';
-import { ExcelExportService } from '../services/excel-export.service';
-import { SuppliersService } from '../services/suppliers.service';
 import { SupplierDetailsComponent } from './components/supplier-details/supplier-details.component';
 import { SuppliersImportStatsComponent } from './components/suppliers-list/suppliers-import-stats/suppliers-import-stats.component';
 import { SuppliersListComponent } from './components/suppliers-list/suppliers-list.component';
@@ -56,6 +59,11 @@ import { routes } from './suppliers.routes';
     MaterialsLibraryComponent,
     HeaderComponent,
   ],
-  providers: [SuppliersService, SupplierResolver, ExcelExportService],
+  providers: [
+    SuppliersService,
+    SupplierResolver,
+    ExcelExportService,
+    UploadService,
+  ],
 })
 export class SuppliersModule {}
