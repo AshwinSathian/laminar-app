@@ -22,9 +22,9 @@
 
   <mat-divider></mat-divider>
 
-  <div class="w-full flex flex-row items-center justify-evenly my-5">
-    <mat-card appearance="outlined" class="p-4 shadow-md card-width">
-      <div class="flex flex-col gap-1">
+  <mat-card appearance="outlined" class="p-4 my-5">
+    <div class="w-full flex flex-row items-center justify-evenly">
+      <div class="flex flex-col gap-1 w-2/5">
         <div class="text-lg font-semibold">Address</div>
         <mat-divider></mat-divider>
         <div class="text-md">
@@ -48,10 +48,8 @@
           </a>
         </div>
       </div>
-    </mat-card>
 
-    <mat-card appearance="outlined" class="p-4 shadow-md card-width">
-      <div class="flex flex-col gap-1">
+      <div class="flex flex-col gap-1 w-2/5">
         <div class="text-lg font-semibold">Contact Information</div>
         <mat-divider></mat-divider>
         <div class="text-md font-medium">
@@ -79,8 +77,8 @@
           </span>
         </div>
       </div>
-    </mat-card>
-  </div>
+    </div>
+  </mat-card>
 
   <!-- Documents -->
   @if (supplier.documents?.length) {
