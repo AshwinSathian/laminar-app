@@ -148,8 +148,8 @@
       hidden
     />
     <button mat-stroked-button (click)="filesInput.click()" class="min-w-fit">
-      <mat-icon>upload</mat-icon>
-      Upload
+      <mat-icon>{{order.invoice?:'edit':'upload'}}</mat-icon>
+      {{ order.invoice ? "Update" : "Upload" }}
     </button>
   </div>
 </div>
