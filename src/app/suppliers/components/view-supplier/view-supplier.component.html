@@ -115,8 +115,8 @@
   <mat-tab>
     <ng-template mat-tab-label>
       <div class="flex flex-row items-center justify-center gap-3 w-full">
-        <mat-icon>store</mat-icon>
-        <div class="text-lg">Suppliers</div>
+        <mat-icon>category</mat-icon>
+        <div class="text-lg">Materials</div>
       </div>
     </ng-template>
     <app-materials-library [materials]="materials"></app-materials-library>
@@ -128,5 +128,9 @@
         <div class="text-lg">Orders</div>
       </div>
     </ng-template>
+    <app-orders-list
+      [orders]="orders"
+      [displayedColumns]="ordersDisplayColumns"
+    ></app-orders-list>
   </mat-tab>
 </mat-tab-group>

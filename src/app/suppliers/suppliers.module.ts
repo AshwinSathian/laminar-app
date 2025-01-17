@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
@@ -18,11 +17,15 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import {
   ExcelExportService,
+  SharedService,
   SuppliersService,
   UploadService,
 } from '@laminar-app/services';
-import { HeaderComponent } from '../header/header.component';
-import { MaterialsLibraryComponent } from '../materials-library/materials-library.component';
+import {
+  HeaderComponent,
+  MaterialsLibraryComponent,
+  OrdersListComponent,
+} from '@laminar-app/shared-components';
 import { SupplierDetailsComponent } from './components/supplier-details/supplier-details.component';
 import { SuppliersImportStatsComponent } from './components/suppliers-list/suppliers-import-stats/suppliers-import-stats.component';
 import { SuppliersListComponent } from './components/suppliers-list/suppliers-list.component';
@@ -45,7 +48,6 @@ import { routes } from './suppliers.routes';
     MatInputModule,
     FormsModule,
     MatButtonModule,
-    HttpClientModule,
     MatToolbarModule,
     MatBottomSheetModule,
     MatIconModule,
@@ -56,14 +58,16 @@ import { routes } from './suppliers.routes';
     MatTabsModule,
     RouterModule.forChild(routes),
 
-    MaterialsLibraryComponent,
     HeaderComponent,
+    MaterialsLibraryComponent,
+    OrdersListComponent,
   ],
   providers: [
     SuppliersService,
     SupplierResolver,
     ExcelExportService,
     UploadService,
+    SharedService,
   ],
 })
 export class SuppliersModule {}

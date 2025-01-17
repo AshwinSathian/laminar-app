@@ -1,0 +1,53 @@
+<h1 mat-dialog-title>Parts supplied by {{ data!.supplier!.name }}</h1>
+
+<mat-divider></mat-divider>
+
+<mat-dialog-content>
+  <div class="flex flex-col gap-2">
+    @for (material of data!.materials; track $index) {
+    <mat-card class="w-full" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{ material.partName }}</mat-card-title>
+        <mat-card-subtitle>
+          {{ material.material }} | {{ material.manufacturingMethod }}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions>
+        @if (!_tempSelectedIds.includes(material.id || '')) {
+        <a
+          mat-button
+          [routerLink]="'/materials/view/' + material.id"
+          target="_blank"
+        >
+          <mat-icon>open_in_new</mat-icon>
+          VIEW DETAILS
+        </a>
+        <button mat-button (click)="addPart(material.id)">
+          <mat-icon>add</mat-icon>
+          ADD
+        </button>
+        } @else {
+        <button mat-button (click)="removePart(material.id)" color="warn">
+          <mat-icon>delete</mat-icon>
+          REMOVE
+        </button>
+        }
+      </mat-card-actions>
+    </mat-card>
+    }
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+    Cancel
+  </button>
+  <button
+    mat-stroked-button
+    [mat-dialog-close]="selectedPartIds()"
+    cdkFocusInitial
+  >
+    <mat-icon>check</mat-icon>
+    Done
+  </button>
+</mat-dialog-actions>

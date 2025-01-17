@@ -6,7 +6,7 @@ import {
   PartDetail,
   Supplier,
 } from '@laminar-app/interfaces';
-import { BillOfMaterialsService } from '@laminar-app/services';
+import { BillOfMaterialsService, SharedService } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -46,6 +46,7 @@ export class BillOfMaterialsDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private _service: BillOfMaterialsService,
+    private _sharedService: SharedService,
     private _router: Router,
     private _route: ActivatedRoute
   ) {}
@@ -57,7 +58,7 @@ export class BillOfMaterialsDetailsComponent implements OnInit, OnDestroy {
       );
     }
 
-    this._service
+    this._sharedService
       .getCurrencies()
       .pipe(takeUntil(this.destroy$))
       .subscribe({

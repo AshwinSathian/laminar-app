@@ -16,7 +16,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
-import { Material } from '../../interfaces/material.interface';
+import { Material } from '../../../interfaces/material.interface';
 
 @Component({
   selector: 'app-materials-library',

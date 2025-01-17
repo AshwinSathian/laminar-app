@@ -135,7 +135,7 @@
 
   <div class="mt-4 flex w-full items-center justify-between">
     <div class="flex flex-col gap-0">
-      <h2 class="text-xl my-2">Documents</h2>
+      <h2 class="text-xl">Documents</h2>
       <small class="font-italic">Supported file types: .jpeg, .png, .pdf</small>
     </div>
     <input
@@ -175,8 +175,9 @@
 </div>
 
 <mat-toolbar
-  class="fixed bottom-0 right-0 w-full flex flex-row justify-end items-center"
+  class="actions-footer fixed bottom-0 right-0 w-full flex flex-row justify-between gap-5 items-center"
 >
+  <div class="flex flex-col gap-0"></div>
   <button mat-fab extended (click)="submit()">
     <mat-icon>check_circle</mat-icon>
     Submit

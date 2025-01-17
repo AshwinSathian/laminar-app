@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '@laminar-app/environment';
+import { Material, Supplier } from '@laminar-app/interfaces';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { Material } from '../../interfaces/material.interface';
-import { Supplier } from '../../interfaces/supplier.interface';
 
 const API_BASE_URL = `${environment.apiUrl}materials/`;
 

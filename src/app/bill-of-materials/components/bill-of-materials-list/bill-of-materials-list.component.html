@@ -1,8 +1,7 @@
 <div class="w-full flex flex-row items-center justify-between">
   <app-header title="Bill of Materials" icon="receipt_long"></app-header>
-  <button mat-fab extended [matMenuTriggerFor]="menu">
+  <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>menu</mat-icon>
-    Actions
   </button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLink="./create">
@@ -26,6 +25,8 @@
     /> -->
   </mat-menu>
 </div>
+
+<mat-divider class="w-full my-3"></mat-divider>
 
 <mat-form-field appearance="fill" class="w-full">
   <input

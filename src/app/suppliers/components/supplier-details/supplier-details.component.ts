@@ -8,7 +8,11 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { MediaTypes } from '@laminar-app/enums';
 import { Supplier } from '@laminar-app/interfaces';
-import { SuppliersService, UploadService } from '@laminar-app/services';
+import {
+  SharedService,
+  SuppliersService,
+  UploadService,
+} from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -47,6 +51,7 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private _service: SuppliersService,
     private _uploadService: UploadService,
+    private _sharedService: SharedService,
     private _router: Router,
     private _route: ActivatedRoute
   ) {}
@@ -58,7 +63,7 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
       );
     }
 
-    this._service
+    this._sharedService
       .getCountries()
       .pipe(takeUntil(this.destroy$))
       .subscribe({

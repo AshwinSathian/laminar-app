@@ -1,0 +1,72 @@
+<div class="w-full h-screen flex items-center justify-center">
+  <div class="flex flex-col gap-10">
+    <h1 class="text-5xl text-center my-5">Welcome to Laminar</h1>
+    <div class="w-full flex items-center gap-5 flex-wrap">
+      <div class="card">
+        <div class="w-full h-full flex items-center justify-center text-center">
+          <div class="flex flex-col gap-2">
+            <div class="text-6xl font-bold">
+              {{ materialsCount$ | async }}
+            </div>
+            <div class="text-lg">Materials</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="w-full h-full flex items-center justify-center text-center">
+          <div class="flex flex-col gap-2">
+            <div class="text-6xl font-bold">
+              {{ suppliersCount$ | async }}
+            </div>
+            <div class="text-lg">Suppliers</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="w-full h-full flex items-center justify-center text-center">
+          <div class="flex flex-col gap-2">
+            <div class="text-6xl font-bold">
+              {{ billsOfMaterialsCount$ | async }}
+            </div>
+            <div class="text-lg">Bills of Materials</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="w-full h-full flex items-center justify-center text-center">
+          <div class="flex flex-col gap-2">
+            <div class="text-6xl font-bold">
+              {{ ordersCount$ | async }}
+            </div>
+            <div class="text-lg">Orders</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="w-full h-full flex items-center justify-center text-center">
+          <div class="flex flex-col gap-2">
+            <div class="text-6xl font-bold">
+              {{ suppliersCount$ | async }}
+            </div>
+            <div class="text-lg">Suppliers</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="w-full h-full flex items-center justify-center text-center">
+          <div class="flex flex-col gap-2">
+            <div class="text-6xl font-bold">
+              {{ inventoryCount$ | async }}
+            </div>
+            <div class="text-lg">Inventory Records</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -21,9 +21,11 @@
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
     "paths": {
+      "@laminar-app/environment": ["./src/environments"],
       "@laminar-app/interfaces": ["./src/interfaces"],
       "@laminar-app/enums": ["./src/enums"],
-      "@laminar-app/services": ["./src/app/services"]
+      "@laminar-app/services": ["./src/app/services"],
+      "@laminar-app/shared-components": ["./src/app/shared-components"]
     }
   },
   "angularCompilerOptions": {

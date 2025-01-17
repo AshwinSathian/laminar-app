@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Inventory } from '@laminar-app/interfaces';
-import { InventoryService } from '@laminar-app/services';
+import { InventoryService, SharedService } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -31,6 +31,7 @@ export class InventoryDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private _service: InventoryService,
+    private _sharedService: SharedService,
     private _router: Router,
     private _route: ActivatedRoute
   ) {}
@@ -42,7 +43,7 @@ export class InventoryDetailsComponent implements OnInit, OnDestroy {
       );
     }
 
-    this._service
+    this._sharedService
       .getCountries()
       .pipe(takeUntil(this.destroy$))
       .subscribe({

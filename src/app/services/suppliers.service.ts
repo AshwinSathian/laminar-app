@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '@laminar-app/environment';
+import { Material, Order, Supplier } from '@laminar-app/interfaces';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { Supplier } from '../../interfaces/supplier.interface';
-import { Material } from '../../interfaces/material.interface';
 
 const API_BASE_URL = `${environment.apiUrl}suppliers/`;
 
@@ -25,6 +24,12 @@ export class SuppliersService {
     );
   }
 
+  getSupplierOrders(id: string): Observable<Order[]> {
+    return this._http.get<Order[]>(
+      `${environment.apiUrl}orders/supplier/${id}`
+    );
+  }
+
   getSupplier(id: string): Observable<Supplier> {
     return this._http.get<Supplier>(`${API_BASE_URL}${id}`);
   }
@@ -35,10 +40,6 @@ export class SuppliersService {
 
   deleteSupplier(id: string): Observable<Supplier> {
     return this._http.delete<Supplier>(`${API_BASE_URL}${id}`);
-  }
-
-  getCountries(): Observable<any[]> {
-    return this._http.get<any[]>('https://restcountries.com/v3.1/all');
   }
 
   importSuppliers(formData: FormData): Observable<{

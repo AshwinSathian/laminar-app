@@ -33,18 +33,18 @@
   <div class="w-full p-2 flex flex-col space-y-4">
     <div class="p-0 flex flex-row items-center gap-1 w-full">
       <div class="w-1/2">
-        <label class="block text-sm font-medium text-gray-400"
-          >Total Cost</label
-        >
+        <label class="block text-sm font-medium text-gray-400">
+          Total Cost
+        </label>
         <div class="text-gray-200">
           {{ billOfMaterials.totalCost | currency : billOfMaterials.currency }}
         </div>
       </div>
 
       <div class="w-1/2">
-        <label class="block text-sm font-medium text-gray-400"
-          >Contact Info</label
-        >
+        <label class="block text-sm font-medium text-gray-400">
+          Contact Info
+        </label>
         <div class="text-gray-200">
           {{ billOfMaterials.contactInfo || "-" }}
         </div>
@@ -140,62 +140,5 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </div>
-    <!-- <div class="overflow-x-auto max-w-full">
-      <table
-        class="table-auto w-full max-w-full bg-gray-800 border border-gray-700 text-gray-200"
-      >
-        <thead>
-          <tr class="bg-gray-700 text-gray-300">
-            <th class="py-2 px-2 border-b border-gray-600 w-24">Part Number</th>
-            <th class="py-2 px-2 border-b border-gray-600">Part Name</th>
-            <th class="py-2 px-2 border-b border-gray-600 w-40">Description</th>
-            <th class="py-2 px-2 border-b border-gray-600 w-20">Quantity</th>
-            <th class="py-2 px-2 border-b border-gray-600 w-24">Units</th>
-            <th class="py-2 px-2 border-b border-gray-600">Supplier</th>
-            <th class="py-2 px-2 border-b border-gray-600 w-28">Unit Cost</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (part of billOfMaterials.parts; track $index) {
-          <tr class="hover:bg-gray-700">
-            <td class="py-2 px-2 border-b border-gray-700 w-24">
-              {{ part.partNumber }}
-            </td>
-
-            <td class="py-2 px-2 border-b border-gray-700">
-              {{ part.partName }}
-            </td>
-
-            <td class="py-2 px-2 border-b border-gray-700 w-40">
-              {{ part.description || "-" }}
-            </td>
-
-            <td class="py-2 px-2 border-b border-gray-700 w-20">
-              {{ part.quantity }}
-            </td>
-
-            <td class="py-2 px-2 border-b border-gray-700 w-24">
-              {{ part.units }}
-            </td>
-
-            <td class="py-2 px-2 border-b border-gray-700">
-              {{
-                part.supplierOrManufacturer
-                  ? part.supplierOrManufacturer.name
-                  : "-"
-              }}
-            </td>
-
-            <td class="py-2 px-2 border-b border-gray-700 w-28">
-              {{
-                part.unitCost
-                  | currency : billOfMaterials.currency : "symbol" : "1.2-2"
-              }}
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
-    </div> -->
   </div>
 </div>

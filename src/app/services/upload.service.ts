@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '@laminar-app/environment';
+import { Attachment } from '@laminar-app/interfaces';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { Attachment } from '../../interfaces/common.interface';
 
 const API_BASE_URL = `${environment.apiUrl}upload`;
 

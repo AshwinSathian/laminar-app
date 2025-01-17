@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,8 +13,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { InventoryService } from '@laminar-app/services';
-import { HeaderComponent } from '../header/header.component';
+import { InventoryService, SharedService } from '@laminar-app/services';
+import { HeaderComponent } from '@laminar-app/shared-components';
 import { InventoryDetailsComponent } from './components/inventory-details/inventory-details.component';
 import { InventoriesImportStatsComponent } from './components/inventory-list/inventories-import-stats/inventories-import-stats.component';
 import { InventoryListComponent } from './components/inventory-list/inventory-list.component';
@@ -41,7 +40,6 @@ import { InventoryResolver } from './resolvers/inventory.resolver';
     MatMenuModule,
     MatCardModule,
     MatButtonModule,
-    HttpClientModule,
     MatToolbarModule,
     MatSelectModule,
     MatIconModule,
@@ -49,6 +47,6 @@ import { InventoryResolver } from './resolvers/inventory.resolver';
 
     HeaderComponent,
   ],
-  providers: [InventoryService, InventoryResolver],
+  providers: [InventoryService, InventoryResolver, SharedService],
 })
 export class InventoryModule {}

@@ -1,0 +1,34 @@
+<div class="w-full flex flex-row items-center justify-between">
+  <app-header title="Orders" icon="shopping_cart"></app-header>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="./create">
+      <mat-icon>add_circle</mat-icon>
+      Create New Order
+    </button>
+    <!-- <button mat-menu-item (click)="exportAllInventory()">
+      <mat-icon>download</mat-icon>
+      Export All Inventory Records
+    </button>
+    <button mat-menu-item (click)="fileInput.click()">
+      <mat-icon>upload</mat-icon>
+      Import Inventory Records
+    </button>
+    <input
+      type="file"
+      #fileInput
+      style="display: none"
+      (change)="onFileSelected($event)"
+      accept=".xlsx, .xls"
+    /> -->
+  </mat-menu>
+</div>
+
+<mat-divider class="w-full my-3"></mat-divider>
+
+<app-orders-list
+  [orders]="orders"
+  [displayedColumns]="displayedColumns"
+></app-orders-list>

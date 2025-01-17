@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '@laminar-app/environment';
+import { BillOfMaterials, Material } from '@laminar-app/interfaces';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { BillOfMaterials } from '../../interfaces/bom.interface';
-import { Material } from '../../interfaces/material.interface';
 
 const API_BASE_URL = `${environment.apiUrl}bill-of-materials/`;
 
@@ -45,12 +44,6 @@ export class BillOfMaterialsService {
 
   deleteBillOfMaterials(id: string): Observable<BillOfMaterials> {
     return this._http.delete<BillOfMaterials>(`${API_BASE_URL}${id}`);
-  }
-
-  getCurrencies(): Observable<{ [code: string]: string }> {
-    return this._http.get<{ [code: string]: string }>(
-      'https://openexchangerates.org/api/currencies.json'
-    );
   }
 
   getMaterials(): Observable<Material[]> {

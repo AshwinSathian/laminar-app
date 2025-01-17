@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Material, Supplier } from '@laminar-app/interfaces';
+import { Material, Order, Supplier } from '@laminar-app/interfaces';
 import { SuppliersService } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -13,6 +13,13 @@ import { Subject, takeUntil } from 'rxjs';
 export class ViewSupplierComponent implements OnInit, OnDestroy {
   supplier!: Supplier;
   materials: Material[] = [];
+  orders: Order[] = [];
+  ordersDisplayColumns: string[] = [
+    'referenceId',
+    'orderDate',
+    'status',
+    'value',
+  ];
 
   destroy$ = new Subject<boolean>();
 
@@ -50,6 +57,17 @@ export class ViewSupplierComponent implements OnInit, OnDestroy {
                 }
               );
             }
+          }
+        },
+      });
+
+    this._service
+      .getSupplierOrders(this._route.snapshot.params['id'])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          if (data?.length) {
+            this.orders = JSON.parse(JSON.stringify(data));
           }
         },
       });

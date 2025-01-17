@@ -39,11 +39,18 @@ export class AppComponent implements OnInit, OnDestroy {
 
   menuItems = [
     {
+      label: 'Dashboard',
+      route: '/',
+      icon: 'dashboard',
+      isActive: false,
+    },
+    {
       label: 'Materials',
       route: '/materials',
       icon: 'category',
       isActive: false,
     },
+    { label: 'Suppliers', route: '/suppliers', icon: 'store', isActive: false },
     {
       label: 'Bill Of Materials',
       route: '/bill-of-materials',
@@ -62,20 +69,19 @@ export class AppComponent implements OnInit, OnDestroy {
       icon: 'inventory',
       isActive: false,
     },
-    { label: 'Suppliers', route: '/suppliers', icon: 'store', isActive: false },
   ];
 
   destroy$ = new Subject<boolean>();
 
   constructor(
-    private router: Router,
+    private _router: Router,
     private _errorMessageService: ErrorMessageService
   ) {}
 
   ngOnInit(): void {
-    this.router.events.pipe(takeUntil(this.destroy$)).subscribe((event) => {
+    this._router.events.pipe(takeUntil(this.destroy$)).subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this._updatedActiveRoute(this.router.url);
+        this._updatedActiveRoute(this._router.url);
       }
     });
 
@@ -94,15 +100,17 @@ export class AppComponent implements OnInit, OnDestroy {
     this.menuItems = this.menuItems.map((m) => ({ ...m, isActive: false }));
 
     if (url.includes('/materials')) {
-      this.menuItems[0].isActive = true;
-    } else if (url.includes('/bill-of-materials')) {
       this.menuItems[1].isActive = true;
-    } else if (url.includes('/orders')) {
-      this.menuItems[2].isActive = true;
-    } else if (url.includes('/inventory')) {
+    } else if (url.includes('/bill-of-materials')) {
       this.menuItems[3].isActive = true;
-    } else if (url.includes('/suppliers')) {
+    } else if (url.includes('/orders')) {
       this.menuItems[4].isActive = true;
+    } else if (url.includes('/inventory')) {
+      this.menuItems[5].isActive = true;
+    } else if (url.includes('/suppliers')) {
+      this.menuItems[2].isActive = true;
+    } else {
+      this.menuItems[0].isActive = true;
     }
   }
 

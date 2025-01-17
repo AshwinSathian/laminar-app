@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
+import { DashboardComponent } from './shared-components';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'materials', pathMatch: 'full' },
+  { path: '', component: DashboardComponent },
   {
     path: 'materials',
     loadChildren: () =>

@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '@laminar-app/environment';
+import { Inventory, Material } from '@laminar-app/interfaces';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { Inventory } from '../../interfaces/inventory.interface';
-import { Material } from '../../interfaces/material.interface';
 
 const API_BASE_URL = `${environment.apiUrl}inventory/`;
 
@@ -38,10 +37,6 @@ export class InventoryService {
 
   deleteInventory(id: string): Observable<Inventory> {
     return this._http.delete<Inventory>(`${API_BASE_URL}${id}`);
-  }
-
-  getCountries(): Observable<any[]> {
-    return this._http.get<any[]>('https://restcountries.com/v3.1/all');
   }
 
   importInventories(formData: FormData): Observable<{

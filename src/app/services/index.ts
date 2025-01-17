@@ -4,5 +4,7 @@ export * from './excel-export.service';
 export * from './inventory.service';
 export * from './loading.service';
 export * from './materials.service';
+export * from './orders.service';
+export * from './shared.service';
 export * from './suppliers.service';
 export * from './upload.service';
