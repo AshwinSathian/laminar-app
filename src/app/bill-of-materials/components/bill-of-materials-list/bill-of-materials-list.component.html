@@ -1,18 +1,18 @@
 <div class="w-full flex flex-row items-center justify-between">
   <app-header title="Bill of Materials" icon="receipt_long"></app-header>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
+  <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>menu</mat-icon>
   </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="./create">
-      <mat-icon>add_circle</mat-icon>
-      Create New Bill of Materials
-    </button>
-    <button mat-menu-item (click)="exportAllBillsOfMaterials()">
+  <mat-menu #menu="matMenu"> -->
+  <button mat-stroked-button routerLink="./create">
+    <mat-icon>add_circle</mat-icon>
+    Create New Bill of Materials
+  </button>
+  <!-- <button mat-menu-item (click)="exportAllBillsOfMaterials()">
       <mat-icon>download</mat-icon>
       Export All Bills of Materials
-    </button>
-    <!-- <button mat-menu-item (click)="fileInput.click()">
+    </button> -->
+  <!-- <button mat-menu-item (click)="fileInput.click()">
       <mat-icon>upload</mat-icon>
       Import Suppliers
     </button>
@@ -23,7 +23,7 @@
       (change)="onFileSelected($event)"
       accept=".xlsx, .xls"
     /> -->
-  </mat-menu>
+  <!-- </mat-menu> -->
 </div>
 
 <mat-divider class="w-full my-3"></mat-divider>
