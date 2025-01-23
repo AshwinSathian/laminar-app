@@ -1,0 +1,33 @@
+<div class="flex items-center justify-between">
+  @for (step of statusSteps; track $index) {
+  <div class="flex items-center space-x-4">
+    <div
+      class="flex flex-col items-center text-center space-y-2"
+      [ngClass]="{
+        'text-white': step.value === OrderStatus.placed,
+        'text-yellow-500': step.value === OrderStatus.dispatched,
+        'text-green-500': step.value === OrderStatus.delivered,
+        'opacity-100': $index <= currentStepIndex,
+        'opacity-50': $index > currentStepIndex
+      }"
+    >
+      <mat-icon class="w-40 h-40">
+        {{ step.icon }}
+      </mat-icon>
+      <span class="text-md font-medium">
+        {{ step.label }}
+      </span>
+    </div>
+
+    @if ($index < statusSteps.length-1) {
+    <div
+      class="flex-grow h-1"
+      [ngClass]="{
+        'bg-gray-300': $index >= currentStepIndex,
+        'bg-green-500': $index < currentStepIndex
+      }"
+    ></div>
+    }
+  </div>
+  }
+</div>

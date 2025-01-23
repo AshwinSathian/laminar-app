@@ -1,3 +1,4 @@
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import {
   AfterViewInit,
   Component,
@@ -32,6 +33,7 @@ export class ViewOrderComponent implements OnInit, AfterViewInit, OnDestroy {
     [OrderStatus.dispatched]: 'local_shipping',
     [OrderStatus.delivered]: 'task_alt',
   };
+  OrderStatus = OrderStatus;
 
   destroy$ = new Subject<boolean>();
 

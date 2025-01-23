@@ -23,6 +23,7 @@ import {
 import {
   HeaderComponent,
   OrdersListComponent,
+  OrderStatusComponent,
 } from '@laminar-app/shared-components';
 import { AllOrdersListComponent } from './all-orders-list/all-orders-list.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
@@ -58,6 +59,7 @@ import { ViewOrderComponent } from './view-order/view-order.component';
 
     HeaderComponent,
     OrdersListComponent,
+    OrderStatusComponent,
   ],
   providers: [OrdersService, OrderResolver, UploadService, SharedService],
 })

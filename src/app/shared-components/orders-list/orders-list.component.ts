@@ -1,4 +1,9 @@
-import { CurrencyPipe, DatePipe, TitleCasePipe } from '@angular/common';
+import {
+  CommonModule,
+  CurrencyPipe,
+  DatePipe,
+  TitleCasePipe,
+} from '@angular/common';
 import {
   Component,
   Input,
@@ -21,6 +26,7 @@ import { Order } from '@laminar-app/interfaces';
 @Component({
   selector: 'app-orders-list',
   imports: [
+    CommonModule,
     MatFormFieldModule,
     MatTableModule,
     MatInputModule,
@@ -48,6 +54,7 @@ export class OrdersListComponent implements OnChanges {
     [OrderStatus.dispatched]: 'local_shipping',
     [OrderStatus.delivered]: 'task_alt',
   };
+  OrderStatus = OrderStatus;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes?.['orders']?.currentValue) {

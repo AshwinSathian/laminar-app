@@ -49,7 +49,14 @@
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
       <td mat-cell *matCellDef="let row">
-        <div class="flex items-center gap-2">
+        <div
+          class="flex items-center gap-2"
+          [ngClass]="{
+            'text-white': row.status === OrderStatus.placed,
+            'text-yellow-500': row.status === OrderStatus.dispatched,
+            'text-green-500': row.status === OrderStatus.delivered
+          }"
+        >
           <mat-icon>{{ statusIconsMap[row.status] }}</mat-icon>
           {{ row.status | titlecase }}
         </div>
