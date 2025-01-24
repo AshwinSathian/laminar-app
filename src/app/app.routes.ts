@@ -35,4 +35,5 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./inventory/inventory.module').then((m) => m.InventoryModule),
   },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
