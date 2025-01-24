@@ -1,6 +1,7 @@
 export * from './bill-of-materials.service';
 export * from './error-message.service';
 export * from './excel-export.service';
+export * from './filter.service';
 export * from './inventory.service';
 export * from './loading.service';
 export * from './materials.service';

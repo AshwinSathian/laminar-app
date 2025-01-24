@@ -1,12 +1,3 @@
-<mat-form-field appearance="fill" class="w-full">
-  <input
-    matInput
-    (keyup)="applyFilter($event)"
-    placeholder="Filter Orders by Reference ID, Supplier or Status..."
-    #input
-  />
-</mat-form-field>
-
 <div class="my-5 mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="referenceId">

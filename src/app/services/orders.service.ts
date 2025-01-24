@@ -24,8 +24,10 @@ export class OrdersService {
     return this._http.post<Order>(`${API_BASE_URL}`, newOrder);
   }
 
-  getOrders(): Observable<Supplier[]> {
-    return this._http.get<Supplier[]>(`${API_BASE_URL}`);
+  getOrders(filters?: string): Observable<Supplier[]> {
+    return this._http.get<Supplier[]>(
+      `${API_BASE_URL}${filters?.length ? '?filters=' + filters : ''}`
+    );
   }
 
   getOrder(id: string): Observable<Order> {

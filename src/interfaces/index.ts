@@ -1,6 +1,7 @@
 export * from './base.interface';
 export * from './bom.interface';
 export * from './common.interface';
+export * from './filters-payload.interface';
 export * from './inventory.interface';
 export * from './material.interface';
 export * from './order.interface';
