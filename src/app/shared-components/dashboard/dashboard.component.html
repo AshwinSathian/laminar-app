@@ -6,7 +6,7 @@
         <div class="w-full h-full flex items-center justify-center text-center">
           <div class="flex flex-col gap-2">
             <div class="text-6xl font-bold">
-              {{ materialsCount$ | async }}
+              {{ (materialsCount$ | async) || 0 }}
             </div>
             <div class="text-lg">Materials</div>
           </div>
@@ -17,7 +17,7 @@
         <div class="w-full h-full flex items-center justify-center text-center">
           <div class="flex flex-col gap-2">
             <div class="text-6xl font-bold">
-              {{ suppliersCount$ | async }}
+              {{ (suppliersCount$ | async) || 0 }}
             </div>
             <div class="text-lg">Suppliers</div>
           </div>
@@ -28,7 +28,7 @@
         <div class="w-full h-full flex items-center justify-center text-center">
           <div class="flex flex-col gap-2">
             <div class="text-6xl font-bold">
-              {{ billsOfMaterialsCount$ | async }}
+              {{ (billsOfMaterialsCount$ | async) || 0 }}
             </div>
             <div class="text-lg">Bills of Materials</div>
           </div>
@@ -39,7 +39,7 @@
         <div class="w-full h-full flex items-center justify-center text-center">
           <div class="flex flex-col gap-2">
             <div class="text-6xl font-bold">
-              {{ ordersCount$ | async }}
+              {{ (ordersCount$ | async) || 0 }}
             </div>
             <div class="text-lg">Orders</div>
           </div>
@@ -50,7 +50,7 @@
         <div class="w-full h-full flex items-center justify-center text-center">
           <div class="flex flex-col gap-2">
             <div class="text-6xl font-bold">
-              {{ inventoryCount$ | async }}
+              {{ (inventoryCount$ | async) || 0 }}
             </div>
             <div class="text-lg">Inventory Records</div>
           </div>
