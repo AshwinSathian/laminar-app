@@ -29,10 +29,10 @@ import {
   HeaderComponent,
   OrdersListComponent,
   OrderStatusComponent,
+  PartsListDialogComponent,
 } from '@laminar-app/shared-components';
 import { AllOrdersListComponent } from './all-orders-list/all-orders-list.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
-import { PartsListDialogComponent } from './order-details/parts-list-dialog/parts-list-dialog.component';
 import { OrdersRoutingModule } from './orders-routing.module';
 import { OrderResolver } from './resolvers/order.resolver';
 import { ViewOrderComponent } from './view-order/view-order.component';
@@ -42,7 +42,6 @@ import { ViewOrderComponent } from './view-order/view-order.component';
     AllOrdersListComponent,
     OrderDetailsComponent,
     ViewOrderComponent,
-    PartsListDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -69,6 +68,7 @@ import { ViewOrderComponent } from './view-order/view-order.component';
     HeaderComponent,
     OrdersListComponent,
     OrderStatusComponent,
+    PartsListDialogComponent,
   ],
   providers: [
     OrdersService,

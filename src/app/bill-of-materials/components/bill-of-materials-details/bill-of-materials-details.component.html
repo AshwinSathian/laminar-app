@@ -18,7 +18,11 @@
     />
   </mat-form-field>
   <mat-form-field class="w-full" appearance="outline">
-    <mat-select [(ngModel)]="billOfMaterials.currency" placeholder="Currency">
+    <mat-select
+      [(ngModel)]="billOfMaterials.currency"
+      placeholder="Currency"
+      [disabled]="true"
+    >
       @for (currency of currencyOptions; track currency.value) {
       <mat-option [value]="currency.value">
         {{ currency.label }}
@@ -50,21 +54,17 @@
     </mat-form-field>
   </div>
 
-  <h2 class="text-xl my-2">Parts</h2>
-  <mat-form-field class="w-full" appearance="outline">
-    <mat-select
-      [(ngModel)]="selectedParts"
-      multiple
-      placeholder="Select Parts"
-      [compareWith]="materialCompareFunction"
-      (ngModelChange)="addParts()"
-    >
-      @for (material of materialsOptions; track material.id) {
-      <mat-option [value]="material">{{ material.partName }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-  <div class="overflow-x-auto max-w-full">
+  <div class="flex flex-row items-center justify-between my-2">
+    <h2 class="text-xl my-2">Parts</h2>
+    <button mat-stroked-button (click)="openPartsDialog()">
+      <mat-icon>
+        {{ billOfMaterials.parts!.length ? "edit" : "add" }}
+      </mat-icon>
+      {{ billOfMaterials.parts!.length ? "Update" : "Add" }} Parts
+    </button>
+  </div>
+  @if (billOfMaterials.parts!.length) {
+  <div class="overflow-x-auto max-w-full px-2 my-2">
     <table
       class="table-auto w-full max-w-full bg-gray-800 border border-gray-700 text-gray-200"
     >
@@ -113,6 +113,7 @@
                 class="w-full text-sm"
                 [(ngModel)]="part.quantity"
                 placeholder="Quantity"
+                (ngModelChange)="calculateTotalCost()"
               />
             </mat-form-field>
           </td>
@@ -154,6 +155,7 @@
                 class="w-full text-sm"
                 [(ngModel)]="part.unitCost"
                 placeholder="Unit Cost"
+                (ngModelChange)="calculateTotalCost()"
               />
             </mat-form-field>
           </td>
@@ -162,14 +164,27 @@
       </tbody>
     </table>
   </div>
+  }
 </div>
 
-<mat-toolbar
-  class="actions-footer fixed bottom-0 right-0 w-full flex flex-row justify-between gap-5 items-center"
->
-  <div class="flex flex-col gap-0"></div>
-  <button mat-flat-button (click)="submit()">
-    <mat-icon>check_circle</mat-icon>
-    Submit
-  </button>
-</mat-toolbar>
+<mat-card class="w-full text-center p-4 text-3xl">
+  <mat-card-content>
+    <label class="block text-sm font-medium text-gray-400"> Total Cost </label>
+    <div class="text-gray-200">
+      {{ billOfMaterials.totalCost | currency : billOfMaterials.currency }}
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<div class="w-full flex flex-row items-center justify-center my-10">
+  <div class="flex items-center gap-2">
+    <button mat-stroked-button routerLink="/bill-of-materials">
+      <mat-icon>close</mat-icon>
+      Cancel
+    </button>
+    <button mat-flat-button (click)="submit()">
+      <mat-icon>check_circle_outline</mat-icon>
+      {{ billOfMaterials.id ? "Update" : "Create" }} Bill of Materials
+    </button>
+  </div>
+</div>

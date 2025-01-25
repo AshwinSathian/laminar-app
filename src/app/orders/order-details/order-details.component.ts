@@ -17,16 +17,10 @@ import {
   SharedService,
   UploadService,
 } from '@laminar-app/services';
+import { PartsListDialogComponent } from '@laminar-app/shared-components';
 import * as _moment from 'moment';
 import { default as _rollupMoment } from 'moment';
 import { Subject, takeUntil } from 'rxjs';
-import { PartsListDialogComponent } from './parts-list-dialog/parts-list-dialog.component';
-
-export interface PartsDialogData {
-  materials: Material[];
-  supplier: Supplier;
-  selectedPartIds: string[];
-}
 
 const moment = _rollupMoment || _moment;
 
@@ -60,7 +54,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     orderDate: new Date(),
     status: OrderStatus.placed,
     totalValue: 0,
-    currency: '',
+    currency: 'GBP',
     invoice: '',
   };
   supplierOptions: Supplier[] = [];
@@ -148,30 +142,39 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
               },
             });
 
-            dialogRef.afterClosed().subscribe({
-              next: (result) => {
-                if (result !== undefined) {
-                  this.selectedPartIds = [...(result || [])];
-                  for (const id of this.selectedPartIds || []) {
-                    const part = this.materialOptions?.find((m) => m.id === id);
-                    if (part) {
-                      const index = this.order.parts?.findIndex(
-                        (p) => p.part.id === part.id
+            dialogRef
+              .afterClosed()
+              .pipe(takeUntil(this.destroy$))
+              .subscribe({
+                next: (result) => {
+                  if (result !== undefined) {
+                    this.selectedPartIds = [...(result || [])];
+                    for (const id of this.selectedPartIds || []) {
+                      const part = this.materialOptions?.find(
+                        (m) => m.id === id
                       );
-                      if (index === -1) {
-                        this.order.parts.push({
-                          part,
-                          quantity: 1,
-                          unitPrice: 0,
-                        });
-                      } else {
-                        this.order.parts.splice(index, 1);
+                      if (part) {
+                        const index = this.order.parts?.findIndex(
+                          (p) => p.part.id === id
+                        );
+                        if (index === -1) {
+                          this.order.parts.push({
+                            part,
+                            quantity: 1,
+                            unitPrice: 0,
+                          });
+                          this.selectedPartIds.push(id);
+                        }
                       }
                     }
+
+                    this.order.parts = this.order.parts?.filter((p) =>
+                      this.selectedPartIds.includes(p.part.id || '')
+                    );
+                    this.updateTotal();
                   }
-                }
-              },
-            });
+                },
+              });
           },
         });
     }
@@ -184,7 +187,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  openPartsDrawer() {
+  openPartsDialog() {
     this._loadSupplierMaterials();
   }
 

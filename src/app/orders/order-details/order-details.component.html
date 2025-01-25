@@ -34,7 +34,11 @@
   </div>
 
   <mat-form-field class="w-full" appearance="outline">
-    <mat-select [(ngModel)]="order.currency" placeholder="Currency">
+    <mat-select
+      [(ngModel)]="order.currency"
+      placeholder="Currency"
+      [disabled]="true"
+    >
       @for (currency of currencyOptions; track currency.value) {
       <mat-option [value]="currency.value">
         {{ currency.label }}
@@ -56,14 +60,14 @@
     </mat-select>
   </mat-form-field>
 
-  <div class="flex flex-row items-center justify-between">
+  <div class="flex flex-row items-center justify-between my-2">
     <h2 class="text-xl my-2">Parts</h2>
     <button
       mat-stroked-button
-      (click)="openPartsDrawer()"
+      (click)="openPartsDialog()"
       [disabled]="!order.supplier?.id"
     >
-      <mat-icon>{{ order.parts!.length ? "edit" : "add" }} Parts</mat-icon>
+      <mat-icon>{{ order.parts!.length ? "edit" : "add" }}</mat-icon>
       {{ order.parts!.length ? "Update" : "Add" }} Parts
     </button>
   </div>
@@ -154,19 +158,24 @@
   </div>
 </div>
 
-<mat-toolbar
-  class="actions-footer fixed bottom-0 right-0 w-full flex flex-row justify-between gap-5 items-center"
->
-  <div class="flex flex-col gap-0">
-    @if (order.currency) {
-    <h2 class="text-lg font-bold">
-      Total Cost: {{ order.totalValue || 0 | currency : order.currency }}
-    </h2>
-    <small class="font-light">(Incl. of all taxes)</small>}
-  </div>
+<mat-card class="w-full text-center p-4 text-3xl">
+  <mat-card-content>
+    <label class="block text-sm font-medium text-gray-400"> Total Value </label>
+    <div class="text-gray-200">
+      {{ order.totalValue | currency : order.currency }}
+    </div>
+  </mat-card-content>
+</mat-card>
 
-  <button mat-flat-button (click)="submit()">
-    <mat-icon>check_circle</mat-icon>
-    Submit
-  </button>
-</mat-toolbar>
+<div class="w-full flex flex-row items-center justify-center my-10">
+  <div class="flex items-center gap-2">
+    <button mat-stroked-button routerLink="/orders">
+      <mat-icon>close</mat-icon>
+      Cancel
+    </button>
+    <button mat-flat-button (click)="submit()">
+      <mat-icon>check_circle_outline</mat-icon>
+      {{ order.id ? "Update" : "Create" }} Order
+    </button>
+  </div>
+</div>

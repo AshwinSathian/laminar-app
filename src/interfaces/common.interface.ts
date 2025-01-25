@@ -1,3 +1,6 @@
+import { Material } from './material.interface';
+import { Supplier } from './supplier.interface';
+
 export interface UserPersona {
   id: string;
   name: string;
@@ -44,4 +47,10 @@ export interface Attachment {
   name: string;
   type: string;
   url: string;
+}
+
+export interface PartsDialogData {
+  materials: Material[];
+  supplier?: Supplier;
+  selectedPartIds: string[];
 }

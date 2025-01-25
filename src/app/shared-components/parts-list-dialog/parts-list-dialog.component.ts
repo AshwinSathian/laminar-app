@@ -1,10 +1,23 @@
 import { Component, inject, model } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PartsDialogData } from '../order-details.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
+import { PartsDialogData } from '@laminar-app/interfaces';
 
 @Component({
   selector: 'app-parts-list-dialog',
-  standalone: false,
+  standalone: true,
+  imports: [
+    MatDialogModule,
+    MatDividerModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    RouterModule,
+  ],
   templateUrl: './parts-list-dialog.component.html',
   styleUrl: './parts-list-dialog.component.css',
 })

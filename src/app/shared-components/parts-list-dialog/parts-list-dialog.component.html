@@ -1,4 +1,8 @@
+@if (data!.supplier) {
 <h1 mat-dialog-title>Parts supplied by {{ data!.supplier!.name }}</h1>
+} @else {
+<h1 mat-dialog-title>Available Parts</h1>
+}
 
 <mat-divider></mat-divider>
 
@@ -22,12 +26,21 @@
           <mat-icon>open_in_new</mat-icon>
           VIEW DETAILS
         </a>
-        <button mat-button (click)="addPart(material.id)">
+        <button
+          mat-button
+          (click)="addPart(material.id)"
+          [disabled]="!material!.suppliers!.length"
+        >
           <mat-icon>add</mat-icon>
           ADD
         </button>
         } @else {
-        <button mat-button (click)="removePart(material.id)" color="warn">
+        <button
+          mat-button
+          (click)="removePart(material.id)"
+          color="warn"
+          [disabled]="!material!.suppliers!.length"
+        >
           <mat-icon>delete</mat-icon>
           REMOVE
         </button>
