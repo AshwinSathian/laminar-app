@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://laminar-api.vercel.app/',
+  apiUrl: 'http://laminar-api-env.eba-uubrrygj.eu-north-1.elasticbeanstalk.com/',
 };
