@@ -1,19 +1,25 @@
 <app-loading></app-loading>
 
-<mat-sidenav-container class="app-container">
+<mat-sidenav-container class="app-container h-screen flex">
   <mat-sidenav
     #sidenav
-    mode="side"
-    opened
+    [mode]="(isMobile$ | async) ? 'over' : 'side'"
+    [opened]="!(isMobile$ | async)"
     fixedInViewport
-    class="h-screen flex flex-col gap-2 mr-3 p-3 bg-black text-white app-sidenav"
-    [disableClose]="true"
+    class="h-screen flex flex-col gap-2 p-3 bg-black text-white app-sidenav transition-all duration-300"
+    [disableClose]="isMobile$ | async"
   >
-    <h1 class="w-full text-4xl text-center font-semibold my-5">Laminar</h1>
+    <h1 class="w-full text-3xl text-center font-semibold my-5">Laminar</h1>
     <mat-divider></mat-divider>
+
     <mat-nav-list class="text-center text-white">
       @for (item of menuItems; track $index) {
-      <a mat-list-item [activated]="item.isActive" [routerLink]="item.route">
+      <a
+        mat-list-item
+        [activated]="item.isActive"
+        [routerLink]="item.route"
+        (click)="sidenav.toggle()"
+      >
         <div class="flex flex-row items-center gap-2 px-2">
           <mat-icon>{{ item.icon }}</mat-icon>
           <div>{{ item.label }}</div>
@@ -23,7 +29,15 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content class="m-0 p-0">
+  <mat-sidenav-content class="m-0 p-0 flex-grow overflow-auto">
+    @if (isMobile$ | async) {
+    <div class="flex items-center justify-between bg-black text-white p-3">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    }
+
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

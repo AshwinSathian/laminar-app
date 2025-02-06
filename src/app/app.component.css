@@ -6,11 +6,27 @@
   right: 0;
   width: 100vw;
   height: 100vh;
+  display: flex;
+  overflow: hidden;
 }
 
 .app-sidenav {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding: 1rem;
   width: 15vw;
+  min-width: 250px;
+  max-width: 300px;
+  transition: width 0.3s ease-in-out;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 50;
+  }
 }

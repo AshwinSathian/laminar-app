@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,6 +16,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { HttpErrorComponent } from './interceptors/components/http-error/http-error.component';
 import { LoadingComponent } from './interceptors/components/loading/loading.component';
 import { ErrorMessageService } from './services';
+import { BreakpointService } from './services/breakpoint.service';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,7 @@ import { ErrorMessageService } from './services';
     MatIconModule,
     LoadingComponent,
     MatListModule,
+    AsyncPipe,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -70,12 +72,14 @@ export class AppComponent implements OnInit, OnDestroy {
       isActive: false,
     },
   ];
+  isMobile$ = this._breakpointService.isMobile$;
 
   destroy$ = new Subject<boolean>();
 
   constructor(
     private _router: Router,
-    private _errorMessageService: ErrorMessageService
+    private _errorMessageService: ErrorMessageService,
+    private _breakpointService: BreakpointService
   ) {}
 
   ngOnInit(): void {
