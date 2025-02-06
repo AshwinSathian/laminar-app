@@ -1,5 +1,11 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -72,8 +78,10 @@ export class AppComponent implements OnInit, OnDestroy {
       isActive: false,
     },
   ];
-  isMobile$ = this._breakpointService.isMobile$;
+  isHeaderHidden = false;
+  private lastScrollTop = 0;
 
+  isMobile$ = this._breakpointService.isMobile$;
   destroy$ = new Subject<boolean>();
 
   constructor(
@@ -81,6 +89,20 @@ export class AppComponent implements OnInit, OnDestroy {
     private _errorMessageService: ErrorMessageService,
     private _breakpointService: BreakpointService
   ) {}
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const currentScroll =
+      window.pageYOffset || document.documentElement.scrollTop;
+
+    if (currentScroll > this.lastScrollTop) {
+      this.isHeaderHidden = true;
+    } else {
+      this.isHeaderHidden = false;
+    }
+
+    this.lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+  }
 
   ngOnInit(): void {
     this._router.events.pipe(takeUntil(this.destroy$)).subscribe((event) => {

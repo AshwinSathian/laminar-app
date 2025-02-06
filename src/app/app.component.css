@@ -21,7 +21,7 @@
   max-width: 300px;
   transition: width 0.3s ease-in-out;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -29,4 +29,21 @@
     top: 0;
     z-index: 50;
   }
+}
+
+.mobile-header {
+  @apply fixed top-0 left-0 w-full bg-gray-800 text-white shadow-md p-3 flex items-center justify-between z-50 transition-all duration-300;
+}
+
+.header-title {
+  @apply absolute left-1/2 transform -translate-x-1/2 text-lg font-semibold;
+}
+
+.menu-button {
+  @apply text-white transition-all duration-200 hover:bg-gray-700 rounded-full p-2;
+}
+
+.hidden-header {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
 }

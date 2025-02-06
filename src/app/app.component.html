@@ -31,10 +31,12 @@
 
   <mat-sidenav-content class="m-0 p-0 flex-grow overflow-auto">
     @if (isMobile$ | async) {
-    <div class="flex items-center justify-between bg-black text-white p-3">
-      <button mat-icon-button (click)="sidenav.toggle()">
+    <div class="mobile-header" [ngClass]="{ 'hidden-header': isHeaderHidden }">
+      <button mat-icon-button (click)="sidenav.toggle()" class="menu-button">
         <mat-icon>menu</mat-icon>
       </button>
+
+      <h1 class="header-title">Laminar</h1>
     </div>
     }
 

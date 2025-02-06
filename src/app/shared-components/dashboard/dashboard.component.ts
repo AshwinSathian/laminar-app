@@ -1,11 +1,12 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { SharedService } from '@laminar-app/services';
+import { BreakpointService } from '../../services/breakpoint.service';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatCardModule, AsyncPipe],
+  imports: [MatCardModule, AsyncPipe, NgClass],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
   providers: [SharedService],
@@ -17,6 +18,10 @@ export class DashboardComponent {
   ordersCount$ = this._sharedService.getOrdersCount();
   inventoryCount$ = this._sharedService.getInventoryCount();
   suppliersCount$ = this._sharedService.getSuppliersCount();
+  isMobile$ = this._breakpointService.isMobile$;
 
-  constructor(private _sharedService: SharedService) {}
+  constructor(
+    private _sharedService: SharedService,
+    private _breakpointService: BreakpointService
+  ) {}
 }

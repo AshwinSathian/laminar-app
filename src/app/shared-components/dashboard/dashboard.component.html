@@ -1,59 +1,56 @@
-<div class="w-full h-screen flex items-center justify-center">
-  <div class="flex flex-col gap-10">
+<div class="w-full h-screen flex items-center justify-center p-5">
+  <div class="flex flex-col gap-10 w-full max-w-screen-xl">
     <h1 class="text-5xl text-center my-5">Welcome to Laminar</h1>
-    <div class="w-full flex items-center gap-5 flex-wrap">
+
+    <div
+      class="w-full grid gap-5 p-5"
+      [ngClass]="{
+        'grid-cols-2': (isMobile$ | async),
+        'grid-cols-5': !(isMobile$ | async)
+      }"
+    >
       <div class="card">
-        <div class="w-full h-full flex items-center justify-center text-center">
-          <div class="flex flex-col gap-2">
-            <div class="text-6xl font-bold">
-              {{ (materialsCount$ | async) || 0 }}
-            </div>
-            <div class="text-lg">Materials</div>
+        <div class="content">
+          <div class="text-6xl font-bold">
+            {{ (materialsCount$ | async) || 0 }}
           </div>
+          <div class="text-lg">Materials</div>
         </div>
       </div>
 
       <div class="card">
-        <div class="w-full h-full flex items-center justify-center text-center">
-          <div class="flex flex-col gap-2">
-            <div class="text-6xl font-bold">
-              {{ (suppliersCount$ | async) || 0 }}
-            </div>
-            <div class="text-lg">Suppliers</div>
+        <div class="content">
+          <div class="text-6xl font-bold">
+            {{ (suppliersCount$ | async) || 0 }}
           </div>
+          <div class="text-lg">Suppliers</div>
         </div>
       </div>
 
       <div class="card">
-        <div class="w-full h-full flex items-center justify-center text-center">
-          <div class="flex flex-col gap-2">
-            <div class="text-6xl font-bold">
-              {{ (billsOfMaterialsCount$ | async) || 0 }}
-            </div>
-            <div class="text-lg">Bills of Materials</div>
+        <div class="content">
+          <div class="text-6xl font-bold">
+            {{ (billsOfMaterialsCount$ | async) || 0 }}
           </div>
+          <div class="text-lg">Bills of Materials</div>
         </div>
       </div>
 
       <div class="card">
-        <div class="w-full h-full flex items-center justify-center text-center">
-          <div class="flex flex-col gap-2">
-            <div class="text-6xl font-bold">
-              {{ (ordersCount$ | async) || 0 }}
-            </div>
-            <div class="text-lg">Orders</div>
+        <div class="content">
+          <div class="text-6xl font-bold">
+            {{ (ordersCount$ | async) || 0 }}
           </div>
+          <div class="text-lg">Orders</div>
         </div>
       </div>
 
       <div class="card">
-        <div class="w-full h-full flex items-center justify-center text-center">
-          <div class="flex flex-col gap-2">
-            <div class="text-6xl font-bold">
-              {{ (inventoryCount$ | async) || 0 }}
-            </div>
-            <div class="text-lg">Inventory Records</div>
+        <div class="content">
+          <div class="text-6xl font-bold">
+            {{ (inventoryCount$ | async) || 0 }}
           </div>
+          <div class="text-lg">Inventory Records</div>
         </div>
       </div>
     </div>
