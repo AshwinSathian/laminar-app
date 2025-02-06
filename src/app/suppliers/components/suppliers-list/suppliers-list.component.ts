@@ -14,6 +14,7 @@ import { Supplier } from '@laminar-app/interfaces';
 import { ExcelExportService, SuppliersService } from '@laminar-app/services';
 import { Subject, switchMap, takeUntil } from 'rxjs';
 import { ColInfo } from 'xlsx';
+import { BreakpointService } from '../../../services/breakpoint.service';
 import { SuppliersImportStatsComponent } from './suppliers-import-stats/suppliers-import-stats.component';
 
 @Component({
@@ -39,11 +40,13 @@ export class SuppliersListComponent
   }>;
   suppliers: Supplier[] = [];
 
+  isMobile$ = this._breakpointService.isMobile$;
   destroy$ = new Subject<boolean>();
 
   constructor(
     private _service: SuppliersService,
-    private _excelExportService: ExcelExportService
+    private _excelExportService: ExcelExportService,
+    private _breakpointService: BreakpointService
   ) {}
 
   ngOnInit(): void {
