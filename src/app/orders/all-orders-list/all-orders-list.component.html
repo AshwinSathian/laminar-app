@@ -4,7 +4,7 @@
     position="end"
     [(opened)]="showSidebar"
     [disableClose]="false"
-    style="width: 30vw; padding: 0 0.5rem"
+    class="sidebar"
   >
     <div class="w-full flex items-center justify-between">
       <app-header title="Filters" icon="filter_alt"></app-header>
@@ -31,17 +31,19 @@
           >
             Placed
           </mat-checkbox>
-          } @if (filterConstraints.status?.[OrderStatus.dispatched])
-          {<mat-checkbox
+          } @if (filterConstraints.status?.[OrderStatus.dispatched]) {
+          <mat-checkbox
             [(ngModel)]="filterPayload!.status![OrderStatus.dispatched]"
           >
-            Dispatched </mat-checkbox
-          >} @if (filterConstraints.status?.[OrderStatus.delivered])
-          {<mat-checkbox
+            Dispatched
+          </mat-checkbox>
+          } @if (filterConstraints.status?.[OrderStatus.delivered]) {
+          <mat-checkbox
             [(ngModel)]="filterPayload!.status![OrderStatus.delivered]"
           >
-            Delivered </mat-checkbox
-          >}
+            Delivered
+          </mat-checkbox>
+          }
         </div>
       </mat-expansion-panel>
 
@@ -85,8 +87,8 @@
           <mat-panel-title> Total Value </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <div class="w-full my-2 flex items-center gap-2">
-          <div class="w-1/2">
+        <div class="w-full my-2 flex flex-col md:flex-row items-center gap-2">
+          <div class="w-full md:w-1/2">
             <label>Minimum Order Value</label>
             <mat-form-field class="w-full">
               <span matTextPrefix class="mr-2">£</span>
@@ -101,9 +103,9 @@
               />
             </mat-form-field>
           </div>
-          <div class="w-1/2">
+          <div class="w-full md:w-1/2">
             <label>Maximum Order Value</label>
-            <mat-form-field class="w-full/2">
+            <mat-form-field class="w-full">
               <span matTextPrefix class="mr-2">£</span>
               <input
                 matInput
@@ -120,17 +122,7 @@
       </mat-expansion-panel>
     </mat-accordion>
 
-    <div
-      class="fixed bottom-0 right-0 flex flex-row justify-end gap-5 items-center p-2"
-    >
-      <button
-        mat-button
-        class="min-w-fit flex flex-row items-center my-0"
-        (click)="closeSidebar()"
-      >
-        <mat-icon>close</mat-icon>
-        Close
-      </button>
+    <div class="w-full flex items-center justify-center mt-5">
       <button
         mat-flat-button
         class="min-w-fit flex flex-row items-center my-0"
@@ -141,28 +133,31 @@
       </button>
     </div>
   </mat-sidenav>
+
   <mat-sidenav-content>
-    <div class="w-full flex flex-row items-center justify-between">
-      <app-header title="Orders" icon="shopping_cart"></app-header>
-      <div class="flex flex-row items-center gap-1">
-        <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
+    <div class="p-2">
+      @if (!(isMobile$|async)) {
+      <div class="w-full flex flex-row items-center justify-between">
+        <app-header title="Orders" icon="shopping_cart"></app-header>
+        <div class="flex flex-row items-center gap-1">
+          <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu"> -->
-        <!-- <app-filter></app-filter> -->
-        <button
-          mat-stroked-button
-          class="min-w-fit flex flex-row items-center my-0"
-          (click)="openSidebar()"
-        >
-          <mat-icon>filter_alt</mat-icon>
-          Apply Filters
-        </button>
-        <button mat-stroked-button routerLink="./create">
-          <mat-icon>add_circle</mat-icon>
-          Create New Order
-        </button>
-        <!-- <button mat-menu-item (click)="exportAllInventory()">
+          <!-- <app-filter></app-filter> -->
+          <button
+            mat-stroked-button
+            class="min-w-fit flex flex-row items-center my-0"
+            (click)="openSidebar()"
+          >
+            <mat-icon>filter_alt</mat-icon>
+            Apply Filters
+          </button>
+          <button mat-stroked-button routerLink="./create">
+            <mat-icon>add_circle</mat-icon>
+            Create New Order
+          </button>
+          <!-- <button mat-menu-item (click)="exportAllInventory()">
       <mat-icon>download</mat-icon>
       Export All Inventory Records
     </button>
@@ -177,32 +172,55 @@
       (change)="onFileSelected($event)"
       accept=".xlsx, .xls"
     /> -->
-        <!-- </mat-menu> -->
-      </div>
-    </div>
-
-    <mat-divider class="w-full my-3"></mat-divider>
-
-    <mat-card appearance="outlined" class="w-full my-5 p-4">
-      <mat-card-content>
-        <div class="w-full flex flex-row items-center justify-evenly">
-          <div class="w-1/2 flex flex-col gap-2 text-center">
-            <div class="text-6xl">{{ analytics.totalCount }}</div>
-            <div class="text-xl">Total Orders</div>
-          </div>
-          <div class="w-1/2 flex flex-col gap-2 text-center">
-            <div class="text-6xl">
-              {{ analytics.totalValue | currency : "GBP" }}
-            </div>
-            <div class="text-xl">Total Value</div>
-          </div>
+          <!-- </mat-menu> -->
         </div>
-      </mat-card-content>
-    </mat-card>
+      </div>
+      } @else {
+      <div class="flex flex-col items-center">
+        <h1 class="text-3xl text-center my-5 w-full">
+          Orders ({{ orders!.length }})
+        </h1>
+        <div class="w-full flex items-center justify-center my-1">
+          <button
+            mat-stroked-button
+            class="min-w-fit flex flex-row items-center my-0"
+            (click)="openSidebar()"
+          >
+            <mat-icon>filter_alt</mat-icon>
+            Apply Filters
+          </button>
+        </div>
+      </div>
+      }
 
-    <app-orders-list
-      [orders]="orders"
-      [displayedColumns]="displayedColumns"
-    ></app-orders-list>
+      <mat-divider class="w-full my-3"></mat-divider>
+
+      <mat-card appearance="outlined" class="w-full my-5 p-4">
+        <mat-card-content>
+          <div
+            class="w-full flex flex-col md:flex-row items-center justify-evenly gap-4"
+          >
+            <!-- Total Orders -->
+            <div class="w-full md:w-1/2 flex flex-col gap-2 text-center">
+              <div class="text-4xl md:text-6xl">{{ analytics.totalCount }}</div>
+              <div class="text-lg md:text-xl">Total Orders</div>
+            </div>
+
+            <!-- Total Value -->
+            <div class="w-full md:w-1/2 flex flex-col gap-2 text-center">
+              <div class="text-4xl md:text-6xl">
+                {{ analytics.totalValue | currency : "GBP" }}
+              </div>
+              <div class="text-lg md:text-xl">Total Value</div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <app-orders-list
+        [orders]="orders"
+        [displayedColumns]="displayedColumns"
+      ></app-orders-list>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

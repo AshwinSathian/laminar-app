@@ -6,6 +6,7 @@ import { OrderStatus } from '@laminar-app/enums';
 import { FiltersPayload, Order } from '@laminar-app/interfaces';
 import { FilterService, OrdersService } from '@laminar-app/services';
 import { Subject, switchMap, takeUntil } from 'rxjs';
+import { BreakpointService } from '../../services/breakpoint.service';
 
 @Component({
   selector: 'app-all-orders-list',
@@ -58,11 +59,13 @@ export class AllOrdersListComponent implements OnInit, OnDestroy {
 
   OrderStatus = OrderStatus;
 
+  isMobile$ = this._breakpointService.isMobile$;
   destroy$ = new Subject<boolean>();
 
   constructor(
     private _service: OrdersService,
     private _filterService: FilterService,
+    private _breakpointService: BreakpointService,
     private _router: Router,
     private _route: ActivatedRoute
   ) {}

@@ -14,12 +14,7 @@
 
     <mat-nav-list class="text-center text-white">
       @for (item of menuItems; track $index) {
-      <a
-        mat-list-item
-        [activated]="item.isActive"
-        [routerLink]="item.route"
-        (click)="sidenav.toggle()"
-      >
+      <a mat-list-item [activated]="item.isActive" [routerLink]="item.route">
         <div class="flex flex-row items-center gap-2 px-2">
           <mat-icon>{{ item.icon }}</mat-icon>
           <div>{{ item.label }}</div>

@@ -1,0 +1,61 @@
+.sidebar {
+  width: 30vw;
+  padding: 0 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 90vw;
+  }
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.md\:flex-row {
+  flex-direction: row;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.md\:w-1\/2 {
+  width: 50%;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+label {
+  font-weight: 500;
+  font-size: 0.875rem;
+  margin-bottom: 4px;
+}
+
+.sticky {
+  position: sticky;
+  background-color: #1e1e1e; /* Dark theme */
+  padding: 12px;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+}

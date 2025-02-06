@@ -1,24 +1,25 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
-  HostListener,
   inject,
   OnDestroy,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import {
   NavigationEnd,
   Router,
   RouterModule,
   RouterOutlet,
 } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { combineLatest, Subject, takeUntil } from 'rxjs';
 import { HttpErrorComponent } from './interceptors/components/http-error/http-error.component';
 import { LoadingComponent } from './interceptors/components/loading/loading.component';
 import { ErrorMessageService } from './services';
@@ -42,7 +43,8 @@ import { BreakpointService } from './services/breakpoint.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('sidenav') sidenav!: MatSidenav;
   private _bottomSheet = inject(MatBottomSheet);
 
   menuItems = [
@@ -78,8 +80,6 @@ export class AppComponent implements OnInit, OnDestroy {
       isActive: false,
     },
   ];
-  isHeaderHidden = false;
-  private lastScrollTop = 0;
 
   isMobile$ = this._breakpointService.isMobile$;
   destroy$ = new Subject<boolean>();
@@ -89,20 +89,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private _errorMessageService: ErrorMessageService,
     private _breakpointService: BreakpointService
   ) {}
-
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const currentScroll =
-      window.pageYOffset || document.documentElement.scrollTop;
-
-    if (currentScroll > this.lastScrollTop) {
-      this.isHeaderHidden = true;
-    } else {
-      this.isHeaderHidden = false;
-    }
-
-    this.lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-  }
 
   ngOnInit(): void {
     this._router.events.pipe(takeUntil(this.destroy$)).subscribe((event) => {
@@ -118,6 +104,20 @@ export class AppComponent implements OnInit, OnDestroy {
           this._bottomSheet.open(HttpErrorComponent, {
             data: error,
           });
+        }
+      });
+  }
+
+  ngAfterViewInit(): void {
+    combineLatest([this._router.events, this.isMobile$])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(([event, isMobile]) => {
+        if (
+          event instanceof NavigationEnd &&
+          this.sidenav?.opened &&
+          isMobile
+        ) {
+          this.sidenav.toggle();
         }
       });
   }
