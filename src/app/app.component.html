@@ -7,7 +7,7 @@
     [opened]="!(isMobile$ | async)"
     fixedInViewport
     class="h-screen flex flex-col gap-2 p-3 bg-black text-white app-sidenav transition-all duration-300"
-    [disableClose]="isMobile$ | async"
+    [disableClose]="!(isMobile$ | async)"
   >
     <h1 class="w-full text-3xl text-center font-semibold my-5">Laminar</h1>
     <mat-divider></mat-divider>
