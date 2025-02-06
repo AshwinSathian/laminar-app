@@ -1,4 +1,14 @@
-<div class="w-full p-5">
+<div class="w-full p-2">
+  @if (isMobile$|async) {
+  <div class="w-full flex flex-col gap-1 my-5">
+    <h1 class="text-3xl text-center w-full">
+      {{ order!.referenceId }}
+    </h1>
+    <div class="text-md text-gray-200 text-center w-full">
+      ID: {{ order!.id }}
+    </div>
+  </div>
+  } @else {
   <div class="w-full flex flex-row items-center justify-between">
     <app-header
       [title]="order.referenceId || 'Order'"
@@ -27,12 +37,13 @@
       </button>
     </div>
   </div>
+  }
 
   <mat-divider></mat-divider>
 
   <div class="w-full p-2 flex flex-col space-y-4">
-    <div class="p-0 flex flex-row items-center gap-1 w-full">
-      <mat-card class="w-1/3 text-center p-4 text-3xl">
+    <div class="p-0 flex flex-col md:flex-row items-center gap-2 w-full">
+      <mat-card class="w-full md:w-1/3 text-center p-4 text-2xl md:text-3xl">
         <mat-card-content>
           <label class="block text-sm font-medium text-gray-400">
             Order Date
@@ -43,7 +54,7 @@
         </mat-card-content>
       </mat-card>
 
-      <mat-card class="w-1/3 text-center p-4 text-3xl">
+      <mat-card class="w-full md:w-1/3 text-center p-4 text-2xl md:text-3xl">
         <mat-card-content>
           <label class="block text-sm font-medium text-gray-400">
             Supplier
@@ -54,7 +65,7 @@
         </mat-card-content>
       </mat-card>
 
-      <mat-card class="w-1/3 text-center p-4 text-3xl">
+      <mat-card class="w-full md:w-1/3 text-center p-4 text-2xl md:text-3xl">
         <mat-card-content>
           <label class="block text-sm font-medium text-gray-400">
             Total Value
@@ -66,15 +77,41 @@
       </mat-card>
     </div>
 
-    <mat-card class="w-1/2 mx-auto my-20" appearance="outlined">
+    <mat-card class="w-full md:w-1/2 mx-auto my-10 p-4" appearance="outlined">
       <mat-card-content>
-        <div class="w-full p-5">
+        <div class="w-full p-2">
           <app-order-status [currentStatus]="order.status"></app-order-status>
         </div>
       </mat-card-content>
     </mat-card>
 
     <h2 class="text-xl my-2 text-gray-300">Parts</h2>
+    @if (isMobile$|async) {
+    <div class="w-full">
+      <mat-accordion class="flex flex-col gap-2">
+        @for (part of order!.parts; track $index) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title class="flex items-center gap-2 min-w-fit">
+              <mat-icon>category</mat-icon>
+              {{ part.part.partName }}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{ part.quantity }}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div class="p-4 flex flex-col gap-2">
+            <p>
+              <strong>Unit Price:</strong>
+              {{ part.unitPrice | currency : order.currency }}
+            </p>
+          </div>
+        </mat-expansion-panel>
+        }
+      </mat-accordion>
+    </div>
+    } @else {
     <mat-form-field appearance="fill" class="w-full">
       <input
         matInput
@@ -117,8 +154,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </div>
-
-    @if (order.invoice) {
+    } @if (order.invoice) {
     <a
       mat-stroked-button
       target="_blank"

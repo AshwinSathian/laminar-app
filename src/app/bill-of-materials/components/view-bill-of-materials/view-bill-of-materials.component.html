@@ -1,4 +1,14 @@
-<div class="w-full p-5">
+<div class="w-full p-2">
+  @if (isMobile$|async) {
+  <div class="w-full flex flex-col gap-1 my-5">
+    <h1 class="text-3xl text-center w-full">
+      {{ billOfMaterials!.productName }}
+    </h1>
+    <div class="text-md text-gray-200 text-center w-full">
+      ID: {{ billOfMaterials!.id }}
+    </div>
+  </div>
+  } @else {
   <div class="w-full flex flex-row items-center justify-between">
     <app-header
       [title]="billOfMaterials!.productName"
@@ -27,12 +37,13 @@
       </button>
     </div>
   </div>
+  }
 
   <mat-divider></mat-divider>
 
   <div class="w-full p-2 flex flex-col space-y-4">
-    <div class="p-0 flex flex-row items-center gap-1 w-full">
-      <div class="w-1/2">
+    <div class="p-0 flex flex-col md:flex-row items-start gap-3 w-full">
+      <div class="w-full md:w-1/2">
         <label class="block text-sm font-medium text-gray-400">
           Total Cost
         </label>
@@ -41,7 +52,7 @@
         </div>
       </div>
 
-      <div class="w-1/2">
+      <div class="w-full md:w-1/2">
         <label class="block text-sm font-medium text-gray-400">
           Contact Info
         </label>
@@ -52,18 +63,18 @@
     </div>
 
     <h2 class="text-xl my-2 text-gray-300">Approval Details</h2>
-    <div class="p-0 flex flex-row items-center gap-1 w-full">
-      <div class="w-1/2">
-        <label class="block text-sm font-medium text-gray-400"
-          >Approved By</label
-        >
+    <div class="p-0 flex flex-col md:flex-row items-start gap-3 w-full">
+      <div class="w-full md:w-1/2">
+        <label class="block text-sm font-medium text-gray-400">
+          Approved By
+        </label>
         <div class="text-gray-200">{{ billOfMaterials.approvedBy || "-" }}</div>
       </div>
 
-      <div class="w-1/2">
-        <label class="block text-sm font-medium text-gray-400"
-          >Date of Approval</label
-        >
+      <div class="w-full md:w-1/2">
+        <label class="block text-sm font-medium text-gray-400">
+          Date of Approval
+        </label>
         <div class="text-gray-200">
           {{
             billOfMaterials.dateOfApproval
@@ -75,6 +86,7 @@
     </div>
 
     <h2 class="text-xl my-2 text-gray-300">Parts</h2>
+    @if (!(isMobile$|async)) {
     <mat-form-field appearance="fill" class="w-full">
       <input
         matInput
@@ -140,5 +152,47 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </div>
+    } @else {
+    <div class="w-full">
+      <mat-accordion class="flex flex-col gap-2">
+        @for (part of billOfMaterials.parts; track $index) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title class="flex items-center gap-2 min-w-fit">
+              <mat-icon>category</mat-icon>
+              {{ part.partName }}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{ part.partNumber }}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div class="p-4 flex flex-col gap-2">
+            <p>
+              <strong>Description:</strong>
+              {{ part.description }}
+            </p>
+            <p>
+              <strong>Unit Cost:</strong>
+              {{ part.unitCost | currency : billOfMaterials.currency }}
+            </p>
+            <p>
+              <strong>Quantity:</strong>
+              {{ part.quantity }} {{ part.units }}
+            </p>
+            <p>
+              <strong>Total Cost:</strong>
+              {{ part.totalPartCost | currency : billOfMaterials.currency }}
+            </p>
+            <p>
+              <strong>Supplier/Manufacturer:</strong>
+              {{ part.supplierOrManufacturer?.name }}
+            </p>
+          </div>
+        </mat-expansion-panel>
+        }
+      </mat-accordion>
+    </div>
+    }
   </div>
 </div>

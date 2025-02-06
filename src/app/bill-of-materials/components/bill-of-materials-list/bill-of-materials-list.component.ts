@@ -15,6 +15,7 @@ import {
 } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
 import { ColInfo } from 'xlsx';
+import { BreakpointService } from '../../../services/breakpoint.service';
 
 @Component({
   selector: 'app-bill-of-materials-list',
@@ -43,11 +44,13 @@ export class BillOfMaterialsListComponent
   }>;
   billOfMaterials: BillOfMaterials[] = [];
 
+  isMobile$ = this._breakpointService.isMobile$;
   destroy$ = new Subject<boolean>();
 
   constructor(
     private _service: BillOfMaterialsService,
-    private _excelExportService: ExcelExportService
+    private _excelExportService: ExcelExportService,
+    private _breakpointService: BreakpointService
   ) {}
 
   ngOnInit(): void {

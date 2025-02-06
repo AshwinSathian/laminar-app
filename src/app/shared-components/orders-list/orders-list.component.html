@@ -1,3 +1,4 @@
+@if (!(isMobile$|async)) {
 <mat-form-field appearance="fill" class="w-full">
   <input
     matInput
@@ -91,3 +92,49 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </div>
+} @else {
+<div class="w-full">
+  <mat-accordion class="flex flex-col gap-2">
+    @for (order of orders; track $index) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title class="flex items-center gap-2">
+          <mat-icon>shopping_cart</mat-icon>
+          {{ order.referenceId }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="p-4 flex flex-col gap-2">
+        <p><strong>Order Date:</strong> {{ order.orderDate | date }}</p>
+        <p>
+          <strong>Total Value:</strong>
+          {{ order.totalValue | currency : order.currency }}
+        </p>
+        <div
+          class="flex items-center gap-2 w-full"
+          [ngClass]="{
+            'text-white': order.status === OrderStatus.placed,
+            'text-yellow-500': order.status === OrderStatus.dispatched,
+            'text-green-500': order.status === OrderStatus.delivered
+          }"
+        >
+          <mat-icon>{{ statusIconsMap[order.status] }}</mat-icon>
+          {{ order.status | titlecase }}
+        </div>
+
+        <div class="flex justify-start">
+          <button
+            mat-button
+            color="primary"
+            [routerLink]="'/orders/view/' + order.id"
+          >
+            <mat-icon>visibility</mat-icon>
+            View
+          </button>
+        </div>
+      </div>
+    </mat-expansion-panel>
+    }
+  </mat-accordion>
+</div>
+}

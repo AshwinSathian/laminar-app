@@ -16,6 +16,7 @@ import {
 } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
 import { ColInfo } from 'xlsx';
+import { BreakpointService } from '../../../services/breakpoint.service';
 
 @Component({
   selector: 'app-view-bill-of-materials',
@@ -51,11 +52,13 @@ export class ViewBillOfMaterialsComponent
   }>;
   billOfMaterials!: BillOfMaterials;
 
+  isMobile$ = this._breakpointService.isMobile$;
   destroy$ = new Subject<boolean>();
 
   constructor(
     private _service: BillOfMaterialsService,
     private _excelExportService: ExcelExportService,
+    private _breakpointService: BreakpointService,
     private _router: Router,
     private _route: ActivatedRoute
   ) {}

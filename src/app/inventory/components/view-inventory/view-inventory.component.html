@@ -1,4 +1,5 @@
-<div class="w-full p-5">
+<div class="w-full p-2">
+  @if (!(isMobile$|async)) {
   <div class="w-full flex flex-row items-center justify-between">
     <app-header
       [title]="'Inventory Item: ' + inventory.itemId"
@@ -19,12 +20,22 @@
       </button>
     </div>
   </div>
+  } @else {
+  <div class="w-full flex flex-col gap-1 my-5">
+    <h1 class="text-3xl text-center w-full">
+      {{ inventory!.itemId }}
+    </h1>
+    <div class="text-md text-gray-200 text-center w-full">
+      ID: {{ inventory!.id }}
+    </div>
+  </div>
+  }
 
   <mat-divider></mat-divider>
 
-  <!-- Inventory Details Section -->
-  <div class="w-full flex flex-col gap-5 my-5">
-    <mat-card appearance="outlined" class="p-4 shadow-md">
+  <div class="w-full flex flex-col md:flex-row gap-5 my-5">
+    <!-- Inventory Details Section -->
+    <mat-card appearance="outlined" class="p-4 shadow-md w-full md:w-1/2">
       <div class="flex flex-col gap-1">
         <div class="text-lg font-semibold">Inventory Details</div>
         <mat-divider></mat-divider>
@@ -43,7 +54,7 @@
     </mat-card>
 
     <!-- Address Details Section -->
-    <mat-card appearance="outlined" class="p-4 shadow-md">
+    <mat-card appearance="outlined" class="p-4 shadow-md w-full md:w-1/2">
       <div class="flex flex-col gap-1">
         <div class="text-lg font-semibold">Address Details</div>
         <mat-divider></mat-divider>

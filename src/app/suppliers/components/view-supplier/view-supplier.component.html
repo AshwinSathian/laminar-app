@@ -1,4 +1,14 @@
-<div class="w-full p-5">
+<div class="w-full p-2">
+  @if ((isMobile$ | async)) {
+  <div class="w-full flex flex-col gap-1 my-5">
+    <h1 class="text-3xl text-center w-full">
+      {{ supplier!.name }}
+    </h1>
+    <div class="text-md text-gray-200 text-center w-full">
+      ID: {{ supplier!.id }}
+    </div>
+  </div>
+  } @else {
   <div class="w-full flex flex-row items-center justify-between">
     <app-header
       [title]="supplier!.name"
@@ -19,12 +29,16 @@
       </button>
     </div>
   </div>
+  }
 
   <mat-divider></mat-divider>
 
   <mat-card appearance="outlined" class="p-4 my-5">
-    <div class="w-full flex flex-row items-center justify-evenly">
-      <div class="flex flex-col gap-1 w-2/5">
+    <div
+      class="w-full flex flex-col md:flex-row items-center justify-between gap-5"
+    >
+      <!-- Address Section -->
+      <div class="flex flex-col gap-1 w-full md:w-2/5">
         <div class="text-lg font-semibold">Address</div>
         <mat-divider></mat-divider>
         <div class="text-md">
@@ -38,7 +52,8 @@
           {{ supplier!.address!.country }}
         </div>
 
-        <div *ngIf="supplier!.address!.mapsLink" class="mt-2">
+        @if (supplier!.address!.mapsLink) {
+        <div class="mt-2">
           <a
             [href]="supplier!.address!.mapsLink"
             target="_blank"
@@ -47,9 +62,11 @@
             View on Maps
           </a>
         </div>
+        }
       </div>
 
-      <div class="flex flex-col gap-1 w-2/5">
+      <!-- Contact Information -->
+      <div class="flex flex-col gap-1 w-full md:w-2/5">
         <div class="text-lg font-semibold">Contact Information</div>
         <mat-divider></mat-divider>
         <div class="text-md font-medium">
@@ -59,7 +76,7 @@
           {{ supplier!.primaryContact!.designation }}
           }
         </div>
-        <div class="text-md flex gap-4 mt-1">
+        <div class="text-md flex flex-col sm:flex-row gap-4 mt-1">
           <span>
             <span class="font-semibold">Email:</span>
             <a
@@ -69,25 +86,26 @@
               {{ supplier!.primaryContact!.email }}
             </a>
           </span>
-          <span *ngIf="supplier!.primaryContact!.phone">
-            <span class="font-semibold">Phone:</span> +{{
-              supplier!.primaryContact!.phone!.code
-            }}
+          @if (supplier!.primaryContact!.phone) {
+          <span>
+            <span class="font-semibold">Phone:</span>
+            +{{ supplier!.primaryContact!.phone!.code }}
             {{ supplier!.primaryContact!.phone!.number }}
           </span>
+          }
         </div>
       </div>
     </div>
   </mat-card>
 
-  <!-- Documents -->
+  <!-- Documents Section -->
   @if (supplier.documents?.length) {
   <mat-card appearance="outlined" class="p-4 shadow-md">
     <div class="flex flex-col gap-1">
       <div class="text-lg font-semibold">Documents</div>
       <mat-divider></mat-divider>
 
-      <div class="w-full flex items-center gap-2 flex-wrap">
+      <div class="w-full flex items-center gap-2 flex-wrap justify-center">
         @for (item of supplier.documents; track $index) {
         <div class="media-card">
           @if (item.type.startsWith('image/')) {
@@ -109,28 +127,28 @@
     </div>
   </mat-card>
   }
-</div>
 
-<mat-tab-group>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <div class="flex flex-row items-center justify-center gap-3 w-full">
-        <mat-icon>category</mat-icon>
-        <div class="text-lg">Materials</div>
-      </div>
-    </ng-template>
-    <app-materials-library [materials]="materials"></app-materials-library>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <div class="flex flex-row items-center justify-center gap-3 w-full">
-        <mat-icon>shopping_cart</mat-icon>
-        <div class="text-lg">Orders</div>
-      </div>
-    </ng-template>
-    <app-orders-list
-      [orders]="orders"
-      [displayedColumns]="ordersDisplayColumns"
-    ></app-orders-list>
-  </mat-tab>
-</mat-tab-group>
+  <mat-tab-group>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="flex flex-row items-center justify-center gap-3 w-full">
+          <mat-icon>category</mat-icon>
+          <div class="text-lg">Materials</div>
+        </div>
+      </ng-template>
+      <app-materials-library [materials]="materials"></app-materials-library>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="flex flex-row items-center justify-center gap-3 w-full">
+          <mat-icon>shopping_cart</mat-icon>
+          <div class="text-lg">Orders</div>
+        </div>
+      </ng-template>
+      <app-orders-list
+        [orders]="orders"
+        [displayedColumns]="ordersDisplayColumns"
+      ></app-orders-list>
+    </mat-tab>
+  </mat-tab-group>
+</div>

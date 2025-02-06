@@ -6,6 +6,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -43,6 +44,7 @@ import { InventoryResolver } from './resolvers/inventory.resolver';
     MatToolbarModule,
     MatSelectModule,
     MatIconModule,
+    MatExpansionModule,
     InventoryRoutingModule,
 
     HeaderComponent,

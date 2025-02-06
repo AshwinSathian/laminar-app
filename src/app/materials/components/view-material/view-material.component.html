@@ -1,4 +1,14 @@
-<div class="w-full p-5">
+<div class="w-full p-2">
+  @if (isMobile$|async) {
+  <div class="w-full flex flex-col gap-1 my-5">
+    <h1 class="text-3xl text-center w-full">
+      {{ material!.partName }}
+    </h1>
+    <div class="text-md text-gray-200 text-center w-full">
+      ID: {{ material!.id }}
+    </div>
+  </div>
+  } @else {
   <div class="w-full flex flex-row items-center justify-between">
     <app-header
       [title]="material.partName"
@@ -19,35 +29,38 @@
       </button>
     </div>
   </div>
+  }
 
   <mat-divider></mat-divider>
 
-  <!-- Material Details Section -->
   <div class="w-full flex flex-col gap-5 my-5">
+    <!-- Material Details Section -->
     <mat-card appearance="outlined" class="p-4 shadow-md">
-      <div class="flex flex-col gap-1">
-        <div class="text-lg font-semibold">Material Details</div>
-        <mat-divider></mat-divider>
+      <div class="flex flex-col md:flex-row md:gap-10">
+        <div class="flex flex-col gap-1 w-full md:w-1/2">
+          <div class="text-lg font-semibold">Material Details</div>
+          <mat-divider></mat-divider>
 
-        <!-- Material Information -->
-        <div class="text-md">
-          <span class="font-semibold">Material:</span> {{ material.material }}
-        </div>
-        <div class="text-md">
-          <span class="font-semibold">Manufacturing Method:</span>
-          {{ material.manufacturingMethod }}
-        </div>
+          <div class="text-md">
+            <span class="font-semibold">Material:</span> {{ material.material }}
+          </div>
+          <div class="text-md">
+            <span class="font-semibold">Manufacturing Method:</span>
+            {{ material.manufacturingMethod }}
+          </div>
 
-        <!-- Material Dimensions (if available) -->
-        <div *ngIf="material.dimensions" class="text-md">
-          <span class="font-semibold">Dimensions:</span>
-          {{ material.dimensions.length }} x {{ material.dimensions.breadth }} x
-          {{ material.dimensions.height }}
-        </div>
+          @if (material.dimensions) {
+          <div class="text-md">
+            <span class="font-semibold">Dimensions:</span>
+            {{ material.dimensions.length }} x
+            {{ material.dimensions.breadth }} x
+            {{ material.dimensions.height }}
+          </div>
+          }
 
-        <!-- Material Weight -->
-        <div class="text-md">
-          <span class="font-semibold">Weight:</span> {{ material.weight }}
+          <div class="text-md">
+            <span class="font-semibold">Weight:</span> {{ material.weight }}
+          </div>
         </div>
       </div>
     </mat-card>
@@ -59,7 +72,9 @@
         <div class="text-lg font-semibold">Images</div>
         <mat-divider></mat-divider>
 
-        <div class="w-full flex items-center gap-2 flex-wrap">
+        <div
+          class="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+        >
           @for (item of material.images; track $index) {
           <div class="media-card">
             @if (item.type.startsWith('image/')) {
@@ -89,7 +104,9 @@
         <div class="text-lg font-semibold">Drawings</div>
         <mat-divider></mat-divider>
 
-        <div class="w-full flex items-center gap-2 flex-wrap">
+        <div
+          class="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+        >
           @for (item of material.drawings; track $index) {
           <div class="media-card">
             @if (item.type.startsWith('image/')) {
@@ -101,7 +118,7 @@
             }
 
             <div class="overlay">
-              <a mat-button [href]="item" target="_blank">
+              <a mat-button [href]="item.url" target="_blank">
                 <mat-icon>visibility</mat-icon>
               </a>
             </div>
@@ -112,14 +129,16 @@
     </mat-card>
     }
 
-    <!-- Data Sheets and other Documents -->
+    <!-- Data Sheets and Other Documents -->
     @if (material.dataSheets?.length) {
     <mat-card appearance="outlined" class="p-4 shadow-md">
       <div class="flex flex-col gap-1">
-        <div class="text-lg font-semibold">Data Sheets and other Documents</div>
+        <div class="text-lg font-semibold">Data Sheets and Other Documents</div>
         <mat-divider></mat-divider>
 
-        <div class="w-full flex items-center gap-2 flex-wrap">
+        <div
+          class="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+        >
           @for (item of material.dataSheets; track $index) {
           <div class="media-card">
             @if (item.type.startsWith('image/')) {
@@ -148,14 +167,8 @@
         <div class="text-lg font-semibold">Suppliers</div>
         <mat-divider></mat-divider>
 
-        <!-- Supplier List -->
-        <div
-          *ngIf="
-            material.suppliers && material.suppliers.length > 0;
-            else noSuppliers
-          "
-          class="text-md"
-        >
+        @if (material.suppliers && material.suppliers.length > 0) {
+        <div class="text-md">
           <mat-list role="list">
             @for (supplier of material.suppliers; track $index) {
             <mat-list-item role="listitem">
@@ -172,9 +185,9 @@
             }
           </mat-list>
         </div>
-        <ng-template #noSuppliers>
-          <div class="text-md text-gray-500">No suppliers available</div>
-        </ng-template>
+        } @else {
+        <div class="text-md text-gray-500">No suppliers available</div>
+        }
       </div>
     </mat-card>
   </div>

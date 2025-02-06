@@ -3,6 +3,7 @@ import { Material } from '@laminar-app/interfaces';
 import { ExcelExportService, MaterialsService } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
 import { ColInfo } from 'xlsx';
+import { BreakpointService } from '../../../services/breakpoint.service';
 
 @Component({
   selector: 'app-materials-list',
@@ -13,11 +14,13 @@ import { ColInfo } from 'xlsx';
 export class MaterialsListComponent implements OnInit, OnDestroy {
   materials: Material[] = [];
 
+  isMobile$ = this._breakpointService.isMobile$;
   destroy$ = new Subject<boolean>();
 
   constructor(
     private _service: MaterialsService,
-    private _excelExportService: ExcelExportService
+    private _excelExportService: ExcelExportService,
+    private _breakpointService: BreakpointService
   ) {}
 
   ngOnInit(): void {

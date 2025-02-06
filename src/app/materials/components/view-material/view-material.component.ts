@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Material } from '@laminar-app/interfaces';
 import { MaterialsService } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
+import { BreakpointService } from '../../../services/breakpoint.service';
 
 @Component({
   selector: 'app-view-material',
@@ -13,12 +14,14 @@ import { Subject, takeUntil } from 'rxjs';
 export class ViewMaterialComponent implements OnInit, OnDestroy {
   material!: Material;
 
+  isMobile$ = this._breakpointService.isMobile$;
   destroy$ = new Subject<boolean>();
 
   constructor(
     private _service: MaterialsService,
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _breakpointService: BreakpointService
   ) {}
 
   ngOnInit(): void {

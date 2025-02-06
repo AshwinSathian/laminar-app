@@ -1,4 +1,3 @@
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import {
   AfterViewInit,
   Component,
@@ -14,6 +13,7 @@ import { OrderStatus } from '@laminar-app/enums';
 import { Order, OrderItem } from '@laminar-app/interfaces';
 import { OrdersService } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
+import { BreakpointService } from '../../services/breakpoint.service';
 
 @Component({
   selector: 'app-view-order',
@@ -35,12 +35,14 @@ export class ViewOrderComponent implements OnInit, AfterViewInit, OnDestroy {
   };
   OrderStatus = OrderStatus;
 
+  isMobile$ = this._breakpointService.isMobile$;
   destroy$ = new Subject<boolean>();
 
   constructor(
     private _service: OrdersService,
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _breakpointService: BreakpointService
   ) {}
 
   ngOnInit(): void {

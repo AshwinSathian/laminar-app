@@ -1,4 +1,5 @@
 import {
+  AsyncPipe,
   CommonModule,
   CurrencyPipe,
   DatePipe,
@@ -12,6 +13,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -22,6 +24,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { OrderStatus } from '@laminar-app/enums';
 import { Order } from '@laminar-app/interfaces';
+import { BreakpointService } from '../../services/breakpoint.service';
 
 @Component({
   selector: 'app-orders-list',
@@ -37,6 +40,8 @@ import { Order } from '@laminar-app/interfaces';
     DatePipe,
     CurrencyPipe,
     TitleCasePipe,
+    MatExpansionModule,
+    AsyncPipe,
   ],
   templateUrl: './orders-list.component.html',
   styleUrl: './orders-list.component.css',
@@ -55,6 +60,10 @@ export class OrdersListComponent implements OnChanges {
     [OrderStatus.delivered]: 'task_alt',
   };
   OrderStatus = OrderStatus;
+
+  isMobile$ = this._breakpointService.isMobile$;
+
+  constructor(private _breakpointService: BreakpointService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes?.['orders']?.currentValue) {

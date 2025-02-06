@@ -14,6 +14,7 @@ import { Inventory } from '@laminar-app/interfaces';
 import { ExcelExportService, InventoryService } from '@laminar-app/services';
 import { Subject, switchMap, takeUntil } from 'rxjs';
 import { ColInfo } from 'xlsx';
+import { BreakpointService } from '../../../services/breakpoint.service';
 import { InventoriesImportStatsComponent } from './inventories-import-stats/inventories-import-stats.component';
 
 @Component({
@@ -38,11 +39,13 @@ export class InventoryListComponent
   }>;
   inventoryEntries: Inventory[] = [];
 
+  isMobile$ = this._breakpointService.isMobile$;
   destroy$ = new Subject<boolean>();
 
   constructor(
     private _service: InventoryService,
-    private _excelExportService: ExcelExportService
+    private _excelExportService: ExcelExportService,
+    private _breakpointService: BreakpointService
   ) {}
 
   ngOnInit(): void {

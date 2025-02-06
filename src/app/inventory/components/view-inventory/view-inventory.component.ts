@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Inventory } from '@laminar-app/interfaces';
 import { InventoryService } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
+import { BreakpointService } from '../../../services/breakpoint.service';
 
 @Component({
   selector: 'app-view-inventory',
@@ -13,12 +14,14 @@ import { Subject, takeUntil } from 'rxjs';
 export class ViewInventoryComponent implements OnInit, OnDestroy {
   inventory!: Inventory;
 
+  isMobile$ = this._breakpointService.isMobile$;
   destroy$ = new Subject<boolean>();
 
   constructor(
     private _service: InventoryService,
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _breakpointService: BreakpointService
   ) {}
 
   ngOnInit(): void {

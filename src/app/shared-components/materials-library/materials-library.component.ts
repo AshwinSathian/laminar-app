@@ -1,3 +1,4 @@
+import { AsyncPipe } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -7,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -17,6 +19,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { Material } from '../../../interfaces/material.interface';
+import { BreakpointService } from '../../services/breakpoint.service';
 
 @Component({
   selector: 'app-materials-library',
@@ -29,6 +32,8 @@ import { Material } from '../../../interfaces/material.interface';
     MatIconModule,
     MatTooltipModule,
     MatMenuModule,
+    MatExpansionModule,
+    AsyncPipe,
   ],
   templateUrl: './materials-library.component.html',
   styleUrl: './materials-library.component.css',
@@ -47,6 +52,10 @@ export class MaterialsLibraryComponent implements OnChanges, AfterViewInit {
     manufacturingMethod: string;
     id: string;
   }>;
+
+  isMobile$ = this._breakpointService.isMobile$;
+
+  constructor(private _breakpointService: BreakpointService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['materials']?.currentValue) {

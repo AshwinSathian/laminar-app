@@ -1,18 +1,24 @@
-<div class="w-full flex flex-row items-center justify-between">
-  <app-header title="Materials Library" icon="category"></app-header>
-  <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
+<div class="p-5">
+  <div class="w-full flex flex-row items-center justify-between">
+    @if (isMobile$|async) {
+    <h1 class="text-3xl text-center my-5 w-full">
+      Materials Library ({{ materials!.length }})
+    </h1>
+    } @else {
+    <app-header title="Materials Library" icon="category"></app-header>
+    <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu"> -->
-  <button mat-stroked-button routerLink="./create">
-    <mat-icon>add_circle</mat-icon>
-    Create Material
-  </button>
-  <!-- <button mat-menu-item (click)="exportAllMaterials()">
+    <button mat-stroked-button routerLink="./create">
+      <mat-icon>add_circle</mat-icon>
+      Create Material
+    </button>
+    <!-- <button mat-menu-item (click)="exportAllMaterials()">
       <mat-icon>download</mat-icon>
       Export All Materials
     </button> -->
-  <!-- <button mat-menu-item (click)="fileInput.click()">
+    <!-- <button mat-menu-item (click)="fileInput.click()">
       <mat-icon>upload</mat-icon>
       Import Suppliers
     </button>
@@ -23,12 +29,14 @@
       (change)="onFileSelected($event)"
       accept=".xlsx, .xls"
     /> -->
-  <!-- </mat-menu> -->
+    <!-- </mat-menu> -->
+    }
+  </div>
+
+  <mat-divider class="w-full my-3"></mat-divider>
+
+  <app-materials-library
+    [materials]="materials"
+    [showActions]="true"
+  ></app-materials-library>
 </div>
-
-<mat-divider class="w-full my-3"></mat-divider>
-
-<app-materials-library
-  [materials]="materials"
-  [showActions]="true"
-></app-materials-library>

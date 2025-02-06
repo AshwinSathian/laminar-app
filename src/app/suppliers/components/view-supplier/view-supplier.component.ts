@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Material, Order, Supplier } from '@laminar-app/interfaces';
 import { SuppliersService } from '@laminar-app/services';
 import { Subject, takeUntil } from 'rxjs';
+import { BreakpointService } from '../../../services/breakpoint.service';
 
 @Component({
   selector: 'app-view-supplier',
@@ -21,12 +22,14 @@ export class ViewSupplierComponent implements OnInit, OnDestroy {
     'value',
   ];
 
+  isMobile$ = this._breakpointService.isMobile$;
   destroy$ = new Subject<boolean>();
 
   constructor(
     private _service: SuppliersService,
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _breakpointService: BreakpointService
   ) {}
 
   ngOnInit(): void {
