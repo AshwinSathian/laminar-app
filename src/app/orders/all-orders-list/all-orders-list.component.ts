@@ -4,12 +4,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderStatus } from '@laminar-app/enums';
 import { FiltersPayload, Order } from '@laminar-app/interfaces';
-import {
-  FilterService,
-  OrdersService,
-  OrdersSocketService,
-} from '@laminar-app/services';
-import { iif, Subject, switchMap, takeUntil } from 'rxjs';
+import { FilterService, OrdersService } from '@laminar-app/services';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { BreakpointService } from '../../services/breakpoint.service';
 
 @Component({
@@ -70,7 +66,7 @@ export class AllOrdersListComponent implements OnInit, OnDestroy {
     private _service: OrdersService,
     private _filterService: FilterService,
     private _breakpointService: BreakpointService,
-    private _ordersSocket: OrdersSocketService,
+    // private _ordersSocket: OrdersSocketService,
     private _router: Router,
     private _route: ActivatedRoute
   ) {}
@@ -152,27 +148,27 @@ export class AllOrdersListComponent implements OnInit, OnDestroy {
         },
       });
 
-    this._ordersSocket.listenForOrderUpdates(() => {
-      const filters = this._route.snapshot.params?.['filters'];
-      iif(
-        () => !!filters,
-        this._service.getOrders(filters),
-        this._service.getOrders()
-      )
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (data) => {
-            if (data?.length) {
-              this.orders = JSON.parse(JSON.stringify(data));
-              this.analytics.totalCount = this.orders?.length;
-              this.analytics.totalValue = this.orders?.reduce(
-                (prev, curr) => prev + curr.totalValue,
-                0
-              );
-            }
-          },
-        });
-    });
+    // this._ordersSocket.listenForOrderUpdates(() => {
+    //   const filters = this._route.snapshot.params?.['filters'];
+    //   iif(
+    //     () => !!filters,
+    //     this._service.getOrders(filters),
+    //     this._service.getOrders()
+    //   )
+    //     .pipe(takeUntil(this.destroy$))
+    //     .subscribe({
+    //       next: (data) => {
+    //         if (data?.length) {
+    //           this.orders = JSON.parse(JSON.stringify(data));
+    //           this.analytics.totalCount = this.orders?.length;
+    //           this.analytics.totalValue = this.orders?.reduce(
+    //             (prev, curr) => prev + curr.totalValue,
+    //             0
+    //           );
+    //         }
+    //       },
+    //     });
+    // });
   }
 
   openSidebar() {
