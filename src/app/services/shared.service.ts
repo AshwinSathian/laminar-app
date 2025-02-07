@@ -21,23 +21,23 @@ export class SharedService {
 
   getBillsOfMaterialsCount(): Observable<number> {
     return this._http.get<number>(
-      `${environment.apiUrl}bill-of-materials/count`
+      `${environment.apiUrl}/bill-of-materials/count`
     );
   }
 
   getMaterialsCount(): Observable<number> {
-    return this._http.get<number>(`${environment.apiUrl}materials/count`);
+    return this._http.get<number>(`${environment.apiUrl}/materials/count`);
   }
 
   getOrdersCount(): Observable<number> {
-    return this._http.get<number>(`${environment.apiUrl}orders/count`);
+    return this._http.get<number>(`${environment.apiUrl}/orders/count`);
   }
 
   getInventoryCount(): Observable<number> {
-    return this._http.get<number>(`${environment.apiUrl}inventory/count`);
+    return this._http.get<number>(`${environment.apiUrl}/inventory/count`);
   }
 
   getSuppliersCount(): Observable<number> {
-    return this._http.get<number>(`${environment.apiUrl}suppliers/count`);
+    return this._http.get<number>(`${environment.apiUrl}/suppliers/count`);
   }
 }

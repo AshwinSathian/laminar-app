@@ -4,7 +4,7 @@ import { environment } from '@laminar-app/environment';
 import { Attachment } from '@laminar-app/interfaces';
 import { Observable } from 'rxjs';
 
-const API_BASE_URL = `${environment.apiUrl}upload`;
+const API_BASE_URL = `${environment.apiUrl}/upload`;
 
 @Injectable()
 export class UploadService {

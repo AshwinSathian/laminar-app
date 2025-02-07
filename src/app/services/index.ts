@@ -5,6 +5,7 @@ export * from './filter.service';
 export * from './inventory.service';
 export * from './loading.service';
 export * from './materials.service';
+export * from './orders-socket.service';
 export * from './orders.service';
 export * from './shared.service';
 export * from './suppliers.service';

@@ -22,6 +22,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {
   FilterService,
   OrdersService,
+  OrdersSocketService,
   SharedService,
   UploadService,
 } from '@laminar-app/services';
@@ -72,6 +73,7 @@ import { ViewOrderComponent } from './view-order/view-order.component';
   ],
   providers: [
     OrdersService,
+    OrdersSocketService,
     OrderResolver,
     UploadService,
     SharedService,

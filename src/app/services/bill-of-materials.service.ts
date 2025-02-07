@@ -4,7 +4,7 @@ import { environment } from '@laminar-app/environment';
 import { BillOfMaterials, Material } from '@laminar-app/interfaces';
 import { Observable } from 'rxjs';
 
-const API_BASE_URL = `${environment.apiUrl}bill-of-materials/`;
+const API_BASE_URL = `${environment.apiUrl}/bill-of-materials/`;
 
 @Injectable()
 export class BillOfMaterialsService {
@@ -25,7 +25,7 @@ export class BillOfMaterialsService {
 
   getBillOfMaterialsMaterials(id: string): Observable<Material[]> {
     return this._http.get<Material[]>(
-      `${environment.apiUrl}materials/billofmaterials/${id}`
+      `${environment.apiUrl}/materials/billofmaterials/${id}`
     );
   }
 
@@ -47,6 +47,6 @@ export class BillOfMaterialsService {
   }
 
   getMaterials(): Observable<Material[]> {
-    return this._http.get<Material[]>(`${environment.apiUrl}materials/`);
+    return this._http.get<Material[]>(`${environment.apiUrl}/materials/`);
   }
 }

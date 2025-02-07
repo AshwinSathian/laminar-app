@@ -83,6 +83,6 @@ export class FilterService {
       newest: Date;
       minValue: number;
       maxValue: number;
-    }>(`${environment.apiUrl}orders/filter-constraints`);
+    }>(`${environment.apiUrl}/orders/filter-constraints`);
   }
 }

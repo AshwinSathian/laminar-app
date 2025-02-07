@@ -4,19 +4,19 @@ import { environment } from '@laminar-app/environment';
 import { Material, Order, Supplier } from '@laminar-app/interfaces';
 import { Observable } from 'rxjs';
 
-const API_BASE_URL = `${environment.apiUrl}orders/`;
+const API_BASE_URL = `${environment.apiUrl}/orders/`;
 
 @Injectable()
 export class OrdersService {
   constructor(private _http: HttpClient) {}
 
   getSuppliers(): Observable<Supplier[]> {
-    return this._http.get<Supplier[]>(`${environment.apiUrl}suppliers/`);
+    return this._http.get<Supplier[]>(`${environment.apiUrl}/suppliers/`);
   }
 
   getSupplierMaterials(id: string): Observable<Material[]> {
     return this._http.get<Material[]>(
-      `${environment.apiUrl}materials/supplier/${id}`
+      `${environment.apiUrl}/materials/supplier/${id}`
     );
   }
 
