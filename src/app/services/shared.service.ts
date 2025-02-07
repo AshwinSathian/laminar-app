@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@laminar-app/environment';
-import { Observable } from 'rxjs';
+import { Apollo, gql } from 'apollo-angular';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SharedService {
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient, private apollo: Apollo) {}
 
   getCurrencies(): Observable<{ [code: string]: string }> {
     return this._http.get<{ [code: string]: string }>(
@@ -30,7 +31,15 @@ export class SharedService {
   }
 
   getOrdersCount(): Observable<number> {
-    return this._http.get<number>(`${environment.apiUrl}orders/count`);
+    return this.apollo
+      .query<{ getOrderCount: number }>({
+        query: gql`
+          query {
+            getOrderCount
+          }
+        `,
+      })
+      .pipe(map((result) => result.data.getOrderCount));
   }
 
   getInventoryCount(): Observable<number> {
