@@ -1,93 +1,181 @@
 <app-header title="Inventory Details"></app-header>
 
 <div class="w-full p-2 flex flex-col">
-  <mat-form-field class="w-full" appearance="outline">
-    <input
-      matInput
-      id="inventoryName"
-      placeholder="Inventory Entry Name/ID"
-      [(ngModel)]="inventory.itemId"
-    />
-  </mat-form-field>
+  <div class="w-full flex flex-col">
+    <label
+      class="block text-sm font-medium text-gray-400"
+      [ngClass]="{
+        'text-red-500': inventoryName.invalid && inventoryName.touched
+      }"
+    >
+      Inventory Entry Name/ID
+      <span class="text-red-500">*</span>
+    </label>
+    <mat-form-field class="w-full" appearance="outline">
+      <input
+        matInput
+        id="inventoryName"
+        placeholder="Inventory Entry Name/ID"
+        [(ngModel)]="inventory.itemId"
+        name="inventoryName"
+        required
+        #inventoryName="ngModel"
+      />
+      @if (inventoryName.invalid && inventoryName.touched) {
+      <mat-error> Inventory Entry Name/ID is required. </mat-error>
+      }
+    </mat-form-field>
+  </div>
 
-  <mat-form-field class="w-full" appearance="outline">
-    <input
-      matInput
-      id="inventoryDescription"
-      placeholder="Description"
-      [(ngModel)]="inventory.description"
-    />
-  </mat-form-field>
+  <div class="w-full flex flex-col">
+    <label class="block text-sm font-medium text-gray-400"> Description </label>
+    <mat-form-field class="w-full" appearance="outline">
+      <input
+        matInput
+        id="inventoryDescription"
+        placeholder="Description"
+        [(ngModel)]="inventory.description"
+      />
+    </mat-form-field>
+  </div>
 
   <h2 class="text-xl my-2">Address</h2>
   <div class="p-0 flex flex-row items-center gap-1">
-    <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
-        id="addressLine1"
-        placeholder="Address Line 1"
-        [(ngModel)]="inventory.address!.addressLine1"
-      />
-    </mat-form-field>
-    <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
-        id="addressLine2"
-        placeholder="Address Line 2"
-        [(ngModel)]="inventory.address!.addressLine2"
-      />
-    </mat-form-field>
-  </div>
-  <div class="p-0 flex flex-row items-center gap-1">
-    <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
-        id="townCity"
-        placeholder="Town/City"
-        [(ngModel)]="inventory.address!.townCity"
-      />
-    </mat-form-field>
-    <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
-        id="stateProvinceCounty"
-        placeholder="State/Province/County"
-        [(ngModel)]="inventory.address!.stateProvinceCounty"
-      />
-    </mat-form-field>
-  </div>
-  <div class="p-0 flex flex-row items-center gap-1">
-    <mat-form-field class="w-1/2" appearance="outline">
-      <mat-select
-        id="country"
-        placeholder="Country"
-        [(ngModel)]="inventory.address!.country"
+    <!-- Address Line 1 -->
+    <div class="w-1/2 flex flex-col">
+      <label
+        class="block text-sm font-medium text-gray-400"
+        [ngClass]="{
+          'text-red-500': addressLine1.invalid && addressLine1.touched
+        }"
       >
-        @for (country of countryOptions; track country.name) {
-        <mat-option [value]="country.name">
-          <div class="flex items-center gap-2">
-            <img
-              [src]="country.flag"
-              alt="{{ country.name }} flag"
-              width="20"
-              height="15"
-            />
-            {{ country.name }}
-          </div>
-        </mat-option>
+        Address Line 1
+        <span class="text-red-500">*</span>
+      </label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="addressLine1"
+          placeholder="Address Line 1"
+          [(ngModel)]="inventory.address!.addressLine1"
+          name="addressLine1"
+          required
+          #addressLine1="ngModel"
+        />
+        @if (addressLine1.invalid && addressLine1.touched) {
+        <mat-error> Address Line 1 is required. </mat-error>
         }
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
-        id="postalZipCode"
-        placeholder="Postal/ZIP Code"
-        [(ngModel)]="inventory.address!.postalZipCode"
-      />
-    </mat-form-field>
+      </mat-form-field>
+    </div>
+
+    <!-- Address Line 2 -->
+    <div class="w-1/2 flex flex-col">
+      <label class="block text-sm font-medium text-gray-400">
+        Address Line 2
+      </label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="addressLine2"
+          placeholder="Address Line 2"
+          [(ngModel)]="inventory.address!.addressLine2"
+          name="addressLine2"
+        />
+      </mat-form-field>
+    </div>
   </div>
   <div class="p-0 flex flex-row items-center gap-1">
+    <!-- Town/City -->
+    <div class="w-1/2 flex flex-col">
+      <label class="block text-sm font-medium text-gray-400"> Town/City </label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="townCity"
+          placeholder="Town/City"
+          [(ngModel)]="inventory.address!.townCity"
+          name="townCity"
+          #townCity="ngModel"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- State -->
+    <div class="w-1/2 flex flex-col">
+      <label class="block text-sm font-medium text-gray-400">
+        State/Provice/County
+      </label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="stateProvinceCounty"
+          placeholder="State/Province/County"
+          [(ngModel)]="inventory.address!.stateProvinceCounty"
+          name="stateProvinceCounty"
+          #stateProvinceCounty="ngModel"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="p-0 flex flex-row items-center gap-1">
+    <!-- Country -->
+    <div class="w-full flex flex-col">
+      <label
+        class="block text-sm font-medium text-gray-400"
+        [ngClass]="{ 'text-red-500': country.invalid && country.touched }"
+      >
+        Country
+        <span class="text-red-500">*</span>
+      </label>
+      <mat-form-field appearance="outline">
+        <mat-select
+          [(ngModel)]="inventory.address!.country"
+          placeholder="Select Country"
+          name="country"
+          required
+          #country="ngModel"
+        >
+          @for (country of countryOptions; track $index) {
+          <mat-option [value]="country">
+            {{ country }}
+          </mat-option>
+          }
+        </mat-select>
+        @if (country.invalid && country.touched) {
+        <mat-error> Country is required. </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Postal/ZIP Code -->
+    <div class="w-full flex flex-col">
+      <label
+        class="block text-sm font-medium text-gray-400"
+        [ngClass]="{
+          'text-red-500': postalZipCode.invalid && postalZipCode.touched
+        }"
+      >
+        Postal/ZIP Code
+        <span class="text-red-500">*</span>
+      </label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="postalZipCode"
+          placeholder="Postal/ZIP Code"
+          [(ngModel)]="inventory.address!.postalZipCode"
+          name="postalZipCode"
+          required
+          #postalZipCode="ngModel"
+        />
+        @if (postalZipCode.invalid && postalZipCode.touched) {
+        <mat-error> Postal/ZIP Code is required. </mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="p-0 flex flex-col">
+    <label class="block text-sm font-medium text-gray-400"> Maps Link </label>
     <mat-form-field class="w-full" appearance="outline">
       <input
         type="url"
@@ -110,12 +198,24 @@
   </mat-form-field>
 </div>
 
-<mat-toolbar
-  class="actions-footer fixed bottom-0 right-0 w-full flex flex-row justify-between gap-5 items-center"
->
-  <div class="flex flex-col gap-0"></div>
-  <button mat-flat-button (click)="submit()">
-    <mat-icon>check_circle</mat-icon>
-    Submit
-  </button>
-</mat-toolbar>
+<div class="w-full flex flex-row items-center justify-center my-10">
+  <div class="flex items-center gap-2">
+    <button mat-stroked-button routerLink="/suppliers">
+      <mat-icon>close</mat-icon>
+      Cancel
+    </button>
+    <button
+      mat-flat-button
+      (click)="submit()"
+      [disabled]="
+        inventoryName.invalid ||
+        addressLine1.invalid ||
+        country.invalid ||
+        postalZipCode.invalid
+      "
+    >
+      <mat-icon>check_circle_outline</mat-icon>
+      {{ inventory.id ? "Update" : "Create" }} Supplier
+    </button>
+  </div>
+</div>

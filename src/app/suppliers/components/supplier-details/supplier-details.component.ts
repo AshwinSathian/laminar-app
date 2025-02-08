@@ -70,11 +70,8 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
         next: (data) => {
           if (data?.length) {
             this.countryOptions = data
-              .map((d) => ({
-                flag: d.flags.png,
-                name: d.name.common,
-              }))
-              ?.sort((a, b) => a.name.localeCompare(b.name));
+              .map((d) => d.name.common)
+              ?.sort((a, b) => a.localeCompare(b));
           }
         },
       });

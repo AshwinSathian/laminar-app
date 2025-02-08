@@ -172,7 +172,6 @@
       </mat-form-field>
     </div>
   </div>
-
   <div class="p-0 flex flex-row items-center gap-1">
     <!-- Town/City -->
     <div class="w-1/2 flex flex-col">
@@ -206,7 +205,6 @@
       </mat-form-field>
     </div>
   </div>
-
   <div class="p-0 flex flex-row items-center gap-1">
     <!-- Country -->
     <div class="w-full flex flex-col">
@@ -226,16 +224,8 @@
           #country="ngModel"
         >
           @for (country of countryOptions; track $index) {
-          <mat-option [value]="country.name">
-            <div class="flex items-center gap-2">
-              <img
-                [src]="country.flag"
-                alt="{{ country.name }} flag"
-                width="20"
-                height="15"
-              />
-              {{ country.name }}
-            </div>
+          <mat-option [value]="country">
+            {{ country }}
           </mat-option>
           }
         </mat-select>
