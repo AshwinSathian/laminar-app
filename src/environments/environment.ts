@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
-  apiUrl: 'https://laminar-api.vercel.app',
+  production: false,
+  apiUrl: 'http://localhost:3000',
 };
