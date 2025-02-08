@@ -34,7 +34,3 @@ body {
 *:not(.material-icons) {
   font-family: "Poppins", Roboto, "Helvetica Neue", sans-serif !important;
 }
-
-.actions-footer {
-  width: 85vw !important;
-}

@@ -1,185 +1,299 @@
 <app-header title="Supplier Details"></app-header>
 
-<div class="w-full p-2 flex flex-col">
-  <mat-form-field class="w-full" appearance="outline">
-    <input
-      matInput
-      id="supplierName"
-      placeholder="Supplier Name"
-      [(ngModel)]="supplier.name"
-    />
-  </mat-form-field>
+<div class="w-full p-2 flex flex-col gap-2">
+  <!-- Supplier Name -->
+  <div class="w-full flex flex-col">
+    <label
+      class="block text-sm font-medium text-gray-400"
+      [ngClass]="{
+        'text-red-500': supplierName.invalid && supplierName.touched
+      }"
+    >
+      Supplier Name
+      <span class="text-red-500">*</span>
+    </label>
+    <mat-form-field class="w-full" appearance="outline">
+      <input
+        matInput
+        id="supplierName"
+        placeholder="Supplier Name"
+        [(ngModel)]="supplier.name"
+        name="supplierName"
+        required
+        #supplierName="ngModel"
+      />
+      @if (supplierName.invalid && supplierName.touched) {
+      <mat-error> Supplier Name is required. </mat-error>
+      }
+    </mat-form-field>
+  </div>
 
   <h2 class="text-xl my-2">Primary Contact</h2>
   <div class="p-0 flex flex-row items-center gap-1">
-    <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
-        id="primaryContactName"
-        placeholder="Name"
-        [(ngModel)]="supplier.primaryContact.name"
-      />
-    </mat-form-field>
-    <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
-        id="primaryContactEmail"
-        type="email"
-        placeholder="Email"
-        [(ngModel)]="supplier.primaryContact.email"
-      />
-    </mat-form-field>
+    <!-- Primary Contact Name -->
+    <div class="w-1/2 flex flex-col">
+      <label
+        class="block text-sm font-medium text-gray-400"
+        [ngClass]="{
+          'text-red-500':
+            primaryContactName.invalid && primaryContactName.touched
+        }"
+      >
+        Name
+        <span class="text-red-500">*</span>
+      </label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="primaryContactName"
+          placeholder="Name"
+          [(ngModel)]="supplier.primaryContact.name"
+          name="primaryContactName"
+          required
+          #primaryContactName="ngModel"
+        />
+        @if (primaryContactName.invalid && primaryContactName.touched) {
+        <mat-error> Name is required. </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Primary Contact Email -->
+    <div class="w-1/2 flex flex-col">
+      <label
+        class="block text-sm font-medium text-gray-400"
+        [ngClass]="{
+          'text-red-600':
+            primaryContactEmail.invalid && primaryContactEmail.touched
+        }"
+      >
+        Email
+        <span class="text-red-500">*</span>
+      </label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="primaryContactEmail"
+          type="email"
+          placeholder="Email"
+          [(ngModel)]="supplier.primaryContact.email"
+          name="primaryContactEmail"
+          required
+          email
+          #primaryContactEmail="ngModel"
+        />
+        @if (primaryContactEmail.invalid && primaryContactEmail.touched) {
+        <mat-error>
+          @if (primaryContactEmail.errors?.['required']) {
+          <span>Email is required.</span>
+          } @if (primaryContactEmail.errors?.['email']) {
+          <span>Invalid email format.</span>
+          }
+        </mat-error>
+        }
+      </mat-form-field>
+    </div>
   </div>
+
   <div class="p-0 flex flex-row items-center gap-1">
-    <mat-form-field appearance="outline">
-      <input
-        matInput
-        id="primaryContactPhoneCode"
-        placeholder="Code"
-        [(ngModel)]="supplier.primaryContact.phone!.code"
-      />
-    </mat-form-field>
-    <mat-form-field class="w-full" appearance="outline">
-      <input
-        matInput
-        id="primaryContactPhoneNumber"
-        placeholder="Number"
-        [(ngModel)]="supplier.primaryContact.phone!.number"
-      />
-    </mat-form-field>
+    <!-- Phone Code -->
+    <div class="flex flex-col">
+      <label class="block text-sm font-medium text-gray-400">Code</label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="primaryContactPhoneCode"
+          placeholder="Code"
+          [(ngModel)]="supplier.primaryContact.phone!.code"
+          name="primaryContactPhoneCode"
+          #primaryContactPhoneCode="ngModel"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- Phone Number -->
+    <div class="w-full flex flex-col">
+      <label class="block text-sm font-medium text-gray-400">Phone</label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="primaryContactPhoneNumber"
+          placeholder="Number"
+          [(ngModel)]="supplier.primaryContact.phone!.number"
+          name="primaryContactPhoneNumber"
+          #primaryContactPhoneNumber="ngModel"
+        />
+      </mat-form-field>
+    </div>
   </div>
-  <mat-form-field class="w-full" appearance="outline">
-    <input
-      matInput
-      id="primaryContactDesignation"
-      placeholder="Designation"
-      [(ngModel)]="supplier.primaryContact.designation"
-    />
-  </mat-form-field>
 
   <h2 class="text-xl my-2">Address</h2>
   <div class="p-0 flex flex-row items-center gap-1">
-    <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
-        id="addressLine1"
-        placeholder="Address Line 1"
-        [(ngModel)]="supplier.address!.addressLine1"
-      />
-    </mat-form-field>
-    <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
-        id="addressLine2"
-        placeholder="Address Line 2"
-        [(ngModel)]="supplier.address!.addressLine2"
-      />
-    </mat-form-field>
-  </div>
-  <div class="p-0 flex flex-row items-center gap-1">
-    <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
-        id="townCity"
-        placeholder="Town/City"
-        [(ngModel)]="supplier.address!.townCity"
-      />
-    </mat-form-field>
-    <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
-        id="stateProvinceCounty"
-        placeholder="State/Province/County"
-        [(ngModel)]="supplier.address!.stateProvinceCounty"
-      />
-    </mat-form-field>
-  </div>
-  <div class="p-0 flex flex-row items-center gap-1">
-    <mat-form-field class="w-1/2" appearance="outline">
-      <mat-select [(ngModel)]="supplier.address!.country" placeholder="Country">
-        @for (country of countryOptions; track country.name) {
-        <mat-option [value]="country.name">
-          <div class="flex items-center gap-2">
-            <img
-              [src]="country.flag"
-              alt="{{ country.name }} flag"
-              width="20"
-              height="15"
-            />
-            {{ country.name }}
-          </div>
-        </mat-option>
+    <!-- Address Line 1 -->
+    <div class="w-1/2 flex flex-col">
+      <label
+        class="block text-sm font-medium text-gray-400"
+        [ngClass]="{
+          'text-red-500': addressLine1.invalid && addressLine1.touched
+        }"
+      >
+        Address Line 1
+        <span class="text-red-500">*</span>
+      </label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="addressLine1"
+          placeholder="Address Line 1"
+          [(ngModel)]="supplier.address!.addressLine1"
+          name="addressLine1"
+          required
+          #addressLine1="ngModel"
+        />
+        @if (addressLine1.invalid && addressLine1.touched) {
+        <mat-error> Address Line 1 is required. </mat-error>
         }
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
-        id="postalZipCode"
-        placeholder="Postal/ZIP Code"
-        [(ngModel)]="supplier.address!.postalZipCode"
-      />
-    </mat-form-field>
-  </div>
-  <div class="p-0 flex flex-row items-center gap-1">
-    <mat-form-field class="w-full" appearance="outline">
-      <input
-        type="url"
-        matInput
-        id="mapsLink"
-        placeholder="Maps Link"
-        [(ngModel)]="supplier.address!.mapsLink"
-      />
-    </mat-form-field>
-  </div>
-
-  <div class="mt-4 flex w-full items-center justify-between">
-    <div class="flex flex-col gap-0">
-      <h2 class="text-xl">Documents</h2>
-      <small class="font-italic">Supported file types: .jpeg, .png, .pdf</small>
+      </mat-form-field>
     </div>
-    <input
-      #filesInput
-      type="file"
-      (change)="filesSelected($event)"
-      accept="image/jpeg, image/jpg, image/png, application/pdf"
-      multiple
-      hidden
-    />
-    <button mat-stroked-button (click)="filesInput.click()" class="min-w-fit">
-      <mat-icon>upload</mat-icon>
-      Upload
-    </button>
-  </div>
-  <div class="w-full flex items-center gap-2 my-2 mb-4">
-    @for (item of supplier.documents; track $index) {
-    <mat-card class="media-card" appearance="outlined">
-      @if (item.type.startsWith('image/')) {
-      <img mat-card-image [src]="item.url" class="responsive-img" />
-      } @else {
-      <div class="pdf-icon-container">
-        <mat-icon class="file-icon">picture_as_pdf</mat-icon>
-      </div>
-      }
 
-      <div class="overlay">
-        <button mat-icon-button (click)="deleteMedia($index)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-    </mat-card>
-    } @if (isUploading) {
-    <div class="skeleton-card"></div>
-    }
+    <!-- Address Line 2 -->
+    <div class="w-1/2 flex flex-col">
+      <label class="block text-sm font-medium text-gray-400">
+        Address Line 2
+      </label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="addressLine2"
+          placeholder="Address Line 2"
+          [(ngModel)]="supplier.address!.addressLine2"
+          name="addressLine2"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="p-0 flex flex-row items-center gap-1">
+    <!-- Town/City -->
+    <div class="w-1/2 flex flex-col">
+      <label class="block text-sm font-medium text-gray-400"> Town/City </label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="townCity"
+          placeholder="Town/City"
+          [(ngModel)]="supplier.address!.townCity"
+          name="townCity"
+          #townCity="ngModel"
+        />
+      </mat-form-field>
+    </div>
+
+    <!-- State -->
+    <div class="w-1/2 flex flex-col">
+      <label class="block text-sm font-medium text-gray-400">
+        State/Provice/County
+      </label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="stateProvinceCounty"
+          placeholder="State/Province/County"
+          [(ngModel)]="supplier.address!.stateProvinceCounty"
+          name="stateProvinceCounty"
+          #stateProvinceCounty="ngModel"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="p-0 flex flex-row items-center gap-1">
+    <!-- Country -->
+    <div class="w-full flex flex-col">
+      <label
+        class="block text-sm font-medium text-gray-400"
+        [ngClass]="{ 'text-red-500': country.invalid && country.touched }"
+      >
+        Country
+        <span class="text-red-500">*</span>
+      </label>
+      <mat-form-field appearance="outline">
+        <mat-select
+          [(ngModel)]="supplier.address!.country"
+          placeholder="Country"
+          name="country"
+          required
+          #country="ngModel"
+        >
+          @for (country of countryOptions; track $index) {
+          <mat-option [value]="country.name">
+            <div class="flex items-center gap-2">
+              <img
+                [src]="country.flag"
+                alt="{{ country.name }} flag"
+                width="20"
+                height="15"
+              />
+              {{ country.name }}
+            </div>
+          </mat-option>
+          }
+        </mat-select>
+        @if (country.invalid && country.touched) {
+        <mat-error> Country is required. </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Postal/ZIP Code -->
+    <div class="w-full flex flex-col">
+      <label
+        class="block text-sm font-medium text-gray-400"
+        [ngClass]="{
+          'text-red-500': postalZipCode.invalid && postalZipCode.touched
+        }"
+      >
+        Postal/ZIP Code
+        <span class="text-red-500">*</span>
+      </label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="postalZipCode"
+          placeholder="Postal/ZIP Code"
+          [(ngModel)]="supplier.address!.postalZipCode"
+          name="postalZipCode"
+          required
+          #postalZipCode="ngModel"
+        />
+        @if (postalZipCode.invalid && postalZipCode.touched) {
+        <mat-error> Postal/ZIP Code is required. </mat-error>
+        }
+      </mat-form-field>
+    </div>
   </div>
 </div>
 
-<mat-toolbar
-  class="actions-footer fixed bottom-0 right-0 w-full flex flex-row justify-between gap-5 items-center"
->
-  <div class="flex flex-col gap-0"></div>
-  <button mat-flat-button (click)="submit()">
-    <mat-icon>check_circle</mat-icon>
-    Submit
-  </button>
-</mat-toolbar>
+<div class="w-full flex flex-row items-center justify-center my-10">
+  <div class="flex items-center gap-2">
+    <button mat-stroked-button routerLink="/supplier">
+      <mat-icon>close</mat-icon>
+      Cancel
+    </button>
+    <button
+      mat-flat-button
+      (click)="submit()"
+      [disabled]="
+        supplierName.invalid ||
+        primaryContactName.invalid ||
+        primaryContactEmail.invalid ||
+        addressLine1.invalid ||
+        country.invalid ||
+        postalZipCode.invalid
+      "
+    >
+      <mat-icon>check_circle_outline</mat-icon>
+      {{ supplier.id ? "Update" : "Create" }} Supplier
+    </button>
+  </div>
+</div>
