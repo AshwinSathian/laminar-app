@@ -1,41 +1,136 @@
 <app-header title="Material Details"></app-header>
 
-<div class="w-full p-2 flex flex-col">
-  <mat-form-field class="w-full" appearance="outline">
-    <input
-      matInput
-      id="partName"
-      placeholder="Part Name"
-      [(ngModel)]="material.partName"
-    />
-  </mat-form-field>
+<div class="w-full p-2 flex flex-col gap-4">
+  <!-- Part Name and Material -->
+  <div class="flex flex-row gap-2">
+    <!-- Part Name -->
+    <div class="w-1/2 flex flex-col">
+      <label
+        for="partNameInput"
+        class="block text-sm font-medium text-gray-400"
+        [ngClass]="{
+          'text-red-500': partNameInput.invalid && partNameInput.touched
+        }"
+      >
+        Part Name<span class="text-red-500">*</span>
+      </label>
+      <mat-form-field class="w-full" appearance="outline">
+        <input
+          matInput
+          id="partNameInput"
+          placeholder="Part Name"
+          [(ngModel)]="material.partName"
+          name="partNameInput"
+          required
+          #partNameInput="ngModel"
+        />
+        @if (partNameInput.invalid && partNameInput.touched) {
+        <mat-error> Part Name is required. </mat-error>
+        }
+      </mat-form-field>
+    </div>
 
-  <mat-form-field class="w-full" appearance="outline">
-    <input
-      matInput
-      id="material"
-      placeholder="Material"
-      [(ngModel)]="material.material"
-    />
-  </mat-form-field>
+    <!-- Material -->
+    <div class="w-1/2 flex flex-col">
+      <label
+        for="materialInput"
+        class="block text-sm font-medium text-gray-400"
+        [ngClass]="{
+          'text-red-500': materialInput.invalid && materialInput.touched
+        }"
+      >
+        Material<span class="text-red-500">*</span>
+      </label>
+      <mat-form-field class="w-full" appearance="outline">
+        <input
+          matInput
+          id="materialInput"
+          placeholder="Material"
+          [(ngModel)]="material.material"
+          name="materialInput"
+          required
+          #materialInput="ngModel"
+        />
+        @if (materialInput.invalid && materialInput.touched) {
+        <mat-error> Material is required. </mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </div>
 
-  <mat-form-field class="w-full" appearance="outline">
-    <input
-      matInput
-      id="manufacturingMethod"
-      placeholder="Manufacturing Method"
-      [(ngModel)]="material.manufacturingMethod"
-    />
-  </mat-form-field>
+  <!-- Manufacturing Method and Weight -->
+  <div class="flex flex-row gap-2">
+    <!-- Manufacturing Method -->
+    <div class="w-1/2 flex flex-col">
+      <label
+        for="manufacturingMethodInput"
+        class="block text-sm font-medium text-gray-400"
+        [ngClass]="{
+          'text-red-500':
+            manufacturingMethodInput.invalid && manufacturingMethodInput.touched
+        }"
+      >
+        Manufacturing Method<span class="text-red-500">*</span>
+      </label>
+      <mat-form-field class="w-full" appearance="outline">
+        <input
+          matInput
+          id="manufacturingMethodInput"
+          placeholder="Manufacturing Method"
+          [(ngModel)]="material.manufacturingMethod"
+          name="manufacturingMethodInput"
+          required
+          #manufacturingMethodInput="ngModel"
+        />
+        @if (manufacturingMethodInput.invalid &&
+        manufacturingMethodInput.touched) {
+        <mat-error> Manufacturing Method is required. </mat-error>
+        }
+      </mat-form-field>
+    </div>
 
-  <mat-form-field class="w-full" appearance="outline">
-    <input
-      matInput
-      id="weight"
-      placeholder="Weight"
-      [(ngModel)]="material.weight"
-    />
-  </mat-form-field>
+    <!-- Weight -->
+    <div class="w-1/2 flex flex-col">
+      <label
+        for="weightInput"
+        class="block text-sm font-medium text-gray-400"
+        [ngClass]="{
+          'text-red-500': weightInput.invalid && weightInput.touched
+        }"
+      >
+        Weight<span class="text-red-500">*</span>
+      </label>
+      <div class="flex flex-row gap-2">
+        <mat-form-field class="w-2/3" appearance="outline">
+          <input
+            matInput
+            id="weightInput"
+            type="number"
+            placeholder="Weight"
+            [(ngModel)]="material.weight!.value"
+            name="weightInput"
+            required
+            #weightInput="ngModel"
+          />
+          @if (weightInput.invalid && weightInput.touched) {
+          <mat-error> Weight is required. </mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field class="w-1/3" appearance="outline">
+          <mat-select
+            [(ngModel)]="material.weight!.unit"
+            name="weightUnitInput"
+            required
+            placeholder="Select Unit"
+          >
+            <mat-option value="kg">kg</mat-option>
+            <mat-option value="g">g</mat-option>
+            <mat-option value="lbs">lbs</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
 
   <div class="mt-4 flex w-full items-center justify-between">
     <div class="flex flex-col gap-0">
@@ -163,32 +258,98 @@
     }
   </div>
 
+  <!-- Dimensions -->
   <h2 class="text-xl my-2">Dimensions</h2>
   <div class="p-0 flex flex-row items-center gap-1">
-    <mat-form-field class="w-1/3" appearance="outline">
-      <input
-        matInput
-        id="length"
-        placeholder="Length"
-        [(ngModel)]="material.dimensions!.length"
-      />
-    </mat-form-field>
-    <mat-form-field class="w-1/3" appearance="outline">
-      <input
-        matInput
-        id="breadth"
-        placeholder="Breadth"
-        [(ngModel)]="material.dimensions!.breadth"
-      />
-    </mat-form-field>
-    <mat-form-field class="w-1/3" appearance="outline">
-      <input
-        matInput
-        id="height"
-        placeholder="Height"
-        [(ngModel)]="material.dimensions!.height"
-      />
-    </mat-form-field>
+    <!-- Length -->
+    <div class="flex flex-col w-1/3">
+      <label for="lengthInput" class="block text-sm font-medium text-gray-400">
+        Length
+      </label>
+      <div class="flex flex-row gap-2">
+        <mat-form-field class="w-2/3" appearance="outline">
+          <input
+            matInput
+            id="lengthInput"
+            type="number"
+            placeholder="Length"
+            [(ngModel)]="material.dimensions!.length.value"
+            name="lengthInput"
+          />
+        </mat-form-field>
+        <mat-form-field class="w-1/3" appearance="outline">
+          <mat-select
+            [(ngModel)]="material.dimensions!.length.unit"
+            name="lengthUnitInput"
+            placeholder="Select Unit"
+          >
+            <mat-option value="mm">mm</mat-option>
+            <mat-option value="cm">cm</mat-option>
+            <mat-option value="m">m</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Breadth -->
+    <div class="flex flex-col w-1/3">
+      <label for="breadthInput" class="block text-sm font-medium text-gray-400">
+        Breadth
+      </label>
+      <div class="flex flex-row gap-2">
+        <mat-form-field class="w-2/3" appearance="outline">
+          <input
+            matInput
+            id="breadthInput"
+            type="number"
+            placeholder="Breadth"
+            [(ngModel)]="material.dimensions!.breadth.value"
+            name="breadthInput"
+          />
+        </mat-form-field>
+        <mat-form-field class="w-1/3" appearance="outline">
+          <mat-select
+            [(ngModel)]="material.dimensions!.breadth.unit"
+            name="breadthUnitInput"
+            placeholder="Select Unit"
+          >
+            <mat-option value="mm">mm</mat-option>
+            <mat-option value="cm">cm</mat-option>
+            <mat-option value="m">m</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Height -->
+    <div class="flex flex-col w-1/3">
+      <label for="heightInput" class="block text-sm font-medium text-gray-400">
+        Height
+      </label>
+      <div class="flex flex-row gap-2">
+        <mat-form-field class="w-2/3" appearance="outline">
+          <input
+            matInput
+            id="heightInput"
+            type="number"
+            placeholder="Height"
+            [(ngModel)]="material.dimensions!.height.value"
+            name="heightInput"
+          />
+        </mat-form-field>
+        <mat-form-field class="w-1/3" appearance="outline">
+          <mat-select
+            [(ngModel)]="material.dimensions!.height.unit"
+            name="heightUnitInput"
+            placeholder="Select Unit"
+          >
+            <mat-option value="mm">mm</mat-option>
+            <mat-option value="cm">cm</mat-option>
+            <mat-option value="m">m</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
   </div>
 
   <h2 class="text-xl my-2">Suppliers</h2>
@@ -206,12 +367,24 @@
   </mat-form-field>
 </div>
 
-<mat-toolbar
-  class="actions-footer fixed bottom-0 right-0 w-full flex flex-row justify-between gap-5 items-center"
->
-  <div class="flex flex-col gap-0"></div>
-  <button mat-flat-button (click)="submit()">
-    <mat-icon>check_circle</mat-icon>
-    Submit
-  </button>
-</mat-toolbar>
+<div class="w-full flex flex-row items-center justify-center my-10">
+  <div class="flex items-center gap-2">
+    <button mat-stroked-button routerLink="/materials">
+      <mat-icon>close</mat-icon>
+      Cancel
+    </button>
+    <button
+      mat-flat-button
+      (click)="submit()"
+      [disabled]="
+        partNameInput.invalid ||
+        materialInput.invalid ||
+        manufacturingMethodInput.invalid ||
+        weightInput.invalid
+      "
+    >
+      <mat-icon>check_circle_outline</mat-icon>
+      {{ material.id ? "Update" : "Create" }} Material
+    </button>
+  </div>
+</div>

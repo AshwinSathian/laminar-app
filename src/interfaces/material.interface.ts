@@ -8,11 +8,11 @@ export interface Material extends Base {
   manufacturingMethod: string;
   drawings?: Attachment[];
   dimensions?: {
-    length: string;
-    breadth: string;
-    height: string;
+    length: { value: number; unit: string };
+    breadth: { value: number; unit: string };
+    height: { value: number; unit: string };
   };
-  weight: string;
+  weight?: { value: number; unit: string };
   dataSheets?: Attachment[];
   suppliers?: any[];
 }

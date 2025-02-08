@@ -52,14 +52,19 @@
           @if (material.dimensions) {
           <div class="text-md">
             <span class="font-semibold">Dimensions:</span>
-            {{ material.dimensions.length }} x
-            {{ material.dimensions.breadth }} x
-            {{ material.dimensions.height }}
+            {{ material.dimensions.length!.value | number }}
+            {{ material.dimensions.length!.unit }} x
+            {{ material.dimensions.breadth!.value | number }}
+            {{ material.dimensions.breadth!.unit }} x
+            {{ material.dimensions.height!.value | number }}
+            {{ material.dimensions.height!.unit }}
           </div>
           }
 
           <div class="text-md">
-            <span class="font-semibold">Weight:</span> {{ material.weight }}
+            <span class="font-semibold">Weight:</span>
+            {{ material.weight!.value | number }}
+            {{ material.weight!.unit }}
           </div>
         </div>
       </div>

@@ -31,11 +31,11 @@ export class MaterialDetailsComponent implements OnInit, OnDestroy {
     manufacturingMethod: '',
     drawings: [],
     dimensions: {
-      length: '',
-      breadth: '',
-      height: '',
+      length: { value: 0, unit: '' },
+      breadth: { value: 0, unit: '' },
+      height: { value: 0, unit: '' },
     },
-    weight: '',
+    weight: { value: 0, unit: '' },
     dataSheets: [],
     suppliers: [],
   };

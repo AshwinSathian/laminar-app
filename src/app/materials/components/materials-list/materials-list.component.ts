@@ -68,9 +68,9 @@ export class MaterialsListComponent implements OnInit, OnDestroy {
   }
 
   private _formatDimensions(dimensions?: {
-    length: string;
-    breadth: string;
-    height: string;
+    length: { value: number; unit: string };
+    breadth: { value: number; unit: string };
+    height: { value: number; unit: string };
   }): string {
     if (!dimensions) {
       return '';
