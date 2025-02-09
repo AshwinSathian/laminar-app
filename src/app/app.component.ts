@@ -22,7 +22,7 @@ import {
 import { combineLatest, Subject, takeUntil } from 'rxjs';
 import { HttpErrorComponent } from './interceptors/components/http-error/http-error.component';
 import { LoadingComponent } from './interceptors/components/loading/loading.component';
-import { ErrorMessageService } from './services';
+import { AuthService, ErrorMessageService } from './services';
 import { BreakpointService } from './services/breakpoint.service';
 
 @Component({
@@ -82,10 +82,12 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   isMobile$ = this._breakpointService.isMobile$;
+  token$ = this._authService.token$;
   destroy$ = new Subject<boolean>();
 
   constructor(
     private _router: Router,
+    private _authService: AuthService,
     private _errorMessageService: ErrorMessageService,
     private _breakpointService: BreakpointService
   ) {}

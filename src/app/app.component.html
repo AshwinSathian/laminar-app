@@ -1,5 +1,6 @@
 <app-loading></app-loading>
 
+@if (token$ | async) {
 <mat-sidenav-container class="app-container h-screen flex">
   <mat-sidenav
     #sidenav
@@ -41,3 +42,6 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+} @else {
+<router-outlet></router-outlet>
+}

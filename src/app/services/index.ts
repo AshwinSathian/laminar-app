@@ -1,3 +1,4 @@
+export * from './auth.service';
 export * from './bill-of-materials.service';
 export * from './error-message.service';
 export * from './excel-export.service';

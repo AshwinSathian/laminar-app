@@ -1,0 +1,55 @@
+<div class="w-screen h-screen p-2 flex items-center justify-center">
+  <div class="flex flex-col gap-4 lg:w-1/3 w-full">
+    <h1 class="text-center text-4xl">Login</h1>
+
+    @if (error!.length) {
+    <div
+      class="w-full border border-red-500 p-2 text-red-500 flex items-center justify-center text-md"
+    >
+      {{ error }}
+    </div>
+    }
+
+    <div class="flex flex-col gap-2">
+      <mat-form-field class="w-full" appearance="outline">
+        <input
+          matInput
+          type="email"
+          id="emailInput"
+          placeholder="Email"
+          [(ngModel)]="email"
+          name="emailInput"
+          required
+          email
+          #emailInput="ngModel"
+        />
+        @if (emailInput.invalid && emailInput.touched) {
+        <mat-error>A valid Email is required</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="w-full" appearance="outline">
+        <input
+          matInput
+          type="password"
+          id="passwordInput"
+          placeholder="Password"
+          [(ngModel)]="password"
+          name="passwordInput"
+          required
+          #passwordInput="ngModel"
+        />
+        @if (passwordInput.invalid && passwordInput.touched) {
+        <mat-error>Password is required</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <button
+      mat-flat-button
+      (click)="login()"
+      [disabled]="emailInput.invalid || passwordInput.invalid"
+    >
+      LOGIN
+    </button>
+  </div>
+</div>
