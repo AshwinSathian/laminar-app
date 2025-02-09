@@ -125,15 +125,14 @@ export class BillOfMaterialsListComponent
           'Total Cost': '',
           Currency: '',
           'Part Number': part.partNumber,
-          'Part Name': part.partName,
-          'Material ID': part.materialId,
+          'Part Name': part.name,
+          'Material ID': part.id,
           Description: part.description || '',
           Quantity: part.quantity,
-          Units: part.units,
           'Supplier/Manufacturer': part.supplierOrManufacturer?.name || '',
           'Unit Cost': part.unitCost,
           'Total Part Cost': part.totalPartCost,
-          'Part Images': (part.partImages || []).join('; '),
+          'Part Images': (part.images || [])?.map((i) => i.url).join('; '),
         });
       }
 

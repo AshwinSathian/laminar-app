@@ -26,7 +26,12 @@ export class ViewOrderComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort) sort!: MatSort;
 
   order!: Order;
-  displayedColumns: string[] = ['partName', 'quantity', 'unitPrice'];
+  displayedColumns: string[] = [
+    'partName',
+    'quantity',
+    'unitPrice',
+    'totalPrice',
+  ];
   dataSource!: MatTableDataSource<any>;
   statusIconsMap: { [key: string]: string } = {
     [OrderStatus.placed]: 'check_circle',
@@ -52,10 +57,11 @@ export class ViewOrderComponent implements OnInit, AfterViewInit, OnDestroy {
       );
       this.dataSource = new MatTableDataSource(
         this.order.parts?.map((p: OrderItem) => ({
-          partName: p.part.partName,
+          partName: p.name,
           quantity: p.quantity,
           unitPrice: p.unitPrice,
-          materialId: p.part.id,
+          totalPrice: p.unitPrice * p.quantity,
+          materialId: p.id,
         }))
       );
     }
@@ -131,7 +137,7 @@ export class ViewOrderComponent implements OnInit, AfterViewInit, OnDestroy {
   //       'Supplier/Manufacturer': part.supplierOrManufacturer?.name || '',
   //       'Unit Cost': part.unitCost,
   //       'Total Part Cost': part.totalPartCost,
-  //       'Part Images': (part.partImages || []).join('; '),
+  //       'Part Images': (part.images || [])?.map((i) => i.url).join('; '),
   //     });
   //   }
 

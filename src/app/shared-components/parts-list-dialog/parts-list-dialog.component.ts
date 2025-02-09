@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import { Component, inject, model } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -17,6 +18,7 @@ import { PartsDialogData } from '@laminar-app/interfaces';
     MatIconModule,
     MatCardModule,
     RouterModule,
+    NgClass,
   ],
   templateUrl: './parts-list-dialog.component.html',
   styleUrl: './parts-list-dialog.component.css',

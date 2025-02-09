@@ -1,21 +1,26 @@
 import { OrderStatus } from '@laminar-app/enums';
 import { Base } from './base.interface';
-import { Material } from './material.interface';
-import { Supplier } from './supplier.interface';
+import { Attachment } from './common.interface';
 
 export interface OrderItem extends Base {
-  part: Material;
+  name: string;
+  images?: Attachment[];
+  material: string;
+  manufacturingMethod: string;
   quantity: number;
   unitPrice: number;
+  nonLinrary?: boolean;
 }
 
 export interface Order extends Base {
   referenceId?: string;
   parts: OrderItem[];
-  supplier?: Supplier;
+  supplier?: { id: string; name: string };
   orderDate: Date;
+  estimatedDeliveryDate?: Date;
   status: OrderStatus;
   totalValue: number;
   currency: string;
   invoice?: string;
+  otherAttachments?: Attachment[];
 }

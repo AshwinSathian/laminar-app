@@ -94,7 +94,7 @@
           <mat-expansion-panel-header>
             <mat-panel-title class="flex items-center gap-2 min-w-fit">
               <mat-icon>category</mat-icon>
-              {{ part.part.partName }}
+              {{ part.name }}
             </mat-panel-title>
             <mat-panel-description>
               {{ part.quantity }}
@@ -105,6 +105,10 @@
             <p>
               <strong>Unit Price:</strong>
               {{ part.unitPrice | currency : order.currency }}
+            </p>
+            <p>
+              <strong>Total Price:</strong>
+              {{ part.unitPrice * part.quantity | currency : order.currency }}
             </p>
           </div>
         </mat-expansion-panel>
@@ -147,6 +151,13 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit Price</th>
           <td mat-cell *matCellDef="let row">
             {{ row.unitPrice | currency : row.currency }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalPrice">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Price</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.totalPrice | currency : row.currency }}
           </td>
         </ng-container>
 

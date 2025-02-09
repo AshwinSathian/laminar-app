@@ -7,21 +7,35 @@
 <mat-divider></mat-divider>
 
 <mat-dialog-content>
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-wrap justify-center gap-4 p-4">
     @for (material of data!.materials; track $index) {
-    <mat-card class="w-full" appearance="outlined">
+    <mat-card
+      class="w-[280px] min-w-[220px] max-w-[300px] flex flex-col justify-between shadow-md"
+      [ngClass]="{
+        'border border-gray-500': _tempSelectedIds.includes(material.id || '')
+      }"
+    >
       <mat-card-header>
-        <mat-card-title>{{ material.partName }}</mat-card-title>
+        <mat-card-title class="text-lg font-semibold">
+          {{ material.partName }}
+        </mat-card-title>
         <mat-card-subtitle>
-          {{ material.material }} | {{ material.manufacturingMethod }}
+          <div class="flex flex-col w-full text-gray-500 text-xs">
+            <span> <strong>Material</strong>: {{ material.material }} </span>
+            <span>
+              <strong>Manufacturing Method</strong>:
+              {{ material.manufacturingMethod }}
+            </span>
+          </div>
         </mat-card-subtitle>
       </mat-card-header>
-      <mat-card-actions>
+      <mat-card-actions class="flex justify-between p-2">
         @if (!_tempSelectedIds.includes(material.id || '')) {
         <a
           mat-button
           [routerLink]="'/materials/view/' + material.id"
           target="_blank"
+          class="text-blue-500 flex items-center gap-1"
         >
           <mat-icon>open_in_new</mat-icon>
           VIEW DETAILS
@@ -30,6 +44,7 @@
           mat-button
           (click)="addPart(material.id)"
           [disabled]="!material!.suppliers!.length"
+          class="text-green-600 flex items-center gap-1"
         >
           <mat-icon>add</mat-icon>
           ADD
@@ -40,6 +55,7 @@
           (click)="removePart(material.id)"
           color="warn"
           [disabled]="!material!.suppliers!.length"
+          class="text-red-600 flex items-center gap-1"
         >
           <mat-icon>delete</mat-icon>
           REMOVE
@@ -50,17 +66,15 @@
     }
   </div>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-stroked-button mat-dialog-close>
-    <mat-icon>close</mat-icon>
-    Cancel
-  </button>
+
+<mat-dialog-actions align="end" class="p-4 flex gap-2">
   <button
-    mat-stroked-button
+    mat-flat-button
     [mat-dialog-close]="selectedPartIds()"
     cdkFocusInitial
+    class="flex items-center gap-1"
   >
-    <mat-icon>check</mat-icon>
+    <mat-icon>check_circle_outline</mat-icon>
     Done
   </button>
 </mat-dialog-actions>

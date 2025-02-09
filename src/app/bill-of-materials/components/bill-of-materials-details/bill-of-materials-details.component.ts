@@ -9,7 +9,7 @@ import {
 } from '@laminar-app/interfaces';
 import { BillOfMaterialsService, SharedService } from '@laminar-app/services';
 import { PartsListDialogComponent } from '@laminar-app/shared-components';
-import { Subject, takeUntil } from 'rxjs';
+import { iif, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-bill-of-materials-details',
@@ -35,16 +35,6 @@ export class BillOfMaterialsDetailsComponent implements OnInit, OnDestroy {
   materialsOptions: Material[] = [];
   selectedParts: Material[] = [];
   supplierOptionsMap: { [materialId: string]: Supplier[] } = {};
-  unitOptions: string[] = [
-    'pieces',
-    'grams',
-    'kilograms',
-    'pounds',
-    'centimeters',
-    'meters',
-    'inches',
-    'feet',
-  ];
   selectedPartIds: string[] = [];
 
   destroy$ = new Subject<boolean>();
@@ -61,8 +51,9 @@ export class BillOfMaterialsDetailsComponent implements OnInit, OnDestroy {
       this.billOfMaterials = JSON.parse(
         JSON.stringify(this._route.snapshot.data['billOfMaterials'])
       );
+
       this.selectedPartIds =
-        this.billOfMaterials?.parts?.map((p) => p.materialId) || [];
+        this.billOfMaterials?.parts?.map((p) => p.id || '') || [];
     }
 
     this._sharedService
@@ -88,12 +79,14 @@ export class BillOfMaterialsDetailsComponent implements OnInit, OnDestroy {
         next: (data) => {
           if (data?.length) {
             this.materialsOptions = data;
-            for (const part of this.billOfMaterials.parts) {
-              const selectedPart = data?.find((d) => d.id === part.materialId);
-              if (selectedPart?.id) {
-                this.supplierOptionsMap[part.materialId] =
-                  selectedPart?.suppliers || [];
-                this.selectedParts.push(selectedPart);
+            for (const part of data || []) {
+              if (part.id) {
+                this.supplierOptionsMap[part.id] =
+                  part?.suppliers?.map((s) => s) || [];
+
+                if (this.billOfMaterials.parts?.find((p) => p.id === part.id)) {
+                  this.selectedParts.push(part);
+                }
               }
             }
           }
@@ -103,6 +96,8 @@ export class BillOfMaterialsDetailsComponent implements OnInit, OnDestroy {
 
   openPartsDialog() {
     const dialogRef = this.dialog.open(PartsListDialogComponent, {
+      width: '50vw',
+      maxWidth: '50vw',
       data: {
         materials: this.materialsOptions,
         selectedPartIds: this.selectedPartIds,
@@ -115,22 +110,23 @@ export class BillOfMaterialsDetailsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (result) => {
           if (result !== undefined) {
-            this.selectedPartIds = [...(result || [])];
+            this.selectedPartIds = [...(result || [])]?.filter((i) => !!i);
             for (const id of this.selectedPartIds || []) {
               const part = this.materialsOptions?.find((m) => m.id === id);
               if (part) {
                 const index = this.billOfMaterials.parts?.findIndex(
-                  (p) => p.materialId === id
+                  (p) => p.id === id
                 );
                 if (index === -1) {
                   const partToAdd: PartDetail = {
-                    materialId: part.id || '',
-                    partName: part.partName,
+                    id,
+                    name: part.partName || '',
+                    material: part.material,
+                    manufacturingMethod: part.manufacturingMethod,
                     description: '',
-                    partImages: part.images,
+                    images: part.images || [],
                     partNumber: `${this.billOfMaterials?.parts?.length + 1}`,
                     quantity: 1,
-                    units: '',
                     unitCost: 0,
                     totalPartCost: 0,
                   };
@@ -140,21 +136,35 @@ export class BillOfMaterialsDetailsComponent implements OnInit, OnDestroy {
             }
 
             this.billOfMaterials.parts = this.billOfMaterials.parts?.filter(
-              (p) => this.selectedPartIds.includes(p.materialId)
+              (p) => this.selectedPartIds.includes(p.id || '')
             );
+            for (const part of this.materialsOptions || []) {
+              if (part.id) {
+                this.supplierOptionsMap[part.id] =
+                  part?.suppliers?.map((s) => s) || [];
+
+                if (this.billOfMaterials.parts?.find((p) => p.id === part.id)) {
+                  this.selectedParts.push(part);
+                }
+              }
+            }
             this.calculateTotalCost();
           }
         },
       });
   }
 
-  materialCompareFunction = (option: Material, value: Material): boolean => {
-    return option.id === value.id;
-  };
+  supplierCompareFunction = (option: Supplier, value: Supplier): boolean =>
+    option.id === value.id;
 
-  supplierCompareFunction = (option: Supplier, value: Supplier): boolean => {
-    return option.id === value.id;
-  };
+  removePart(index: number) {
+    const id = this.billOfMaterials.parts[index].id;
+    this.selectedPartIds = this.selectedPartIds.filter((i) => i !== id);
+    this.selectedParts = this.selectedParts.filter((p) => p.id !== id);
+
+    this.billOfMaterials.parts.splice(index, 1);
+    this.calculateTotalCost();
+  }
 
   calculateTotalCost() {
     this.billOfMaterials.parts = this.billOfMaterials.parts?.map((p) => ({
@@ -170,37 +180,27 @@ export class BillOfMaterialsDetailsComponent implements OnInit, OnDestroy {
 
   submit() {
     this.billOfMaterials.partCount = this.billOfMaterials.parts?.length;
+    this.billOfMaterials.parts = this.billOfMaterials.parts?.map((p) => ({
+      ...p,
+      supplierOrManufacturer: {
+        id: p.supplierOrManufacturer?.id || '',
+        name: p.supplierOrManufacturer?.name || '',
+      },
+    }));
 
-    if (this.billOfMaterials?.id) {
-      this._updateBillOfMaterials();
-    } else {
-      this._createBillOfMaterials();
-    }
-  }
-
-  private _createBillOfMaterials() {
-    this._service
-      .createBillOfMaterials(this.billOfMaterials)
+    iif(
+      () => !!this.billOfMaterials?.id,
+      this._service.updateBillOfMaterials(this.billOfMaterials),
+      this._service.createBillOfMaterials(this.billOfMaterials)
+    )
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
           if (data) {
             this.billOfMaterials = JSON.parse(JSON.stringify(data));
-            this._router.navigate(['/bill-of-materials']);
-          }
-        },
-      });
-  }
-
-  private _updateBillOfMaterials() {
-    this._service
-      .updateBillOfMaterials(this.billOfMaterials)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (data) => {
-          if (data) {
-            this.billOfMaterials = JSON.parse(JSON.stringify(data));
-            this._router.navigate(['/bill-of-materials']);
+            this._router.navigate([
+              `/bill-of-materials/view/${this.billOfMaterials.id}`,
+            ]);
           }
         },
       });

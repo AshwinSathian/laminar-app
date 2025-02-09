@@ -1,51 +1,91 @@
 <app-header title="Order Details"></app-header>
 
-<div class="w-full p-2 flex flex-col">
-  <mat-form-field class="w-full" appearance="outline">
-    <input
-      matInput
-      id="supplierName"
-      placeholder="Order Reference ID"
-      [(ngModel)]="order.referenceId"
-    />
-  </mat-form-field>
-
-  <div class="p-0 flex flex-row items-center gap-1">
-    <mat-form-field class="w-1/2">
-      <mat-label>Order Date</mat-label>
-      <input matInput [matDatepicker]="dp" [(ngModel)]="order.orderDate" />
-      <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
-      <mat-datepicker #dp></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field class="w-1/2" appearance="outline">
-      <mat-select
-        [(ngModel)]="order.status"
-        placeholder="Select Order Status"
-        [compareWith]="statusCompareFunction"
-      >
-        @for (option of statusOptions; track option.value) {
-        <mat-option [value]="option.value">
-          <mat-icon>{{ option.icon }}</mat-icon>
-          {{ option.label }}
-        </mat-option>
-        }
-      </mat-select>
+<div class="w-full p-2 flex flex-col gap-2">
+  <div class="w-full flex flex-col">
+    <label
+      class="block text-sm font-medium text-gray-400 mx-2"
+      [ngClass]="{
+        'text-red-500': orderReferenceId.invalid && orderReferenceId.touched
+      }"
+    >
+      Order Reference ID
+      <span class="text-red-500">*</span>
+    </label>
+    <mat-form-field class="w-full" appearance="outline">
+      <input
+        matInput
+        id="orderReferenceId"
+        name="orderReferenceId"
+        placeholder="Order Reference ID"
+        [(ngModel)]="order.referenceId"
+        #orderReferenceId="ngModel"
+        required=""
+      />
+      @if (orderReferenceId.invalid && orderReferenceId.touched) {
+      <mat-error> Order Date is required. </mat-error>
+      }
     </mat-form-field>
   </div>
 
-  <mat-form-field class="w-full" appearance="outline">
-    <mat-select
-      [(ngModel)]="order.currency"
-      placeholder="Currency"
-      [disabled]="true"
-    >
-      @for (currency of currencyOptions; track currency.value) {
-      <mat-option [value]="currency.value">
-        {{ currency.label }}
-      </mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+  <div class="p-0 flex flex-row items-center gap-1">
+    <div class="w-1/2 flex flex-col">
+      <label
+        class="block text-sm font-medium text-gray-400 mx-2"
+        [ngClass]="{
+          'text-red-500': orderDate.invalid && orderDate.touched
+        }"
+      >
+        Order Date
+        <span class="text-red-500">*</span>
+      </label>
+      <mat-form-field class="w-full">
+        <input
+          matInput
+          [matDatepicker]="dp"
+          [(ngModel)]="order.orderDate"
+          id="orderDate"
+          name="orderDate"
+          #orderDate="ngModel"
+          required
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+        @if (orderDate.invalid && orderDate.touched) {
+        <mat-error> Order Date is required. </mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="w-1/2 flex flex-col">
+      <label
+        class="block text-sm font-medium text-gray-400 mx-2"
+        [ngClass]="{
+          'text-red-500': orderStatus.invalid && orderStatus.touched
+        }"
+      >
+        Order Status
+        <span class="text-red-500">*</span>
+      </label>
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-select
+          [(ngModel)]="order.status"
+          placeholder="Select Order Status"
+          id="orderStatus"
+          name="orderStatus"
+          #orderStatus="ngModel"
+          required
+        >
+          @for (option of statusOptions; track option) {
+          <mat-option [value]="option">
+            {{ option | titlecase }}
+          </mat-option>
+          }
+        </mat-select>
+        @if (orderStatus.invalid && orderStatus.touched) {
+        <mat-error> Order Status is required. </mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </div>
 
   <h2 class="text-xl my-2">Supplier</h2>
   <mat-form-field class="w-full" appearance="outline">
@@ -53,11 +93,18 @@
       [(ngModel)]="order.supplier"
       placeholder="Select Supplier"
       [compareWith]="supplierCompareFunction"
+      id="orderSupplier"
+      name="orderSupplier"
+      #orderSupplier="ngModel"
+      required
     >
       @for (supplier of supplierOptions; track supplier.id) {
       <mat-option [value]="supplier">{{ supplier.name }}</mat-option>
       }
     </mat-select>
+    @if (orderSupplier.invalid && orderSupplier.touched) {
+    <mat-error> Supplier is required. </mat-error>
+    }
   </mat-form-field>
 
   <div class="flex flex-row items-center justify-between my-2">
@@ -81,6 +128,7 @@
           <th class="p-2 border-b border-gray-600 w-3/5">Part Name</th>
           <th class="p-2 border-b border-gray-600 w-1/5">Quantity</th>
           <th class="p-2 border-b border-gray-600 w-1/5">Unit Price</th>
+          <th class="p-2 border-b border-gray-600 w-10"></th>
         </tr>
       </thead>
       <tbody>
@@ -93,14 +141,14 @@
                 class="w-10 h-10 rounded-full"
               />
               <div class="flex flex-col">
-                {{ part.part.partName }}
+                {{ part.name }}
                 <small>
-                  {{ part.part.material }} | {{ part.part.manufacturingMethod }}
+                  {{ part.material }} | {{ part.manufacturingMethod }}
                 </small>
               </div>
               <a
                 mat-icon-button
-                [href]="'/materials/view/' + part.part.id"
+                [href]="'/materials/view/' + part.id"
                 target="_blank"
               >
                 <mat-icon>open_in_new</mat-icon>
@@ -131,6 +179,11 @@
                 (ngModelChange)="updateTotal()"
               />
             </mat-form-field>
+          </td>
+          <td class="p-2 border-b border-gray-700 w-10">
+            <button mat-icon-button (click)="removePart($index)">
+              <mat-icon class="text-red-500">delete_forever</mat-icon>
+            </button>
           </td>
         </tr>
         }
@@ -173,7 +226,17 @@
       <mat-icon>close</mat-icon>
       Cancel
     </button>
-    <button mat-flat-button (click)="submit()">
+    <button
+      mat-flat-button
+      (click)="submit()"
+      [disabled]="
+        orderReferenceId.invalid ||
+        orderDate.invalid ||
+        orderStatus.invalid ||
+        orderSupplier.invalid ||
+        !order.parts!.length
+      "
+    >
       <mat-icon>check_circle_outline</mat-icon>
       {{ order.id ? "Update" : "Create" }} Order
     </button>

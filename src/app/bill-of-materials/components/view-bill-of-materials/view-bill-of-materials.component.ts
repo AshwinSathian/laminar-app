@@ -39,17 +39,7 @@ export class ViewBillOfMaterialsComponent
     'unitCost',
     'totalPartCost',
   ];
-  dataSource!: MatTableDataSource<{
-    partNumber: string;
-    partName: string;
-    description: string;
-    quantity: string;
-    supplierOrManufacturer: string;
-    unitCost: number;
-    totalPartCost: number;
-    currency: string;
-    materialId: string;
-  }>;
+  dataSource!: MatTableDataSource<any>;
   billOfMaterials!: BillOfMaterials;
 
   isMobile$ = this._breakpointService.isMobile$;
@@ -71,14 +61,14 @@ export class ViewBillOfMaterialsComponent
       this.dataSource = new MatTableDataSource(
         this.billOfMaterials.parts?.map((p: PartDetail) => ({
           partNumber: p.partNumber,
-          partName: p.partName,
+          partName: p.name,
           description: p.description || '',
-          quantity: `${p.quantity} ${p.units}`,
           supplierOrManufacturer: p.supplierOrManufacturer?.name || '',
           unitCost: p.unitCost,
+          quantity: p.quantity,
           totalPartCost: p.totalPartCost,
           currency: this.billOfMaterials.currency,
-          materialId: p.materialId,
+          materialId: p.id,
         }))
       );
     }
@@ -146,15 +136,14 @@ export class ViewBillOfMaterialsComponent
         'Total Cost': '',
         Currency: '',
         'Part Number': part.partNumber,
-        'Part Name': part.partName,
-        'Material ID': part.materialId,
+        'Part Name': part.name,
+        'Material ID': part.id,
         Description: part.description || '',
         Quantity: part.quantity,
-        Units: part.units,
         'Supplier/Manufacturer': part.supplierOrManufacturer?.name || '',
         'Unit Cost': part.unitCost,
         'Total Part Cost': part.totalPartCost,
-        'Part Images': (part.partImages || []).join('; '),
+        'Part Images': (part.images || [])?.map((i) => i.url).join('; '),
       });
     }
 

@@ -1,57 +1,77 @@
 <app-header title="Bill Of Materials Details"></app-header>
 
-<div class="w-full p-2 flex flex-col">
-  <mat-form-field class="w-full" appearance="outline">
-    <input
-      matInput
-      id="productName"
-      placeholder="Product Name"
-      [(ngModel)]="billOfMaterials.productName"
-    />
-  </mat-form-field>
-  <mat-form-field class="w-full" appearance="outline">
-    <input
-      matInput
-      id="contactInfo"
-      placeholder="Contact Info"
-      [(ngModel)]="billOfMaterials.contactInfo"
-    />
-  </mat-form-field>
-  <mat-form-field class="w-full" appearance="outline">
-    <mat-select
-      [(ngModel)]="billOfMaterials.currency"
-      placeholder="Currency"
-      [disabled]="true"
+<div class="w-full p-2 flex flex-col gap-2">
+  <div class="w-full flex flex-col">
+    <label
+      class="block text-sm font-medium text-gray-400 mx-2"
+      [ngClass]="{
+        'text-red-500': productName.invalid && productName.touched
+      }"
     >
-      @for (currency of currencyOptions; track currency.value) {
-      <mat-option [value]="currency.value">
-        {{ currency.label }}
-      </mat-option>
+      Product Name
+      <span class="text-red-500">*</span>
+    </label>
+    <mat-form-field class="w-full" appearance="outline">
+      <input
+        matInput
+        id="productName"
+        name="productName"
+        #productName="ngModel"
+        required
+        placeholder="Product Name"
+        [(ngModel)]="billOfMaterials.productName"
+      />
+      @if (productName.invalid && productName.touched) {
+      <mat-error> Product Name is required. </mat-error>
       }
-    </mat-select>
-  </mat-form-field>
+    </mat-form-field>
+  </div>
+
+  <div class="w-full flex flex-col">
+    <label class="block text-sm font-medium text-gray-400 mx-2">
+      Contact Info
+    </label>
+    <mat-form-field class="w-full" appearance="outline">
+      <input
+        matInput
+        id="contactInfo"
+        placeholder="Contact Info"
+        [(ngModel)]="billOfMaterials.contactInfo"
+      />
+    </mat-form-field>
+  </div>
 
   <h2 class="text-xl my-2">Approval Details</h2>
   <div class="p-0 flex flex-row items-center gap-1">
-    <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
-        id="approvedBy"
-        placeholder="Approved By"
-        [(ngModel)]="billOfMaterials.approvedBy"
-      />
-    </mat-form-field>
-    <mat-form-field class="w-1/2" appearance="outline">
-      <input
-        matInput
-        [matDatepicker]="picker"
-        id="approvedDate"
-        placeholder="Date of Approval"
-        [(ngModel)]="billOfMaterials.dateOfApproval"
-      />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+    <div class="w-1/2 flex flex-col">
+      <label class="block text-sm font-medium text-gray-400 mx-2">
+        Approved By
+      </label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          id="approvedBy"
+          placeholder="Approved By"
+          [(ngModel)]="billOfMaterials.approvedBy"
+        />
+      </mat-form-field>
+    </div>
+    <div class="w-1/2 flex flex-col">
+      <label class="block text-sm font-medium text-gray-400 mx-2">
+        Date of Approval
+      </label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          [matDatepicker]="picker"
+          id="approvedDate"
+          placeholder="Date of Approval"
+          [(ngModel)]="billOfMaterials.dateOfApproval"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
   </div>
 
   <div class="flex flex-row items-center justify-between my-2">
@@ -74,9 +94,10 @@
           <th class="py-2 px-2 border-b border-gray-600">Part Name</th>
           <th class="py-2 px-2 border-b border-gray-600 w-40">Description</th>
           <th class="py-2 px-2 border-b border-gray-600 w-20">Quantity</th>
-          <th class="py-2 px-2 border-b border-gray-600 w-24">Units</th>
           <th class="py-2 px-2 border-b border-gray-600">Supplier</th>
           <th class="py-2 px-2 border-b border-gray-600 w-28">Unit Cost</th>
+          <th class="py-2 px-2 border-b border-gray-600 w-28">Total Cost</th>
+          <th class="py-2 px-2 border-b border-gray-600 w-10"></th>
         </tr>
       </thead>
       <tbody>
@@ -93,7 +114,7 @@
             </mat-form-field>
           </td>
           <td class="py-2 px-2 border-b border-gray-700">
-            {{ part.partName }}
+            {{ part.name }}
           </td>
           <td class="py-2 px-2 border-b border-gray-700 w-40">
             <mat-form-field class="w-full" appearance="outline">
@@ -117,38 +138,28 @@
               />
             </mat-form-field>
           </td>
-          <td class="py-2 px-2 border-b border-gray-700 w-24">
-            <mat-form-field class="w-full" appearance="outline">
-              <mat-select [(ngModel)]="part.units" placeholder="Units">
-                @for (unit of unitOptions; track unit) {
-                <mat-option [value]="unit">
-                  {{ unit }}
-                </mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-          </td>
           <td class="py-2 px-2 border-b border-gray-700">
+            @if (part.id) {
             <mat-form-field class="w-full" appearance="outline">
               <mat-select
                 [(ngModel)]="part.supplierOrManufacturer"
                 placeholder="Select Supplier"
                 [compareWith]="supplierCompareFunction"
               >
-                @for (supplier of supplierOptionsMap[part.materialId]; track
-                $index) {
+                @for (supplier of supplierOptionsMap[part.id]; track $index) {
                 <mat-option [value]="supplier">
                   {{ supplier.name }}
                 </mat-option>
                 }
               </mat-select>
             </mat-form-field>
+            }
           </td>
           <td class="py-2 px-2 border-b border-gray-700 w-28">
             <mat-form-field class="w-full" appearance="outline">
-              <span matTextPrefix class="mr-2">{{
-                billOfMaterials.currency
-              }}</span>
+              <span matTextPrefix class="mr-2">
+                {{ billOfMaterials.currency }}
+              </span>
               <input
                 matInput
                 type="number"
@@ -158,6 +169,14 @@
                 (ngModelChange)="calculateTotalCost()"
               />
             </mat-form-field>
+          </td>
+          <td class="py-2 px-2 border-b border-gray-700 w-28">
+            {{ part.totalPartCost | currency : billOfMaterials!.currency }}
+          </td>
+          <td class="py-2 px-2 border-b border-gray-700 w-10">
+            <button mat-icon-button (click)="removePart($index)">
+              <mat-icon class="text-red-500">delete_forever</mat-icon>
+            </button>
           </td>
         </tr>
         }
@@ -182,7 +201,11 @@
       <mat-icon>close</mat-icon>
       Cancel
     </button>
-    <button mat-flat-button (click)="submit()">
+    <button
+      mat-flat-button
+      (click)="submit()"
+      [disabled]="productName.invalid || !billOfMaterials!.parts!.length"
+    >
       <mat-icon>check_circle_outline</mat-icon>
       {{ billOfMaterials.id ? "Update" : "Create" }} Bill of Materials
     </button>

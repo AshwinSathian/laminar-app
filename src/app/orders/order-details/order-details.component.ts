@@ -11,7 +11,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderStatus } from '@laminar-app/enums';
-import { Material, Order, Supplier } from '@laminar-app/interfaces';
+import { Material, Order, OrderItem, Supplier } from '@laminar-app/interfaces';
 import {
   OrdersService,
   SharedService,
@@ -20,7 +20,7 @@ import {
 import { PartsListDialogComponent } from '@laminar-app/shared-components';
 import * as _moment from 'moment';
 import { default as _rollupMoment } from 'moment';
-import { Subject, takeUntil } from 'rxjs';
+import { iif, Subject, takeUntil } from 'rxjs';
 
 const moment = _rollupMoment || _moment;
 
@@ -60,18 +60,10 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   supplierOptions: Supplier[] = [];
   materialOptions: Material[] = [];
   isUploading = false;
-  statusOptions: { label: string; value: OrderStatus; icon: string }[] = [
-    { label: 'Order Placed', value: OrderStatus.placed, icon: 'check_circle' },
-    {
-      label: 'Order Dispatched',
-      value: OrderStatus.dispatched,
-      icon: 'local_shipping',
-    },
-    {
-      label: 'Order Delivered',
-      value: OrderStatus.delivered,
-      icon: 'task_alt',
-    },
+  statusOptions: OrderStatus[] = [
+    OrderStatus.placed,
+    OrderStatus.dispatched,
+    OrderStatus.delivered,
   ];
   selectedPartIds: string[] = [];
   currencyOptions: { label: string; value: string }[] = [];
@@ -135,6 +127,8 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
             }
 
             const dialogRef = this.dialog.open(PartsListDialogComponent, {
+              width: '50vw',
+              maxWidth: '50vw',
               data: {
                 materials: this.materialOptions,
                 supplier: this.order.supplier,
@@ -155,21 +149,30 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
                       );
                       if (part) {
                         const index = this.order.parts?.findIndex(
-                          (p) => p.part.id === id
+                          (p) => p.id === id
                         );
                         if (index === -1) {
-                          this.order.parts.push({
-                            part,
+                          const partToAdd: OrderItem = {
+                            id: part.id,
+                            name: part.partName,
+                            manufacturingMethod: part.manufacturingMethod,
+                            material: part.material,
                             quantity: 1,
                             unitPrice: 0,
-                          });
+                            images: part.images || [],
+                          };
+                          this.order.parts.push(partToAdd);
                           this.selectedPartIds.push(id);
                         }
                       }
                     }
 
+                    this.selectedPartIds = Array.from(
+                      new Set(this.selectedPartIds || [])
+                    );
+
                     this.order.parts = this.order.parts?.filter((p) =>
-                      this.selectedPartIds.includes(p.part.id || '')
+                      this.selectedPartIds.includes(p.id || '')
                     );
                     this.updateTotal();
                   }
@@ -185,6 +188,14 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
       (prev, curr) => prev + curr.unitPrice * curr.quantity,
       0
     );
+  }
+
+  removePart(index: number) {
+    const id = this.order.parts[index].id;
+    this.selectedPartIds = this.selectedPartIds.filter((i) => i !== id);
+
+    this.order.parts.splice(index, 1);
+    this.updateTotal();
   }
 
   openPartsDialog() {
@@ -234,36 +245,17 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    if (this.order?.id) {
-      this._updateOrder();
-    } else {
-      this._createOrder();
-    }
-  }
-
-  private _createOrder() {
-    this._service
-      .createOrder(this.order)
+    iif(
+      () => !!this.order?.id,
+      this._service.updateOrder(this.order),
+      this._service.createOrder(this.order)
+    )
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
           if (data) {
             this.order = JSON.parse(JSON.stringify(data));
-            this._router.navigate(['/orders']);
-          }
-        },
-      });
-  }
-
-  private _updateOrder() {
-    this._service
-      .updateOrder(this.order)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (data) => {
-          if (data) {
-            this.order = JSON.parse(JSON.stringify(data));
-            this._router.navigate(['/orders']);
+            this._router.navigate([`/orders/view/${this.order.id}`]);
           }
         },
       });
