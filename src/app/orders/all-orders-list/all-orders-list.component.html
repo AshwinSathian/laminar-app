@@ -88,7 +88,7 @@
         </mat-expansion-panel-header>
 
         <div class="w-full my-2 flex flex-col lg:flex-row items-center gap-2">
-          <div class="w-full md:w-1/2">
+          <div class="w-full lg:w-1/2">
             <label>Minimum Order Value</label>
             <mat-form-field class="w-full">
               <span matTextPrefix class="mr-2">£</span>
@@ -103,7 +103,7 @@
               />
             </mat-form-field>
           </div>
-          <div class="w-full md:w-1/2">
+          <div class="w-full lg:w-1/2">
             <label>Maximum Order Value</label>
             <mat-form-field class="w-full">
               <span matTextPrefix class="mr-2">£</span>
@@ -201,13 +201,13 @@
             class="w-full flex flex-col lg:flex-row items-center justify-evenly gap-4"
           >
             <!-- Total Orders -->
-            <div class="w-full md:w-1/2 flex flex-col gap-2 text-center">
+            <div class="w-full lg:w-1/2 flex flex-col gap-2 text-center">
               <div class="text-4xl md:text-6xl">{{ analytics.totalCount }}</div>
               <div class="text-lg md:text-xl">Total Orders</div>
             </div>
 
             <!-- Total Value -->
-            <div class="w-full md:w-1/2 flex flex-col gap-2 text-center">
+            <div class="w-full lg:w-1/2 flex flex-col gap-2 text-center">
               <div class="text-4xl md:text-6xl">
                 {{ analytics.totalValue | currency : "GBP" }}
               </div>
