@@ -45,10 +45,15 @@ export class AuthService {
     }
   }
 
-  logout(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    this.tokenSubject.next(null);
+  logout(): Observable<void> {
+    const refreshToken = localStorage.getItem('refreshToken');
+    return this.http.post<void>(`${API_BASE_URL}logout`, refreshToken).pipe(
+      tap(() => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        this.tokenSubject.next(null);
+      })
+    );
   }
 
   refreshToken(): Observable<{ accessToken: string }> {

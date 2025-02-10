@@ -142,6 +142,15 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  logout() {
+    this._authService
+      .logout()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this._router.navigate(['/login']);
+      });
+  }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
